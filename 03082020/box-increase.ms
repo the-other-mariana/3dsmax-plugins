@@ -25,8 +25,8 @@ for i = 1 to objs.count do
 		(
 			if j == 1 or j == i then
 			(
-				bb0 = (objs[j].max - objs[j].min) 
-				dist += bb0[1]/2.0
+				bb0 = (objs[j].max - objs[j].min) -- array of dimensions as [x, y, z]
+				dist += bb0[1]/2.0 -- x value
 			) else
 			(
 				dist +=(objs[j].max - objs[j].min)[1]
@@ -51,20 +51,16 @@ for x in $ do
 -- #()
 -- OK
 -- array size 4OK
+-- 0
+-- 5
 -- 1
 -- "Box001"
 -- 2
 -- "Box002"
--- 18.0;18.0;18.0
--- 38.2704
 -- 3
 -- "Box003"
--- 36.0;36.0;36.0
--- 94.4133
 -- 4
 -- "Box004"
--- 54.0;54.0;54.0
--- 168.609
 -- OK
 -- "Box001"
 -- 1.0
