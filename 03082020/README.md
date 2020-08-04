@@ -1,11 +1,11 @@
-# First Class Notes
+# 03.08.2020
 
-Software version: `3ds max 2020`<br />
+Software version: `3ds Max 2020`<br />
 
 ## Notes
 To edit poly: object > Modifiers list > EditPoly <br />
 
-Copy or reference: change to move (w) and Shift + drag somewhere to copy. <br />
+Copy or reference: change to move (w) and Shift (while hovering over desired axis) + drag somewhere to copy. <br />
 
 Units Setup: Customize > Units Setup > System Unit Setup<br />
 
@@ -26,6 +26,8 @@ Script Spot, a site for scripts and help.
 Click Undo btn every time you want to re-run a code.
 
 Clear Listener: Edit > Clear All
+
+To move object to exact position: select object + w, and bottom right corner
 
 ## Examples
 ```

@@ -1,3 +1,4 @@
+-- example 3
 count = 0
 
 objs = #()
@@ -11,17 +12,27 @@ for x in $ do
 	append objs x
 )
 format "array size %" objs.count
-
-for i = 1 to 4 do
+dist = 0
+gap = 5 -- constant space between cubes
+for i = 1 to objs.count do
 (
 	print i
 	print objs[i].name
-	if i > 1 do
+	if i > 1  do
 	(
-		bb0 = (objs[i-1].max - objs[i-1].min) -- array of dimensions [x, y, z]
-		format "%;%;%\n" bb0[1] bb0[2] bb0[3]
-		objs[i].pos.x += bb0[1]/2.0 * i -- x value 
-		print objs[i].pos.x
+		dist = 0
+		for j = 1 to i do
+		(
+			if j == 1 or j == i then
+			(
+				bb0 = (objs[j].max - objs[j].min) 
+				dist += bb0[1]/2.0
+			) else
+			(
+				dist +=(objs[j].max - objs[j].min)[1]
+			)
+		)
+		objs[i].pos.x = objs[1].pos.x + dist + (gap*(i - 1))
 	)
 )
 
