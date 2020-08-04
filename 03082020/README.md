@@ -23,6 +23,10 @@ Go back to grid: F + alt (go to front view) and in corner change to perspective.
 
 Script Spot, a site for scripts and help.
 
+Click Undo btn every time you want to re-run a code.
+
+Clear Listener: Edit > Clear All
+
 ## Examples
 ```
 $ -- selected object 
