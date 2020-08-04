@@ -44,6 +44,9 @@ for x in $ do
 	print x.scale.x
 	print x.scale.y
 	print x.scale.z
+	
+	bb0 = (x.max - x.min)
+	format "dimensions: %, %, % \n" bb0[1] bb0[2] bb0[3] -- bounding box
 )
 
 -- output --
@@ -66,18 +69,22 @@ for x in $ do
 -- 1.0
 -- 1.0
 -- 1.0
+-- dimensions: 18.0, 18.0, 18.0 
 -- "Box002"
 -- 2.0
 -- 2.0
 -- 2.0
+-- dimensions: 36.0, 36.0, 36.0 
 -- "Box003"
 -- 3.0
 -- 3.0
 -- 3.0
+-- dimensions: 54.0, 54.0, 54.0 
 -- "Box004"
 -- 4.0
 -- 4.0
 -- 4.0
+-- dimensions: 72.0, 72.0, 72.0 
 -- OK
 -- OK
 
