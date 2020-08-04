@@ -25,7 +25,7 @@ Script Spot, a site for scripts and help.
 
 ## Examples
 ```
-$ = selected object 
-$Box001 = select object by name
+$ -- selected object 
+$Box001 -- select object by name
 ```
 
