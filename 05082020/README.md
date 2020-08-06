@@ -1,4 +1,4 @@
-# 05.08.2020 <br />
+# Class 05.08.2020 <br />
 
 ## Notes 
 
@@ -52,7 +52,7 @@ Path: Right click > Properties > Motion Path <br />
 
 In an expression, create a path for a sphere that looks like a torus. Something like bellow.<br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/hw-pic.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-pic.png?raw=true) <br />
 
 
 
