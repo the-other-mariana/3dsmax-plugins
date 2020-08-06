@@ -1,6 +1,6 @@
-# 03.08.2020
+# Class 03.08.2020
 
-Software version: `3ds Max 2020`<br />
+Software version to use: `3ds Max 2020`<br />
 
 ## Notes
 To edit poly: object > Modifiers list > EditPoly <br />
