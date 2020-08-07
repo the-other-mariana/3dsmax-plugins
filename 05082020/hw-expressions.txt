@@ -1,0 +1,6 @@
+torus: [(50 + 15*cos(30*F)) * cos(0.5*F), (50 + 15*cos(30*F)) * sin(0.5*F), 15*sin(30*F)]
+
+
+torus 2: [abs(100*cos(0.25*F) )* cos(10*F), abs(100*cos(0.25*F))  * sin(10*F), 30 * sin(0.5*F)]
+
+sphere: [50*cos(0.5*F) * cos(10*F), abs(50*cos(0.5*F))  * sin(10*F), 50 * sin(0.5*F)]

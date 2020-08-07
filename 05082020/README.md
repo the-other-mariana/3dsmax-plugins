@@ -54,6 +54,24 @@ In an expression, create a path for a sphere that looks like a torus. Something 
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-pic.png?raw=true) <br />
 
+### Results
+
+#### Theoretical Torus
+
+Expression: [(50 + 15*cos(30*F)) * cos(0.5*F), (50 + 15*cos(30*F)) * sin(0.5*F), 15*sin(30*F)] <br />
+
+Frames: 750 or more <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-output-01.png?raw=true) <br />
+
+#### Horizontal Torus
+
+Expression: [abs(100*cos(0.25*F) )* cos(10*F), abs(100*cos(0.25*F))  * sin(10*F), 30 * sin(0.5*F)] <br />
+
+Frames: 750 or more <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-output-02.png?raw=true) <br />
+
 
 
 

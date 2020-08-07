@@ -1,0 +1,5 @@
+[(out_radius + in_radius*cos(in_freq*F)) * cos(out_freq*F), (out_radius + in_radius*cos(in_freq*F)) * sin(out_freq*F), in_radius*sin(in_freq*F)]
+s: out_radius:0
+s: in_radius:0
+s: in_freq:0
+s: out_freq:0
