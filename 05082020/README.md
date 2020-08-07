@@ -48,15 +48,15 @@ Motion > Position > Controller > Position expression. Shows an array: [cos(F*10)
 
 Path: Right click > Properties > Motion Path <br />
 
-### Homework
+## Homework
 
 In an expression, create a path for a sphere that looks like a torus. Something like bellow.<br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-pic.png?raw=true) <br />
 
-### Results
+## Results
 
-#### Theoretical Torus
+### A) Theoretical Torus
 
 Expression: [(50 + 15*cos(30*F)) * cos(0.5*F), (50 + 15*cos(30*F)) * sin(0.5*F), 15*sin(30*F)] <br />
 
@@ -64,13 +64,16 @@ Frames: 750 or more <br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-output-01.png?raw=true) <br />
 
-#### Horizontal Torus
+Download [3dsMax Scene](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-scene01_v02.max) or load as Position Expression for a 5m sphere [the expression file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-expression01_v02.xpr). <br />
+
+### B) Horizontal Torus
 
 Expression: [abs(100*cos(0.25*F) )* cos(10*F), abs(100*cos(0.25*F))  * sin(10*F), 30 * sin(0.5*F)] <br />
 
 Frames: 750 or more <br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-output-02.png?raw=true) <br />
+
 
 
 
