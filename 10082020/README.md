@@ -24,7 +24,7 @@ Select Object > Right click > EditPoly > Vertex view. Activate `Snap` (button wi
 
 `point3D` in 3dsMax is a list with [x, y, z] values.<br />
 
-`Ctrl + e` to run the plugin and check for errors in the Max Listener.<br />
+`Ctrl + a` and `Ctrl + e` to run the plugin and check for errors in the Max Listener. Then, go to Circle button on the top right menu > First dropdown, and in the bottom, you will see the name of your `category`.<br />
 
 For clicks, the defined values are: 1 when you click, 2 when you move mouse, 3 when you click out. Useful for switch value.<br />
 
