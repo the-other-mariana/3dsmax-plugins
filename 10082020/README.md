@@ -18,7 +18,7 @@ A `spinner` is the IU field with two little arrows.<br />
 
 The `parameters` function has parameter variables that connect IU input. Write `ui:UI_NameOfSpinner` so that it connects.<br />
 
-Select Object > Right click > EditPoly > Vertex view. Activate `Snap` (button with a 3 and a magnet) to grab vertices easily with mouse. Also, during Vertex View, you can select a vertex and under `Selection` you can see which number of vertex you are selecting.<br />
+Select Object > Right click > Covert To > EditPoly > Vertex view. Activate `Snap` (button with a 3 and a magnet) to grab vertices easily with mouse. Also, during Vertex View, you can select a vertex and under `Selection` you can see which number of vertex you are selecting.<br />
 
 `on build mesh` is one of the functions of `simpleObject` object inside 3dsMax. Also, `simpleObject` is a centered object in [0, 0, 0].<br />
 
@@ -31,4 +31,10 @@ For clicks, the defined values are: 1 when you click, 2 when you move mouse, 3 w
 ## Homework
 
 Try to generate the cone's side faces.<br />
+
+## Results
+
+The [file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10082020/my-cone.ms) after this class homework generates the following.<br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10082020/hw-output.png?raw=true) <br />
 

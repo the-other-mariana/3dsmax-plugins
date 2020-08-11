@@ -17,8 +17,11 @@ category:"Plugins Class"
 		spinner UI_Sides "Sides" type:#integer range:[3, 30, 6]
 	)
 	
+
+	
 	on buildMesh do
 	(
+		Last = 0
 		Vertices = #()
 		for i in 1 to P_Sides by 1 do
 		(
@@ -27,7 +30,20 @@ category:"Plugins Class"
 		Vertices[P_Sides + 1] = [0, 0, 0]
 		Vertices[P_Sides + 2] = [0, 0, P_Height]
 		
-		Faces = #([6, 1, P_Sides + 2], [6, P_Sides + 2, 5])
+		Faces = #()
+		for i in 1 to P_Sides by 1 do
+		(
+			if i == P_Sides then
+			(
+				Last = P_Sides
+			)
+			Faces[i] = [i, (i + 1) - Last, P_Sides + 2]
+		)
+		
+		--
+		-- 6, 1, top
+		--Faces = #([6, 1, P_Sides + 2], [6, P_Sides + 2, 5])
+		-- Faces are counter clock wise ordered
 		setMesh mesh verts:Vertices faces:Faces
 	)
 	
@@ -41,7 +57,7 @@ category:"Plugins Class"
 				3: #stop
 			)
 		)
-		on mousePoint click do
+		on mouseMove click do
 		(
 			case click of
 			(
