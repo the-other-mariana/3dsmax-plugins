@@ -7,22 +7,23 @@ category:"Plugins Class"
 	(
 		P_Radius type:#worldUnits ui:UI_Radius	default:10
 		P_Height type:#worldUnits ui:UI_Height	default:15
-		P_Sides type:#integer ui:UI_Sides	default:6
-		P_VSegments type:#integer ui:UI_VSegments	default:3
+		P_Sides type:#integer ui:UI_Sides	default:10
+		P_VSegments type:#integer ui:UI_VSegments	default:4
 	)
 	
 	rollout Cone_Params "Parameters"
 	(
 		spinner UI_Radius "Radius" type:#worldUnits range:[0, 1000, 10]
 		spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 15]
-		spinner UI_Sides "Sides" type:#integer range:[3, 30, 6]
-		spinner UI_VSegments "V Segments" type:#integer range:[2,100,3]
+		spinner UI_Sides "Sides" type:#integer range:[3, 30, 10]
+		spinner UI_VSegments "V Segments" type:#integer range:[2,100,4]
 	)
 	
 
 	
 	on buildMesh do
 	(
+		--print "new cone \n"
 		Vertices = #()
 		
 		dh = (P_Height * 1.0) / P_VSegments
@@ -44,6 +45,7 @@ category:"Plugins Class"
 		for j in 1 to P_VSegments - 1 by 1 do
 		(
 			Last = 0
+			--format "segment % \n" j
 			for i in 1 to (P_Sides) by 1 do
 			(
 				if i == P_Sides then
@@ -51,8 +53,22 @@ category:"Plugins Class"
 					Last = P_Sides
 				)
 				-- (Quad) Faces[i + P_Sides * (j - 1)] = [i + 1 + (P_Sides * (j - 1)), i + 1 + (P_Sides * j), i + (P_Sides * j), i + (P_Sides * (j - 1))]
+-- 				format "new faces, last: % \n" Last
+-- 				f1_i = i + (P_Sides * 2) * (j - 1)
+-- 				f1_x = i + 1 + (P_Sides * (j - 1)) - Last
+-- 				f1_y = i + 1 + (P_Sides * j) - Last
+-- 				f1_z = i + (P_Sides * j)
+-- 				format "face index: % = %; %; % \n" f1_i f1_x f1_y f1_z
+				
 				-- first triangle
 				Faces[i + (P_Sides * 2) * (j - 1)] = [i + 1 + (P_Sides * (j - 1)) - Last, i + 1 + (P_Sides * j) - Last, i + (P_Sides * j)]
+					
+-- 				f2_i = i + P_Sides + ((P_Sides * 2) * (j - 1))
+-- 				f2_x = i + (P_Sides * (j - 1))
+-- 				f2_y = i + 1 + (P_Sides * (j - 1)) - Last
+-- 				f2_z = i + (P_Sides * j)
+-- 				format "face index: % = %; %; % \n" f2_i f2_x f2_y f2_z
+					
 				-- second triangle
 				Faces[i + P_Sides + ((P_Sides * 2) * (j - 1))] = [i + (P_Sides * (j - 1)), i + 1 + (P_Sides * (j - 1)) - Last, i + (P_Sides * j)]
 			)
@@ -77,7 +93,7 @@ category:"Plugins Class"
 			(
 				Last = P_Sides
 			)
-			Faces[i + (P_Sides * P_VSegments) + (P_Sides * 2)] = [i, (P_Sides * P_VSegments) + 1,  i + 1 - Last]
+			Faces[i + ((P_Sides * 2) * (P_VSegments - 1)) + (P_Sides)] = [i, (P_Sides * P_VSegments) + 1,  i + 1 - Last]
 		)
 		
 	
@@ -85,11 +101,13 @@ category:"Plugins Class"
 		
 		for i in 1 to ((P_Sides * 2) * (P_VSegments)) by 1 do
 		(
-			if i > ((P_Sides * P_VSegments) + (P_Sides * 2)) then
+			if i > ( ((P_Sides * 2) * (P_VSegments - 1)) + (P_Sides) ) then
 			(
+				-- bottom
 				setFaceSmoothGroup mesh (i) (2)
 			) else
 			(
+				-- anything else
 				setFaceSmoothGroup mesh (i) (1)
 			)
 			
@@ -110,8 +128,8 @@ category:"Plugins Class"
 		(
 			case click of
 			(
-				2: P_Radius = gridDist.x
-				3: P_Height = gridDist.z
+				2: Radius = gridDist.x
+				3: Height = gridDist.z
 			)
 		)
 	)
