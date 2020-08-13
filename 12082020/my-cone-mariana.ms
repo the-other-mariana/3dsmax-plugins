@@ -23,7 +23,6 @@ category:"Plugins Class"
 	
 	on buildMesh do
 	(
-		--print "new cone \n"
 		Vertices = #()
 		
 		dh = (P_Height * 1.0) / P_VSegments
@@ -45,7 +44,6 @@ category:"Plugins Class"
 		for j in 1 to P_VSegments - 1 by 1 do
 		(
 			Last = 0
-			--format "segment % \n" j
 			for i in 1 to (P_Sides) by 1 do
 			(
 				if i == P_Sides then
@@ -53,21 +51,9 @@ category:"Plugins Class"
 					Last = P_Sides
 				)
 				-- (Quad) Faces[i + P_Sides * (j - 1)] = [i + 1 + (P_Sides * (j - 1)), i + 1 + (P_Sides * j), i + (P_Sides * j), i + (P_Sides * (j - 1))]
--- 				format "new faces, last: % \n" Last
--- 				f1_i = i + (P_Sides * 2) * (j - 1)
--- 				f1_x = i + 1 + (P_Sides * (j - 1)) - Last
--- 				f1_y = i + 1 + (P_Sides * j) - Last
--- 				f1_z = i + (P_Sides * j)
--- 				format "face index: % = %; %; % \n" f1_i f1_x f1_y f1_z
 				
 				-- first triangle
 				Faces[i + (P_Sides * 2) * (j - 1)] = [i + 1 + (P_Sides * (j - 1)) - Last, i + 1 + (P_Sides * j) - Last, i + (P_Sides * j)]
-					
--- 				f2_i = i + P_Sides + ((P_Sides * 2) * (j - 1))
--- 				f2_x = i + (P_Sides * (j - 1))
--- 				f2_y = i + 1 + (P_Sides * (j - 1)) - Last
--- 				f2_z = i + (P_Sides * j)
--- 				format "face index: % = %; %; % \n" f2_i f2_x f2_y f2_z
 					
 				-- second triangle
 				Faces[i + P_Sides + ((P_Sides * 2) * (j - 1))] = [i + (P_Sides * (j - 1)), i + 1 + (P_Sides * (j - 1)) - Last, i + (P_Sides * j)]
@@ -128,8 +114,8 @@ category:"Plugins Class"
 		(
 			case click of
 			(
-				2: Radius = gridDist.x
-				3: Height = gridDist.z
+				2: P_Radius = gridDist.x
+				3: P_Height = gridDist.z
 			)
 		)
 	)
