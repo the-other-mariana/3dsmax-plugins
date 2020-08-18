@@ -4,7 +4,7 @@
 
 ### Creating a custom Cone figure plugin
 
-Link for class: [Google Meet Link](meet.google.com/swj-niyp-fca) <br />
+Link for class: [meet.google.com/swj-niyp-fca]() <br />
 
 Scripting > MAXScript Listener: type `genclassid()` + `Enter` to generate header unique id of our plugin class. <br />
 
