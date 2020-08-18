@@ -16,7 +16,7 @@ category:"Plugins Class"
 		spinner UI_Radius "Radius" type:#worldUnits range:[0, 1000, 10]
 		spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 15]
 		spinner UI_Sides "Sides" type:#integer range:[3, 30, 10]
-		spinner UI_VSegments "V Segments" type:#integer range:[2,100,4]
+		spinner UI_VSegments "V Segments" type:#integer range:[1,100,4]
 	)
 	
 

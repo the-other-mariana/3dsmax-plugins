@@ -11,3 +11,9 @@ Cannot create quads in 3dsMax, you must create 2 triangles per square.<br />
 ## Homework
 
 No homework, but I will check if my [cone script](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/12082020/my-cone-mariana.ms) works when just 1 vertical segment is chosen.<br />
+
+## Results
+
+The [cone script](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/12082020/my-cone-mariana.ms) I did last week works also for 1 segment (right pyramid-like cone). <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/17082020/mariana-cone-output.png?raw=true)
