@@ -2,7 +2,7 @@
 
 ## Notes
 
-Lower bottom has clock wise vertex orientation.<br />
+Lower bottom has clock-wise vertex orientation, whereas triangle body faces use counter clock-wise orientation. <br />
 
 In 3ds Max, you can't make quads, you need to make triangles.<br />
 
