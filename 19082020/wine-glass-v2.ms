@@ -33,25 +33,39 @@ category:"Plugins Class"
 		h4 = 0.1
 		h5 = 0.4
 		
+		r1 = 1.0
+		r2 = 0.8
+		r3 = 0.2
+		r4 = 0.2
+		r5 = 1.0
+		r6 = 0.8
+		
 		heights = #(0, P_Height * h1, P_Height * h2, P_Height * h3, P_Height * h4, P_Height * h5)
 		-- 0 2 2 6 2 8
+		rads = #(P_Radius*r1, P_Radius*r2, P_Radius*r3, P_Radius*r4, P_Radius*r5, P_Radius*r6)
+		
+		
 		height = 0
 		dh = 0
 		top = 0
+		last = 0
 		for j in 1 to (vsegs) by 1 do
 		(
 			height += heights[j]
 			if j == (vsegs) then top = 1
 			for s in 1 to (P_Segments + top) by 1 do
 			(
-				
-				dh = (heights[j + 1] + height - height) / (P_Segments * 1.0)
+				if s == (P_Segments + top) and top == 1 then last = 1
+				dh = (heights[j + 1]) / (P_Segments * 1.0)
 				cheight = height + (dh * (s - 1))
 				format "seg: %; h: % \n" s cheight
+				
+				dr = 0
 				for i in 1 to (P_Sides) by 1 do
 				(
 					--vertices[i + P_Sides * (j - 1)] = [(P_Radius) * cos(i * 360.0/P_Sides), (P_Radius) * sin(i * 360/P_Sides), cheight]
-					Append vertices [(P_Radius) * cos(i * 360.0/P_Sides), (P_Radius) * sin(i * 360/P_Sides), cheight]
+					Append vertices [(rads[j+last]) * cos(i * 360.0/P_Sides), (rads[j+last]) * sin(i * 360/P_Sides), cheight]
+					format "j: %; s: %; rad: % \n" j s rads[j + last]
 				)
 			)
 		)
