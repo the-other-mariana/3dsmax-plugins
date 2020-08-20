@@ -9,6 +9,8 @@ category:"Plugins Class"
 		P_Height type:#worldUnits ui:UI_Height	default:30
 		P_Sides type:#integer ui:UI_Sides	default:6
 		P_Segments type:#integer ui:UI_Segments	default:2
+		
+		P_Body type:#float ui: UI_Body default: 0.6
 	)
 	
 	rollout WGlass_Params "Parameters"
@@ -17,6 +19,8 @@ category:"Plugins Class"
 		spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 20]
 		spinner UI_Sides "Sides" type:#integer range:[3, 30, 6]
 		spinner UI_Segments "Segments" type:#integer range:[1,100,2]
+		
+		spinner UI_Body "Body Scale" type:#float range:[0.1, 0.8, 0.6]
 	)
 	
 	on buildMesh do
@@ -27,17 +31,18 @@ category:"Plugins Class"
 		faces = #()
 		
 		--heights
-		h1 = 0.05
-		h2 = 0.05
-		h3 = 0.15
-		h4 = 0.15
-		h5 = 0.6
+		h5 = P_Body
+		h4 = (1.0 - P_Body)/3.0
+		h3 = h4 * 1.5
+		h1 = (h3 * 0.5) / 2.0
+		h2 = (h3 * 0.5) / 2.0
+
 		
 		r1 = 1.0
 		r2 = 0.9
 		r3 = 0.2
 		r4 = 0.2
-		r5 = 1.0
+		r5 = r1
 		r6 = 0.8
 		
 		heights = #(0, P_Height * h1, P_Height * h2, P_Height * h3, P_Height * h4, P_Height * h5)
