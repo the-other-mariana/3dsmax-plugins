@@ -15,11 +15,17 @@ Deadline: 31.08.2020 <br />
 ## Progress & Logic
 
 
-### 1st Day of Work
+### 1st Round
 
 First defined 5 essential sections, just as the teapot. Then created a cylinder where each section has N number of `segments`. This is so that if the user inputs `segments = 1` it can still look like the minimum form of a wine glass.<br />
 
 Then just defined each section's radius and interpolated the current radius with the next.<br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/process01.png?raw=true)<br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/process01.png?raw=true) <br />
+
+### 2nd Round
+
+What I did was simply clean a bit the parameters of heights: I added a spinner for the wine glass body scale and determined all the other section's height with respect to it. Next thing to do is round section 4 (below). <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/process02.png?raw=true) <br />
 
