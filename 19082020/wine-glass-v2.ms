@@ -37,10 +37,12 @@ category:"Plugins Class"
 		-- 0 2 2 6 2 8
 		height = 0
 		dh = 0
+		top = 0
 		for j in 1 to (vsegs) by 1 do
 		(
 			height += heights[j]
-			for s in 1 to (P_Segments) by 1 do
+			if j == (vsegs) then top = 1
+			for s in 1 to (P_Segments + top) by 1 do
 			(
 				
 				dh = (heights[j + 1] + height - height) / (P_Segments * 1.0)
@@ -54,22 +56,22 @@ category:"Plugins Class"
 			)
 		)
 		
--- 		last = 0
--- 		for j in 1 to (tot_segs) by 1 do
--- 		(
--- 			last = 0
--- 			for i in 1 to (P_Sides-1) by 1 do
--- 			(
--- 				if i == P_Sides then
--- 				(
--- 					last = P_Sides
--- 				)
--- 				-- first triangle
--- 				faces[i + (P_Sides * 2) * (j - 1)] = [i + 1 + (P_Sides * (j - 1)) - last, i + 1 + (P_Sides * j) - last, i + (P_Sides * j)]
--- 				-- second triangle
--- 				faces[i + P_Sides + ((P_Sides * 2) * (j - 1))] = [i + (P_Sides * (j - 1)), i + 1 + (P_Sides * (j - 1)) - last, i + (P_Sides * j)]
--- 			)
--- 		)
+		last = 0
+		for j in 1 to (tot_segs) by 1 do
+		(
+			last = 0
+			for i in 1 to (P_Sides) by 1 do
+			(
+				if i == P_Sides then
+				(
+					last = P_Sides
+				)
+				-- first triangle
+				faces[i + (P_Sides * 2) * (j - 1)] = [i + 1 + (P_Sides * (j - 1)) - last, i + 1 + (P_Sides * j) - last, i + (P_Sides * j)]
+				-- second triangle
+				faces[i + P_Sides + ((P_Sides * 2) * (j - 1))] = [i + (P_Sides * (j - 1)), i + 1 + (P_Sides * (j - 1)) - last, i + (P_Sides * j)]
+			)
+		)
 		setMesh mesh verts:vertices faces:faces
 	)
 	
