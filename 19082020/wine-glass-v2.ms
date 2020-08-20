@@ -6,7 +6,7 @@ category:"Plugins Class"
 	parameters main rollout:WGlass_Params
 	(
 		P_Radius type:#worldUnits ui:UI_Radius	default:10
-		P_Height type:#worldUnits ui:UI_Height	default:20
+		P_Height type:#worldUnits ui:UI_Height	default:30
 		P_Sides type:#integer ui:UI_Sides	default:6
 		P_Segments type:#integer ui:UI_Segments	default:2
 	)
@@ -27,11 +27,11 @@ category:"Plugins Class"
 		faces = #()
 		
 		--heights
-		h1 = 0.1
-		h2 = 0.1
-		h3 = 0.3
-		h4 = 0.1
-		h5 = 0.4
+		h1 = 0.05
+		h2 = 0.05
+		h3 = 0.15
+		h4 = 0.15
+		h5 = 0.6
 		
 		r1 = 1.0
 		r2 = 0.9
@@ -58,14 +58,14 @@ category:"Plugins Class"
 				if s == (P_Segments + top) and top == 1 then last = 1
 				dh = (heights[j + 1]) / (P_Segments * 1.0)
 				cheight = height + (dh * (s - 1))
-				format "seg: %; h: % \n" s cheight
+				--format "seg: %; h: % \n" s cheight
 				
 				dr = (rads[j + 1] - rads[j]) / (P_Segments)
 				for i in 1 to (P_Sides) by 1 do
 				(
 					--vertices[i + P_Sides * (j - 1)] = [(P_Radius) * cos(i * 360.0/P_Sides), (P_Radius) * sin(i * 360/P_Sides), cheight]
 					Append vertices [(rads[j] + dr*(s-1)) * cos(i * 360.0/P_Sides), (rads[j] + dr*(s-1)) * sin(i * 360/P_Sides), cheight]
-					format "j: %; s: %; rad: % \n" j s (rads[j] + dr*(s-1))
+					--format "j: %; s: %; rad: % \n" j s (rads[j] + dr*(s-1))
 				)
 			)
 		)
