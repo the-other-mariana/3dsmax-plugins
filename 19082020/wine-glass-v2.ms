@@ -34,7 +34,7 @@ category:"Plugins Class"
 		h5 = 0.4
 		
 		r1 = 1.0
-		r2 = 0.8
+		r2 = 0.9
 		r3 = 0.2
 		r4 = 0.2
 		r5 = 1.0
@@ -43,7 +43,7 @@ category:"Plugins Class"
 		heights = #(0, P_Height * h1, P_Height * h2, P_Height * h3, P_Height * h4, P_Height * h5)
 		-- 0 2 2 6 2 8
 		rads = #(P_Radius*r1, P_Radius*r2, P_Radius*r3, P_Radius*r4, P_Radius*r5, P_Radius*r6)
-		
+		-- 10 9 2 2 10 8
 		
 		height = 0
 		dh = 0
@@ -60,12 +60,12 @@ category:"Plugins Class"
 				cheight = height + (dh * (s - 1))
 				format "seg: %; h: % \n" s cheight
 				
-				dr = 0
+				dr = (rads[j + 1] - rads[j]) / (P_Segments)
 				for i in 1 to (P_Sides) by 1 do
 				(
 					--vertices[i + P_Sides * (j - 1)] = [(P_Radius) * cos(i * 360.0/P_Sides), (P_Radius) * sin(i * 360/P_Sides), cheight]
-					Append vertices [(rads[j+last]) * cos(i * 360.0/P_Sides), (rads[j+last]) * sin(i * 360/P_Sides), cheight]
-					format "j: %; s: %; rad: % \n" j s rads[j + last]
+					Append vertices [(rads[j] + dr*(s-1)) * cos(i * 360.0/P_Sides), (rads[j] + dr*(s-1)) * sin(i * 360/P_Sides), cheight]
+					format "j: %; s: %; rad: % \n" j s (rads[j] + dr*(s-1))
 				)
 			)
 		)
