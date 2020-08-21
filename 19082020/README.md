@@ -25,7 +25,14 @@ Then just defined each section's radius and interpolated the current radius with
 
 ### 2nd Round
 
-What I did was simply clean a bit the parameters of heights: I added a spinner for the wine glass body scale and determined all the other section's height with respect to it. Next thing to do is round section 4 (below). <br />
+What I did was simply clean a bit the parameters of heights: I added a spinner for the wine glass body scale and determined all the other section's height with respect to it. Next thing to do is round section 4 (below the body). <br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/process02.png?raw=true) <br />
+
+### 3rd Round
+
+This time I made section 4 (between handle and body) have an option to be curved or simply straight, using spheric coordinates. Separated `segments` parameter to just apply to sections 2,3 and 5 (bigger sections) and sections 1 and 4 (smaller sections) to have their separate amount of custom sections. Current script is [this file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/wine-glass-v3.ms) <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/process03.png?raw=true) <br />
+
 

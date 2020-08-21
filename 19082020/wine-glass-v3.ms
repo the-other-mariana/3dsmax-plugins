@@ -103,7 +103,7 @@ category:"Plugins Class"
 				
 				dr = (rads[j + 1] - rads[j]) / (segs[j])
 				cradius = (rads[j] + dr*(s-1))
-				if j == 4 and P_Belly == 1 and s > 1 then cradius += abs(rads[j + 1] - cradius)/2.0
+				--if j == 4 and P_Belly == 1 and s > 1 then cradius += abs(rads[j + 1] - cradius)/2.0
 				for i in 1 to (P_Sides) by 1 do
 				(
 					if j == 4 and P_Belly == 1 and s > 1 then
