@@ -164,8 +164,8 @@ category:"Plugins Class"
 		(
 			case click of
 			(
-				2: Radius = gridDist.x
-				3: Height = gridDist.z
+				2: P_Radius = gridDist.x
+				3: P_Height = gridDist.z
 			)
 		)
 	)
