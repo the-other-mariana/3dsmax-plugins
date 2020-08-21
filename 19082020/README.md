@@ -33,6 +33,6 @@ What I did was simply clean a bit the parameters of heights: I added a spinner f
 
 This time I made section 4 (between handle and body) have an option to be curved or simply straight, using spheric coordinates. Separated `Segments` parameter to just apply to sections 2,3 and 5 (bigger sections) and sections 1(foot) and 4(belly) (smaller sections) to have their separate amount of custom sections. Current script is [this file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/wine-glass-v3.ms) <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/process03.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/cup03.png?raw=true) <br />
 
 
