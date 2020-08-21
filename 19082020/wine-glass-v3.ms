@@ -10,7 +10,8 @@ category:"Plugins Class"
 		P_Sides type:#integer ui:UI_Sides	default:6
 		P_Segments type:#integer ui:UI_Segments	default:4
 		
-		P_Body type:#float ui: UI_Body default: 0.6
+		P_BodyScale type:#float ui: UI_BodyScale default: 0.6
+		
 		P_Belly type:#integer ui: UI_Belly default: 1
 		P_BellySegs type:#integer ui: UI_BellySegs default: 3
 		P_BellyAngle type:#integer ui: UI_BellyAngle default: 45
@@ -18,21 +19,27 @@ category:"Plugins Class"
 	
 	rollout WGlass_Params "Parameters"
 	(
-		spinner UI_Radius "Radius" type:#worldUnits range:[0, 1000, 10]
-		spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 20]
-		spinner UI_Sides "Sides" type:#integer range:[3, 30, 6]
-		spinner UI_Segments "Segments" type:#integer range:[1,100,2]
+		group "General Parameters"
+		(
+			spinner UI_Radius "Radius" type:#worldUnits range:[0, 1000, 10]
+			spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 20]
+			spinner UI_Sides "Sides" type:#integer range:[3, 30, 6]
+			spinner UI_Segments "Segments" type:#integer range:[1,100,2]
+			slider UI_BodyScale "Cup Proportion" orient:#horizontal ticks:10 range:[0.1,0.9,0.6]
+		)
 		
-		spinner UI_Body "Body Scale" type:#float range:[0.1, 0.8, 0.6]
-		spinner UI_Belly "Belly Curve On" type:#integer range:[0, 1, 0]
-		spinner UI_BellySegs "Belly Segments" type:#integer range:[1, 100, 3]
-		spinner UI_BellyAngle "Belly Angle" type:#integer range:[1, 90, 45]
-		
+		group "Belly Parameters"
+		(
+			spinner UI_BellySegs "Belly Segments" type:#integer range:[1, 100, 3]
+			spinner UI_Belly "Belly Curve On" type:#integer range:[0, 1, 0]
+			spinner UI_BellyAngle "Belly Angle" type:#integer range:[1, 90, 45]
+		)
 	)
 	
 	on buildMesh do
 	(
 		vsegs = 5
+		
 		tot_segs = 0
 		for i in 1 to (vsegs) by 1 do
 		(
@@ -48,8 +55,8 @@ category:"Plugins Class"
 		faces = #()
 		
 		--heights
-		h5 = P_Body
-		h4 = (1.0 - P_Body)/3.0
+		h5 = P_BodyScale
+		h4 = (1.0 - P_BodyScale)/3.0
 		h3 = h4 * 1.5
 		h1 = (h3 * 0.5) / 2.0
 		h2 = (h3 * 0.5) / 2.0
