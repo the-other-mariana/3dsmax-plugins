@@ -17,6 +17,7 @@ category:"Plugins Class"
 		P_BellyAngle type:#integer ui: UI_BellyAngle default: 45
 		
 		P_FootSegs type:#integer ui: UI_FootSegs default: 3
+		P_FootRadius type:#float ui: UI_FootRadius default: 0.9
 	)
 	
 	rollout WGlass_Params "Parameters"
@@ -40,6 +41,7 @@ category:"Plugins Class"
 		group "Foot Parameters"
 		(
 			spinner UI_FootSegs "Foot Segments" type:#integer range:[1, 100, 3]
+			slider UI_FootRadius "Foot Closure" orient:#horizontal ticks:10 range:[0.2,1.0,0.9]
 		)
 	)
 	
@@ -63,7 +65,7 @@ category:"Plugins Class"
 		h2 = (h3 * 0.5) / 2.0
 		
 		r1 = 1.0
-		r2 = 0.9
+		r2 = P_FootRadius
 		r3 = 0.2
 		r4 = 0.2
 		r5 = r1
