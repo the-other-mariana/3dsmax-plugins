@@ -39,7 +39,7 @@ category:"Plugins Class"
 		
 		group "Foot Parameters"
 		(
-			spinner UI_FootSegs "Belly Segments" type:#integer range:[1, 100, 3]
+			spinner UI_FootSegs "Foot Segments" type:#integer range:[1, 100, 3]
 		)
 	)
 	
