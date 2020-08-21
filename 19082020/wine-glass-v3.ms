@@ -15,6 +15,8 @@ category:"Plugins Class"
 		P_Belly type:#integer ui: UI_Belly default: 1
 		P_BellySegs type:#integer ui: UI_BellySegs default: 3
 		P_BellyAngle type:#integer ui: UI_BellyAngle default: 45
+		
+		P_FootSegs type:#integer ui: UI_FootSegs default: 3
 	)
 	
 	rollout WGlass_Params "Parameters"
@@ -34,22 +36,21 @@ category:"Plugins Class"
 			spinner UI_Belly "Belly Curve On" type:#integer range:[0, 1, 0]
 			spinner UI_BellyAngle "Belly Angle" type:#integer range:[1, 90, 45]
 		)
+		
+		group "Foot Parameters"
+		(
+			spinner UI_FootSegs "Belly Segments" type:#integer range:[1, 100, 3]
+		)
 	)
 	
 	on buildMesh do
 	(
 		vsegs = 5
-		
+		segs = #(P_FootSegs, P_Segments, P_Segments, P_BellySegs, P_Segments)
 		tot_segs = 0
 		for i in 1 to (vsegs) by 1 do
 		(
-			if i == 4 then
-			(
-				tot_segs += P_BellySegs
-			) else
-			(
-				tot_segs += P_Segments
-			)
+			tot_segs += segs[i]
 		)
 		vertices = #()
 		faces = #()
@@ -60,7 +61,6 @@ category:"Plugins Class"
 		h3 = h4 * 1.5
 		h1 = (h3 * 0.5) / 2.0
 		h2 = (h3 * 0.5) / 2.0
-
 		
 		r1 = 1.0
 		r2 = 0.9
@@ -92,16 +92,16 @@ category:"Plugins Class"
 			height += heights[j]
 			if j == (vsegs) then top = 1
 			
-			segs = P_Segments
-			if j == 4 then segs = P_BellySegs
-			for s in 1 to (segs + top) by 1 do
+			--segs = P_Segments
+			--if j == 4 then segs = P_BellySegs
+			for s in 1 to (segs[j] + top) by 1 do
 			(
-				if s == (segs + top) and top == 1 then last = 1
-				dh = (heights[j + 1]) / (segs * 1.0)
+				if s == (segs[j] + top) and top == 1 then last = 1
+				dh = (heights[j + 1]) / (segs[j] * 1.0)
 				cheight = height + (dh * (s - 1))
 				--format "seg: %; h: % \n" s cheight
 				
-				dr = (rads[j + 1] - rads[j]) / (segs)
+				dr = (rads[j + 1] - rads[j]) / (segs[j])
 				cradius = (rads[j] + dr*(s-1))
 				if j == 4 and P_Belly == 1 and s > 1 then cradius += abs(rads[j + 1] - cradius)/2.0
 				for i in 1 to (P_Sides) by 1 do
@@ -109,9 +109,9 @@ category:"Plugins Class"
 					if j == 4 and P_Belly == 1 and s > 1 then
 					(
 						radius4 = rads[j + 1] + dr
-						hola = -P_BellyAngle - (((segs) - (s)) * ((P_BellyAngle) / segs))
+						hola = -P_BellyAngle - (((segs[j]) - (s)) * ((P_BellyAngle) / segs[j]))
 						cool_angle1 = atan(rads[j] / (heights[j+1] * 1.0)) - 90.0
-						cool_angle = -cool_angle1 - (((segs) - (s)) * (abs(cool_angle1) / segs))
+						cool_angle = -cool_angle1 - (((segs[j]) - (s)) * (abs(cool_angle1) / segs[j]))
 						
 						xy = radius4 * cos( hola )
 						--format "rad: %; cool: %; hola: %; \n" radius4 cool_angle1 hola
