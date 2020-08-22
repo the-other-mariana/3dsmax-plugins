@@ -1,6 +1,6 @@
-plugin simpleObject WineGlass3_Mesh
-name: "Wine Glass3"
-classID:#(0x244b373a, 0x35da12bb)
+plugin simpleObject WineGlass_Mesh
+name: "Wine Glass"
+classID:#(0x4e2f8318, 0x205fef6d)
 category:"Plugins Class"
 (
 	parameters main rollout:WGlass_Params
@@ -11,10 +11,10 @@ category:"Plugins Class"
 		P_Segments type:#integer ui:UI_Segments	default:4
 		
 		P_BodyScale type:#float ui: UI_BodyScale default: 0.6
+		P_CupRadius type:#float ui: UI_CupRadius default: 0.8
 		
 		P_Belly type:#integer ui: UI_Belly default: 1
 		P_BellySegs type:#integer ui: UI_BellySegs default: 3
-		P_BellyAngle type:#integer ui: UI_BellyAngle default: 45
 		
 		P_FootSegs type:#integer ui: UI_FootSegs default: 3
 		P_FootRadius type:#float ui: UI_FootRadius default: 0.9
@@ -29,13 +29,13 @@ category:"Plugins Class"
 			spinner UI_Sides "Sides" type:#integer range:[3, 30, 6]
 			spinner UI_Segments "Segments" type:#integer range:[1,100,2]
 			slider UI_BodyScale "Cup Proportion" orient:#horizontal ticks:10 range:[0.1,0.9,0.6]
+			slider UI_CupRadius "Cup Closure" orient:#horizontal ticks:10 range:[0.5,2.0, 0.8]
 		)
 		
 		group "Belly Parameters"
 		(
 			spinner UI_BellySegs "Belly Segments" type:#integer range:[1, 100, 3]
 			spinner UI_Belly "Belly Curve On" type:#integer range:[0, 1, 0]
-			spinner UI_BellyAngle "Belly Angle" type:#integer range:[1, 90, 45]
 		)
 		
 		group "Foot Parameters"
@@ -69,7 +69,7 @@ category:"Plugins Class"
 		r3 = 0.2
 		r4 = 0.2
 		r5 = r1
-		r6 = 0.8
+		r6 = P_CupRadius
 		
 		heights = #(0, P_Height * h1, P_Height * h2, P_Height * h3, P_Height * h4, P_Height * h5)
 		-- 0 2 2 6 2 8
@@ -94,34 +94,30 @@ category:"Plugins Class"
 			height += heights[j]
 			if j == (vsegs) then top = 1
 			
-			--segs = P_Segments
-			--if j == 4 then segs = P_BellySegs
 			for s in 1 to (segs[j] + top) by 1 do
 			(
 				if s == (segs[j] + top) and top == 1 then last = 1
 				dh = (heights[j + 1]) / (segs[j] * 1.0)
 				cheight = height + (dh * (s - 1))
-				--format "seg: %; h: % \n" s cheight
 				
 				dr = (rads[j + 1] - rads[j]) / (segs[j])
 				cradius = (rads[j] + dr*(s-1))
-				--if j == 4 and P_Belly == 1 and s > 1 then cradius += abs(rads[j + 1] - cradius)/2.0
 				for i in 1 to (P_Sides) by 1 do
 				(
 					if j == 4 and P_Belly == 1 and s > 1 then
 					(
-						radius4 = rads[j + 1] + dr
-						hola = -P_BellyAngle - (((segs[j]) - (s)) * ((P_BellyAngle) / segs[j]))
-						cool_angle1 = atan(rads[j] / (heights[j+1] * 1.0)) - 90.0
-						cool_angle = -cool_angle1 - (((segs[j]) - (s)) * (abs(cool_angle1) / segs[j]))
+						crad = rads[j + 1] - rads[j]
+						start_angle = atan(rads[j] / (heights[j+1] * 1.0))
+						--cool_angle = -cool_angle1 - (((segs[j]) - (s)) * (abs(cool_angle1) / segs[j]))
 						
-						xy = radius4 * cos( hola )
+						cangle = (90.0 - abs(start_angle)) - ((s-1) * ((90.0 - abs(start_angle)) / segs[j]))
+						
+						xy = crad * cos( cangle )
 						--format "rad: %; cool: %; hola: %; \n" radius4 cool_angle1 hola
+						x = (xy + rads[j]) * cos(i * 360.0/P_Sides)
+						y = (xy + rads[j]) * sin(i * 360.0/P_Sides)
 						
-						x = xy * cos(i * 360.0/P_Sides)
-						y = xy * sin(i * 360.0/P_Sides)
-						
-						Append vertices [x, y, cheight]
+						Append vertices [x , y, cheight]
 						--format "x: %; y: % z: % \n" x y cheight
 					) else 
 					(
