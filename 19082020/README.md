@@ -35,4 +35,10 @@ This time I made section 4 (between handle and body) have an option to be curved
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/cup03.png?raw=true) <br />
 
+### 4th Round
+
+I made section 4's curve to be calculated automatically (inverse tangent!) and the curve can have a better look even if there are a lot of sections. I also closed the model in top and bottom. Added closure factor slider for the cup's mouth, but erased the angle parameter in the belly curve which didnt really improved the model and now is calculated. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/process04.png?raw=true) <br />
+
 
