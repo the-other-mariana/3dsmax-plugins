@@ -58,7 +58,7 @@ category:"Plugins Class"
 		faces = #()
 		
 		--heights
-		h5 = P_BodyScale
+		h5 = P_BodyScale --0.6
 		h4 = (1.0 - P_BodyScale)/3.0
 		h3 = h4 * 1.5
 		h1 = (h3 * 0.5) / 2.0
@@ -80,14 +80,7 @@ category:"Plugins Class"
 		dh = 0
 		top = 0
 		last = 0
-		
-		vStep = 0
-		hola = 0
-		xy = 0
-		x = 0
-		y = 0
-		z = 0
-		radius4 = 0
+		cheight = 0
 		
 		for j in 1 to (vsegs) by 1 do
 		(
@@ -108,7 +101,6 @@ category:"Plugins Class"
 					(
 						crad = rads[j + 1] - rads[j]
 						start_angle = atan(rads[j] / (heights[j+1] * 1.0))
-						--cool_angle = -cool_angle1 - (((segs[j]) - (s)) * (abs(cool_angle1) / segs[j]))
 						
 						cangle = (90.0 - abs(start_angle)) - ((s-1) * ((90.0 - abs(start_angle)) / segs[j]))
 						
@@ -125,9 +117,13 @@ category:"Plugins Class"
 					Append vertices [cradius* cos(i * 360.0/P_Sides), cradius * sin(i * 360/P_Sides), cheight]
 					--format "j: %; s: %; rad: % \n" j s (rads[j] + dr*(s-1))
 					)
+					--print(height)
 				)
 			)
 		)
+		
+		Append vertices [0, 0, 0]
+		Append vertices [0, 0, cheight]
 		
 		last = 0
 		for j in 1 to (tot_segs) by 1 do
@@ -145,6 +141,29 @@ category:"Plugins Class"
 				faces[i + P_Sides + ((P_Sides * 2) * (j - 1))] = [i + (P_Sides * (j - 1)), i + 1 + (P_Sides * (j - 1)) - last, i + (P_Sides * j)]
 			)
 		)
+		
+		-- top cup faces
+		last = 0
+		for i in 1 to P_Sides by 1 do
+		(
+			if i == P_Sides then
+			(
+				last = P_Sides
+			)
+			Faces[i + ((P_Sides * 2) * (tot_segs))] = [i + (P_Sides * (tot_segs)), (i + 1 + (P_Sides * (tot_segs))) - last, (P_Sides * (tot_segs + 1)) + 2]
+		)
+		
+		-- bottom
+		last = 0
+		for i in 1 to P_Sides by 1 do
+		(
+			if i == P_Sides then
+			(
+				last = P_Sides
+			)
+			Faces[i + ((P_Sides * 2) * (tot_segs)) + (P_Sides)] = [i, (P_Sides * (tot_segs + 1)) + 1,  i + 1 - last]
+		)
+		
 		setMesh mesh verts:vertices faces:faces
 	)
 	
