@@ -16,7 +16,7 @@ category:"Plugins Class"
 		P_Belly type:#integer ui: UI_Belly default: 1
 		P_BellySegs type:#integer ui: UI_BellySegs default: 3
 		
-		P_FootSegs type:#integer ui: UI_FootSegs default: 3
+		P_FootSegs type:#integer ui: UI_FootSegs default: 2
 		P_FootRadius type:#float ui: UI_FootRadius default: 0.9
 	)
 	
@@ -28,7 +28,7 @@ category:"Plugins Class"
 			spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 20]
 			spinner UI_Sides "Sides" type:#integer range:[3, 30, 6]
 			spinner UI_Segments "Segments" type:#integer range:[1,100,2]
-			slider UI_BodyScale "Cup Proportion" orient:#horizontal ticks:10 range:[0.1,0.9,0.6]
+			slider UI_BodyScale "Cup Proportion" orient:#horizontal ticks:10 range:[0.2,0.8,0.6]
 			slider UI_CupRadius "Cup Closure" orient:#horizontal ticks:10 range:[0.5,2.0, 0.8]
 		)
 		
@@ -40,7 +40,7 @@ category:"Plugins Class"
 		
 		group "Foot Parameters"
 		(
-			spinner UI_FootSegs "Foot Segments" type:#integer range:[1, 100, 3]
+			spinner UI_FootSegs "Foot Segments" type:#integer range:[1, 100, 2]
 			slider UI_FootRadius "Foot Closure" orient:#horizontal ticks:10 range:[0.2,1.0,0.9]
 		)
 	)
@@ -58,11 +58,11 @@ category:"Plugins Class"
 		faces = #()
 		
 		--heights
-		h5 = P_BodyScale --0.6
+		h5 = P_BodyScale
 		h4 = (1.0 - P_BodyScale)/3.0
-		h3 = h4 * 1.5
-		h1 = (h3 * 0.5) / 2.0
-		h2 = (h3 * 0.5) / 2.0
+		h3 = h4 + (h4/2.0)
+		h1 = (h4/2.0) / 2.0
+		h2 = (h4/2.0) / 2.0
 		
 		r1 = 1.0
 		r2 = P_FootRadius
@@ -85,6 +85,7 @@ category:"Plugins Class"
 		for j in 1 to (vsegs) by 1 do
 		(
 			height += heights[j]
+
 			if j == (vsegs) then top = 1
 			
 			for s in 1 to (segs[j] + top) by 1 do
@@ -117,7 +118,6 @@ category:"Plugins Class"
 					Append vertices [cradius* cos(i * 360.0/P_Sides), cradius * sin(i * 360/P_Sides), cheight]
 					--format "j: %; s: %; rad: % \n" j s (rads[j] + dr*(s-1))
 					)
-					--print(height)
 				)
 			)
 		)
@@ -181,8 +181,8 @@ category:"Plugins Class"
 		(
 			case click of
 			(
-				2: P_Radius = gridDist.x
-				3: P_Height = gridDist.z
+				2: Radius = gridDist.x
+				3: Height = gridDist.z
 			)
 		)
 	)
