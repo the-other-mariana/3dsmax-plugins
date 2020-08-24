@@ -165,6 +165,35 @@ category:"Plugins Class"
 		)
 		
 		setMesh mesh verts:vertices faces:faces
+		
+		-- body groups
+		s_group = 1
+		acc_faces = 0
+		for j in 1 to (vsegs) by 1 do
+		(
+			for i in 1 to (segs[j] * (P_Sides * 2)) by 1 do
+			(
+				f_index = i + acc_faces
+				setFaceSmoothGroup mesh (f_index) (1)
+				--format "g: %; f: % \n" s_group (i + acc_faces)
+			)
+			acc_faces += (segs[j] * (P_Sides * 2))
+			s_group += 1
+			
+		)
+		
+		-- top and bottom groups
+		exc = tot_segs * (P_Sides * 2)
+		for j in 1 to (2) by 1 do
+		(
+			for i in 1 to (P_Sides) by 1 do
+			(
+				f_index = i + (exc) + (j - 1)*(P_Sides)
+				setFaceSmoothGroup mesh (f_index) (3 - (j - 1))
+				--format "g: %; f: % \n" s_group (i + (exc) + (j - 1)*(P_Sides))
+			)
+			s_group += 1
+		)
 	)
 	
 	tool create
