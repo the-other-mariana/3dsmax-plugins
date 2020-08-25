@@ -167,30 +167,33 @@ category:"Plugins Class"
 		setMesh mesh verts:vertices faces:faces
 		
 		-- body groups
-		s_group = 1
+		s_group = 0
 		acc_faces = 0
 		for j in 1 to (vsegs) by 1 do
 		(
+			-- smooth groups are according to powers of 2: 3 means 4, 4 means 8, 5 means 16
+			
+			s_group = 2^(j-1)
+			if (j == vsegs and P_Belly == 1) then s_group = 2^(j-2)
+			
 			for i in 1 to (segs[j] * (P_Sides * 2)) by 1 do
 			(
 				f_index = i + acc_faces
-				--setFaceSmoothGroup mesh (f_index) (s_group)
-				setFaceSmoothGroup mesh (f_index) (1)
+				setFaceSmoothGroup mesh (f_index) (s_group)
 				format "g: %; f: % \n" s_group (i + acc_faces)
 			)
 			acc_faces += (segs[j] * (P_Sides * 2))
-			s_group += 1
-			
 		)
-		
+
 		-- top and bottom groups
 		exc = tot_segs * (P_Sides * 2)
 		for j in 1 to (2) by 1 do
 		(
+			s_group = 2^(vsegs + (j - 1))
 			for i in 1 to (P_Sides) by 1 do
 			(
 				f_index = i + (exc) + (j - 1)*(P_Sides)
-				setFaceSmoothGroup mesh (f_index) (3 - (j - 1))
+				setFaceSmoothGroup mesh (f_index) (s_group)
 				format "g: %; f: % \n" s_group (i + (exc) + (j - 1)*(P_Sides))
 			)
 			s_group += 1
