@@ -72,20 +72,19 @@ category:"Plugins Class"
 		r6 = P_CupRadius
 		
 		heights = #(0, P_Height * h1, P_Height * h2, P_Height * h3, P_Height * h4, P_Height * h5)
-		-- 0 2 2 6 2 8
 		rads = #(P_Radius*r1, P_Radius*r2, P_Radius*r3, P_Radius*r4, P_Radius*r5, P_Radius*r6)
-		-- 10 9 2 2 10 8
 		
 		height = 0
 		dh = 0
 		top = 0
 		last = 0
 		cheight = 0
+		x = 0
+		y = 0
 		
 		for j in 1 to (vsegs) by 1 do
 		(
 			height += heights[j]
-
 			if j == (vsegs) then top = 1
 			
 			for s in 1 to (segs[j] + top) by 1 do
@@ -98,6 +97,8 @@ category:"Plugins Class"
 				cradius = (rads[j] + dr*(s-1))
 				for i in 1 to (P_Sides) by 1 do
 				(
+					x = cradius* cos(i * 360.0/P_Sides)
+					y = cradius * sin(i * 360/P_Sides)
 					if j == 4 and P_Belly == 1 and s > 1 then
 					(
 						crad = rads[j + 1] - rads[j]
@@ -105,19 +106,12 @@ category:"Plugins Class"
 						
 						cangle = (90.0 - abs(start_angle)) - ((s-1) * ((90.0 - abs(start_angle)) / segs[j]))
 						
-						xy = crad * cos( cangle )
-						--format "rad: %; cool: %; hola: %; \n" radius4 cool_angle1 hola
-						x = (xy + rads[j]) * cos(i * 360.0/P_Sides)
-						y = (xy + rads[j]) * sin(i * 360.0/P_Sides)
-						
-						Append vertices [x , y, cheight]
-						--format "x: %; y: % z: % \n" x y cheight
-					) else 
-					(
-					--vertices[i + P_Sides * (j - 1)] = [(P_Radius) * cos(i * 360.0/P_Sides), (P_Radius) * sin(i * 360/P_Sides), cheight]
-					Append vertices [cradius* cos(i * 360.0/P_Sides), cradius * sin(i * 360/P_Sides), cheight]
-					--format "j: %; s: %; rad: % \n" j s (rads[j] + dr*(s-1))
+						out_rad = crad * cos( cangle )
+						x = (out_rad + rads[j]) * cos(i * 360.0/P_Sides)
+						y = (out_rad + rads[j]) * sin(i * 360.0/P_Sides)
 					)
+					
+					Append vertices [x, y, cheight]
 				)
 			)
 		)
@@ -125,6 +119,7 @@ category:"Plugins Class"
 		Append vertices [0, 0, 0]
 		Append vertices [0, 0, cheight]
 		
+		-- body faces
 		last = 0
 		for j in 1 to (tot_segs) by 1 do
 		(
@@ -180,7 +175,7 @@ category:"Plugins Class"
 			(
 				f_index = i + acc_faces
 				setFaceSmoothGroup mesh (f_index) (s_group)
-				format "g: %; f: % \n" s_group (i + acc_faces)
+				--format "g: %; f: % \n" s_group (i + acc_faces)
 			)
 			acc_faces += (segs[j] * (P_Sides * 2))
 		)
@@ -194,11 +189,10 @@ category:"Plugins Class"
 			(
 				f_index = i + (exc) + (j - 1)*(P_Sides)
 				setFaceSmoothGroup mesh (f_index) (s_group)
-				format "g: %; f: % \n" s_group (i + (exc) + (j - 1)*(P_Sides))
+				--format "g: %; f: % \n" s_group (i + (exc) + (j - 1)*(P_Sides))
 			)
 			s_group += 1
 		)
-		print(faces.count)
 	)
 	
 	tool create
@@ -215,8 +209,8 @@ category:"Plugins Class"
 		(
 			case click of
 			(
-				2: Radius = gridDist.x
-				3: Height = gridDist.z
+				2: P_Radius = gridDist.x
+				3: P_Height = gridDist.z
 			)
 		)
 	)
