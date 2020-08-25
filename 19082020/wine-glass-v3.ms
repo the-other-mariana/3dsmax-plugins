@@ -25,9 +25,9 @@ category:"Plugins Class"
 		group "General Parameters"
 		(
 			spinner UI_Radius "Radius" type:#worldUnits range:[0, 1000, 10]
-			spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 20]
+			spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 30]
 			spinner UI_Sides "Sides" type:#integer range:[3, 30, 6]
-			spinner UI_Segments "Segments" type:#integer range:[1,100,2]
+			spinner UI_Segments "Segments" type:#integer range:[1,30,4]
 			slider UI_BodyScale "Cup Proportion" orient:#horizontal ticks:10 range:[0.2,0.8,0.6]
 			slider UI_CupRadius "Cup Closure" orient:#horizontal ticks:10 range:[0.5,2.0, 0.8]
 		)
@@ -35,18 +35,19 @@ category:"Plugins Class"
 		group "Belly Parameters"
 		(
 			spinner UI_BellySegs "Belly Segments" type:#integer range:[1, 100, 3]
-			spinner UI_Belly "Belly Curve On" type:#integer range:[0, 1, 0]
+			spinner UI_Belly "Belly Curve On" type:#integer range:[0, 1, 1]
 		)
 		
 		group "Foot Parameters"
 		(
-			spinner UI_FootSegs "Foot Segments" type:#integer range:[1, 100, 2]
+			spinner UI_FootSegs "Foot Segments" type:#integer range:[1, 30, 2]
 			slider UI_FootRadius "Foot Closure" orient:#horizontal ticks:10 range:[0.2,1.0,0.9]
 		)
 	)
 	
 	on buildMesh do
 	(
+		-- minimum of 5 segments to look like a wine glass
 		vsegs = 5
 		segs = #(P_FootSegs, P_Segments, P_Segments, P_BellySegs, P_Segments)
 		tot_segs = 0
@@ -57,13 +58,14 @@ category:"Plugins Class"
 		vertices = #()
 		faces = #()
 		
-		--heights
+		--height proportion constants
 		h5 = P_BodyScale
 		h4 = (1.0 - P_BodyScale)/3.0
 		h3 = h4 + (h4/2.0)
 		h1 = (h4/2.0) / 2.0
 		h2 = (h4/2.0) / 2.0
 		
+		-- radius proportion constants
 		r1 = 1.0
 		r2 = P_FootRadius
 		r3 = 0.2
@@ -74,6 +76,7 @@ category:"Plugins Class"
 		heights = #(0, P_Height * h1, P_Height * h2, P_Height * h3, P_Height * h4, P_Height * h5)
 		rads = #(P_Radius*r1, P_Radius*r2, P_Radius*r3, P_Radius*r4, P_Radius*r5, P_Radius*r6)
 		
+		-- init variables
 		height = 0
 		dh = 0
 		top = 0
@@ -82,14 +85,19 @@ category:"Plugins Class"
 		x = 0
 		y = 0
 		
+		-- generate vertex positions
 		for j in 1 to (vsegs) by 1 do
 		(
 			height += heights[j]
+			
+			-- last round of vertices needs an extra round
 			if j == (vsegs) then top = 1
 			
 			for s in 1 to (segs[j] + top) by 1 do
 			(
 				if s == (segs[j] + top) and top == 1 then last = 1
+				
+				-- calculate the interpolated height
 				dh = (heights[j + 1]) / (segs[j] * 1.0)
 				cheight = height + (dh * (s - 1))
 				
@@ -99,6 +107,8 @@ category:"Plugins Class"
 				(
 					x = cradius* cos(i * 360.0/P_Sides)
 					y = cradius * sin(i * 360/P_Sides)
+					
+					-- condition for curved belly with spherical coordinates
 					if j == 4 and P_Belly == 1 and s > 1 then
 					(
 						crad = rads[j + 1] - rads[j]
@@ -111,6 +121,7 @@ category:"Plugins Class"
 						y = (out_rad + rads[j]) * sin(i * 360.0/P_Sides)
 					)
 					
+					-- append current vertex
 					Append vertices [x, y, cheight]
 				)
 			)
@@ -119,7 +130,7 @@ category:"Plugins Class"
 		Append vertices [0, 0, 0]
 		Append vertices [0, 0, cheight]
 		
-		-- body faces
+		-- body faces counter clock wise orientation
 		last = 0
 		for j in 1 to (tot_segs) by 1 do
 		(
@@ -148,7 +159,7 @@ category:"Plugins Class"
 			Faces[i + ((P_Sides * 2) * (tot_segs))] = [i + (P_Sides * (tot_segs)), (i + 1 + (P_Sides * (tot_segs))) - last, (P_Sides * (tot_segs + 1)) + 2]
 		)
 		
-		-- bottom
+		-- bottom faces
 		last = 0
 		for i in 1 to P_Sides by 1 do
 		(
@@ -161,7 +172,7 @@ category:"Plugins Class"
 		
 		setMesh mesh verts:vertices faces:faces
 		
-		-- body groups
+		-- body smooth groups
 		s_group = 0
 		acc_faces = 0
 		for j in 1 to (vsegs) by 1 do

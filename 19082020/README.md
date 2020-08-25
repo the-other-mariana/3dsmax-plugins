@@ -47,7 +47,16 @@ This time I found that smoothing groups in 3dsMax are set according to powers of
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/smoothgroups.png?raw=true) <br />
 
-A picture of probably all final parameters is shown bellow. Current script is [this file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/wine-glass-v3.ms).<br />
+A picture of probably all final parameters is shown bellow.
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/process05.png?raw=true) <br />
 
+### Final version
+
+Current script is [this file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/wine-glass-v3.ms). An example would be the following.<br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/process-final.png?raw=true) <br />
+
+And the smoothing corrected as mentioned. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/19082020/images/process-final02.png?raw=true) <br />
