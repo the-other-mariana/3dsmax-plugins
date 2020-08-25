@@ -174,8 +174,9 @@ category:"Plugins Class"
 			for i in 1 to (segs[j] * (P_Sides * 2)) by 1 do
 			(
 				f_index = i + acc_faces
+				--setFaceSmoothGroup mesh (f_index) (s_group)
 				setFaceSmoothGroup mesh (f_index) (1)
-				--format "g: %; f: % \n" s_group (i + acc_faces)
+				format "g: %; f: % \n" s_group (i + acc_faces)
 			)
 			acc_faces += (segs[j] * (P_Sides * 2))
 			s_group += 1
@@ -190,10 +191,11 @@ category:"Plugins Class"
 			(
 				f_index = i + (exc) + (j - 1)*(P_Sides)
 				setFaceSmoothGroup mesh (f_index) (3 - (j - 1))
-				--format "g: %; f: % \n" s_group (i + (exc) + (j - 1)*(P_Sides))
+				format "g: %; f: % \n" s_group (i + (exc) + (j - 1)*(P_Sides))
 			)
 			s_group += 1
 		)
+		print(faces.count)
 	)
 	
 	tool create
@@ -210,8 +212,8 @@ category:"Plugins Class"
 		(
 			case click of
 			(
-				2: P_Radius = gridDist.x
-				3: P_Height = gridDist.z
+				2: Radius = gridDist.x
+				3: Height = gridDist.z
 			)
 		)
 	)
