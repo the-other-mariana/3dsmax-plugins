@@ -34,13 +34,13 @@ category:"Plugins Class"
 		
 		group "Belly Parameters"
 		(
-			spinner UI_BellySegs "Belly Segments" type:#integer range:[1, 100, 3]
+			spinner UI_BellySegs "Belly Segments" type:#integer range:[1, 20, 3]
 			spinner UI_Belly "Belly Curve On" type:#integer range:[0, 1, 1]
 		)
 		
 		group "Foot Parameters"
 		(
-			spinner UI_FootSegs "Foot Segments" type:#integer range:[1, 30, 2]
+			spinner UI_FootSegs "Foot Segments" type:#integer range:[1, 20, 2]
 			slider UI_FootRadius "Foot Closure" orient:#horizontal ticks:10 range:[0.2,1.0,0.9]
 		)
 	)
