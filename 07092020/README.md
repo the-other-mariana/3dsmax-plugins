@@ -18,6 +18,8 @@ If you want to create a keyframe for a selected object (pos, rot, scale): <br />
 2. Transform the object to your desired position and slide in the bottom time line to the frame you wish. <br />
 3. Click on the +(key icon) button called `Set Keys` or press (K) to set the key frame there. <br />
 
+Example of this would be this [scene](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/07092020/animation-keys.max). <br />
+
 ## Results
 
 Latest code: [ms file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/07092020/Arbol5.ms) <br />
