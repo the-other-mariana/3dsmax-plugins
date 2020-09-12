@@ -24,7 +24,7 @@ Example of this would be this [scene](https://github.com/the-other-mariana/3dsma
 
 ## Results
 
-Latest code: [ms file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/07092020/Arbol5.ms) <br />
+Latest code (run it positioned around frame 100): [ms file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/07092020/Arbol5.ms) <br />
 
 The code makes a randomized tree animation:
 

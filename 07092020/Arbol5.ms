@@ -8,7 +8,7 @@ fn CreateBranch BranchParent BranchName=
 	Branch = Cone radius1:BranchRadius radius2:0 height:BranchHeight pos:BranchPos isSelected:on name:BranchName
 	Branch.wirecolor = Color 0 (Random 45 60)  (Random 5 20)
 	Branch.dir = BranchParent.dir
-	BranchZAngle = Random 0 359
+	BranchZAngle = Random 0 359 -- around the whole parent angle
 	BranchAngle = Random 30.0 80.0
 
 	Branch.transform = (RotateZMatrix (BranchZAngle)) * Branch.transform
