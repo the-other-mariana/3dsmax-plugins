@@ -10,6 +10,8 @@ Boolean IU is called `Checkbox` in 3dsMax. <br />
 
 Use a for loop and then `at time #` to calculate something and set it on a specific frame number (#). <br />
 
+To add frames in the bottom time line go to the button ´Time Configuration´ (a small clock and gear) at the bottom right. <br />
+
 ### Animation
 
 If you want to create a keyframe for a selected object (pos, rot, scale): <br />
@@ -23,3 +25,7 @@ Example of this would be this [scene](https://github.com/the-other-mariana/3dsma
 ## Results
 
 Latest code: [ms file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/07092020/Arbol5.ms) <br />
+
+The code makes a randomized tree animation:
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/07092020/tree-gif.gif)
