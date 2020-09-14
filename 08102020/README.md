@@ -34,7 +34,7 @@ Try to generate the cone's side faces.<br />
 
 ## Results
 
-The [file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10082020/my-cone.ms) after this class homework generates the following.<br />
+The [file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/08102020/my-cone.ms) after this class homework generates the following.<br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10082020/hw-output.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/08102020/hw-output.png?raw=true) <br />
 
