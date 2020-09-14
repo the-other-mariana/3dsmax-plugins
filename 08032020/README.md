@@ -1,4 +1,4 @@
-# Class 03.08.2020
+# Class 08.03.2020
 
 Software version to use: `3ds Max 2020`<br />
 

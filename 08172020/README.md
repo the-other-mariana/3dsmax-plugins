@@ -1,4 +1,4 @@
-# Class 17.08.2020
+# Class 08.17.2020
 
 ## Notes
 
@@ -16,6 +16,6 @@ No homework, but I will check if my [cone script](https://github.com/the-other-m
 
 ## Results
 
-The [cone script](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/12082020/my-cone-mariana.ms) I did last week works also for 1 segment (right pyramid-like cone). <br />
+The [cone script](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/08122020/my-cone-mariana.ms) I did last week works also for 1 segment (right pyramid-like cone). <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/17082020/mariana-cone-output.png?raw=true)
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/08172020/mariana-cone-output.png?raw=true)
