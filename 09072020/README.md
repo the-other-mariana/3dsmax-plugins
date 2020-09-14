@@ -1,4 +1,4 @@
-# Class 07.09.2020
+# Class 09.07.2020
 
 ## Notes 
 
@@ -20,12 +20,12 @@ If you want to create a keyframe for a selected object (pos, rot, scale): <br />
 2. Transform the object to your desired position and slide in the bottom time line to the frame you wish. <br />
 3. Click on the +(key icon) button called `Set Keys` or press (K) to set the key frame there. <br />
 
-Example of this would be this [scene](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/07092020/animation-keys.max). <br />
+Example of this would be this [scene](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/09072020/animation-keys.max). <br />
 
 ## Results
 
-Latest code (run it positioned around frame 100): [ms file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/07092020/Arbol5.ms) <br />
+Latest code (run it positioned around frame 100): [ms file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/09072020/Arbol5.ms) <br />
 
 The code makes a randomized tree animation:
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/07092020/tree-gif.gif)
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/09072020/tree-gif.gif)

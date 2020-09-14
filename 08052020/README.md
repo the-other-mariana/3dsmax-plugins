@@ -1,4 +1,4 @@
-# Class 05.08.2020 <br />
+# Class 08.05.2020 <br />
 
 ## Notes 
 
@@ -52,7 +52,7 @@ Path: Right click > Properties > Motion Path <br />
 
 In an expression, create a path for a sphere that looks like a torus. Something like bellow.<br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-pic.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/08052020/hw-pic.png?raw=true) <br />
 
 ## Results
 
@@ -62,9 +62,9 @@ Expression: [(50 + 15*cos(30*F)) * cos(0.5*F), (50 + 15*cos(30*F)) * sin(0.5*F),
 
 Frames: 750 or more <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-output-01.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/08052020/hw-output-01.png?raw=true) <br />
 
-Download [3dsMax Scene](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-scene01_v02.max) or load as Position Expression for a 5m sphere [the expression file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-expression01_v02.xpr). <br />
+Download [3dsMax Scene](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/08052020/hw-scene01_v02.max) or load as Position Expression for a 5m sphere [the expression file](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/08052020/hw-expression01_v02.xpr). <br />
 
 ### B) Horizontal Torus
 
@@ -72,7 +72,7 @@ Expression: [abs(100*cos(0.25*F) )* cos(10*F), abs(100*cos(0.25*F))  * sin(10*F)
 
 Frames: 750 or more <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/05082020/hw-output-02.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/08052020/hw-output-02.png?raw=true) <br />
 
 
 
