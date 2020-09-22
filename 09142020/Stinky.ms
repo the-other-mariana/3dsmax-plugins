@@ -16,7 +16,6 @@ animate on
 (
 	for t in 0 to 100 do
 	(
-		
 		at time t
 		(
 			max_dist = 10000000
