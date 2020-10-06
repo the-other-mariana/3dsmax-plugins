@@ -5,6 +5,9 @@ fn createPoint numP=
 	--label.text = "Points: " + (numP as string)
 	
 	mouseray = mapScreenToWorldRay mouse.pos
+	localhits = intersectRayScene mouseRay
+	print localhits[1]
+	mySurface = (localhits[1])[1]
 	sectray = intersectRay mySurface mouseray
 		
 	temp = Circle radius:3
@@ -17,18 +20,21 @@ fn createPoint numP=
 
 rollout SurfJump "Surface Jumper"
 (
-	pickbutton UI_SelectedObject "Select Surface"
+	--pickbutton UI_SelectedObject "Select Surface"
 	button UI_CreateJumps "Add Point"
 	button UI_NumPoints "Points: 0" border:false
 	
 	global numP = 0
 	global start = false
+	global mySurface
 	
+	
+	/*
 	on UI_SelectedObject picked obj do
 	(
-		global mySurface = obj
+		mySurface = obj
 		UI_SelectedObject.text = obj.name
-	)
+	)*/
 	
 	on UI_CreateJumps pressed do
 	(
