@@ -2,7 +2,9 @@ rollout SurfJump "Surface Jumper"
 (
 	pickbutton UI_SelectedObject "Select Surface"
 	button UI_CreateJumps "Get Position"
+	button UI_NumPoints "Points: 0" border:false
 	
+	global numP = 0
 	
 	on UI_SelectedObject picked obj do
 	(
@@ -12,7 +14,8 @@ rollout SurfJump "Surface Jumper"
 	
 	on UI_CreateJumps pressed do
 	(
-		
+		numP += 1
+		UI_NumPoints.text = "Points: " + (numP as string)
 		print("pressed")
 		mouseray = mapScreenToWorldRay mouse.pos
 		sectray = intersectRay mySurface mouseray
