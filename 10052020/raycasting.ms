@@ -5,11 +5,33 @@ fn createPoint numP=
 	--label.text = "Points: " + (numP as string)
 	
 	mouseray = mapScreenToWorldRay mouse.pos
+	format "mouseray: % \n" mouseray
 	localhits = intersectRayScene mouseRay
-	print localhits[1]
-	mySurface = (localhits[1])[1]
-	sectray = intersectRay mySurface mouseray
-		
+	print localhits
+
+	max_dist = 1000000
+	global closest
+	global closest_index = 1
+	
+	for i in 1 to (localhits.count) by 1 do
+	(
+		cdist = distance (localhits[i])[2].position mouseray.pos
+		if cdist < max_dist then
+		(
+			max_dist = cdist
+			closest = (localhits[i])[1]
+			closest_index = i
+		)
+	)
+	format "closest: % \n" closest
+	
+	--mySurface = (localhits[1])[1]
+	--sectray = intersectRay mySurface mouseray
+	--sectray = (localhits[1])[2]
+	
+	mySurface = closest
+	sectray = (localhits[closest_index])[2]
+	
 	temp = Circle radius:3
 		
 	temp.pos = sectray.pos
@@ -20,7 +42,7 @@ fn createPoint numP=
 
 rollout SurfJump "Surface Jumper"
 (
-	--pickbutton UI_SelectedObject "Select Surface"
+	--pickbutton UI_SelectedObject "Select Surface (op)"
 	button UI_CreateJumps "Add Point"
 	button UI_NumPoints "Points: 0" border:false
 	
@@ -34,8 +56,8 @@ rollout SurfJump "Surface Jumper"
 	(
 		mySurface = obj
 		UI_SelectedObject.text = obj.name
-	)*/
-	
+	)
+	*/
 	on UI_CreateJumps pressed do
 	(
 		if start == false then
