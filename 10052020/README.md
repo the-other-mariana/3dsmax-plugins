@@ -8,7 +8,11 @@ In order to work, the selected mesh must editable poly, not mesh.<br />
 
 If you click over the selected mesh, you create a small cube in that position. Still need to fix the direction.<br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/ray-output.png?raw=true)
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/ray-output.png?raw=true)<br />
+
+Seems direction is okay. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/ray-output-02.png?raw=true) <br />
 
 [important link 01](https://forums.cgsociety.org/t/getting-explicit-normal-of-a-surface-with-a-ray-intersection/1846022) <br />
 
