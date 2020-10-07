@@ -39,7 +39,6 @@ fn createPoint numP=
 	format "pos: % dir: % \n" sectray.pos sectray.dir
 )
 
-
 rollout SurfJump "Surface Jumper"
 (
 	--pickbutton UI_SelectedObject "Select Surface (op)"
@@ -49,7 +48,7 @@ rollout SurfJump "Surface Jumper"
 	global numP = 0
 	global start = false
 	global mySurface
-	
+	global mouseHandler
 	
 	/*
 	on UI_SelectedObject picked obj do
@@ -63,7 +62,7 @@ rollout SurfJump "Surface Jumper"
 		if start == false then
 		(
 			
-			--UI_CreateJumps.text = "Right Click!"
+			UI_CreateJumps.text = "Right Click!"
 			start = true
 			startTool mouseHandler
 		)
@@ -93,19 +92,19 @@ rollout SurfJump "Surface Jumper"
 	--createPoint UI_NumPoints numP
 	
 )
+
 tool mouseHandler
+(
+	on mousePoint click do
 	(
-		on mousePoint click do
+		if click == 1 and start == true then
 		(
-			if click == 1 and start == true then
-			(
 				numP += 1
 				print(numP)
 				createPoint numP
-			)
-			if click == 3 and start == true then #stop
 		)
+		if click == 3 and start == true then #stop
 	)
-	
+)
 --startTool mouseHandler
 createdialog SurfJump
