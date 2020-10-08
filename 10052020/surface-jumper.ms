@@ -41,12 +41,12 @@ fn createPoint numP cPoints=
 	format "pos: % dir: % \n" sectray.pos sectray.dir
 )
 
-fn simpleJump jumper point01 point03 initialFrame finalFrame =
+fn simpleJump jumpers point01 point03 initialFrame finalFrame=
 (
 	print "jump"
 	
 	height = distance point01 point03
-	point02 = [((point01.x +point03.x)/2.0), ((point01.y +point03.y)/2.0), ((point01.z +point03.z)/2.0) + height]
+	point02 = [((point01.x + point03.x)/2.0), ((point01.y + point03.y)/2.0), ((point01.z + point03.z)/2.0) + height]
 	Vector01 = (point02 - point01)
 	Vector02 = (point03 - point02)
 	
@@ -81,7 +81,7 @@ rollout SurfJump "Surface Jumper"
 	button UI_AddPoint "Add Point"
 	button UI_NumPoints "Points: 0" border:false
 	button UI_CreateJumps "Create Jumps"
-	spinner UI_JumpFrame "Jump Frame" range:[10,1000,24] type:#integer
+	spinner UI_JumpFrames "Frames per Jump" range:[10,1000,24] type:#integer
 	
 	global numP = 0
 	global start = false
@@ -89,11 +89,9 @@ rollout SurfJump "Surface Jumper"
 	global mouseHandler
 	global cPoints = #()
 	
-	--print(UI_JumpFrame.value)
-	jumpTime = (UI_JumpFrame.value)
 	on UI_SelectedObject picked obj do
 	(
-		global jumper = obj
+		global jumpers = obj
 		UI_SelectedObject.text = obj.name
 	)
 	
@@ -115,9 +113,16 @@ rollout SurfJump "Surface Jumper"
 	
 	on UI_CreateJumps pressed do
 	(
-		for i in 1 to (cPoints.count - 1) do
+		print(cPoints)
+		jumpTime = UI_JumpFrames.value
+		startTimer = 0
+		endTimer = 0
+		for i in 1 to (cPoints.count - 1) by 1 do
 		(
-			simpleJump jumper cPoints[i] cPoints[i + 1] ((i -1) * jumpTime) ((i) * jumpTime)
+			sTimer = (i - 1) * jumpTime
+			eTimer = (i) * jumpTime
+			format "s: % e: % \n" sTimer eTimer
+			simpleJump jumpers cPoints[i].pos cPoints[i + 1].pos sTimer eTimer
 		)
 	)
 	
