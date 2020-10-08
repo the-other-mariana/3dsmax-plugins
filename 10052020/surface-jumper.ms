@@ -46,16 +46,26 @@ fn simpleJump jumpers point01 point03 initialFrame finalFrame=
 	print "jump"
 	
 	height = distance point01 point03
-	point02 = [((point01.x + point03.x)/2.0), ((point01.y + point03.y)/2.0), ((point01.z + point03.z)/2.0) + height]
+	--point02 = [((point01.x + point03.x)/2.0), ((point01.y + point03.y)/2.0), ((point01.z + point03.z)/2.0) + height]
+	pointVector = point03 - point01
+	halfVec = [0.5 * pointVector.x, 0.5 * pointVector.y, 0.5 * pointVector.z]
+	halfVecRot = [halfVec.x * cos(90) - halfVec.y * sin(90), halfVec.y * cos(90) + halfVec.x * sin(90), 0]
+	--halfVecRot = [1, 1, 0]
+	heightVec = (normalize (cross halfVec halfVecRot)) * height 
+	print(halfVecRot)
+		
+	upVec = halfVec + heightVec + point01
+	
+	point02 = upVec
 	Vector01 = (point02 - point01)
 	Vector02 = (point03 - point02)
 	
 	midPoint = box length:1 width:1 height:1
-	midPoint.pos = point02
+	midPoint.pos = upVec
 	
 	it = 0
 	
-	/*
+	
 	Animate on
 	(
 		for t in InitialFrame to FinalFrame by 1 do 
@@ -72,7 +82,7 @@ fn simpleJump jumpers point01 point03 initialFrame finalFrame=
 			)
 			it += 1
 		)
-	)*/
+	)
 )
 
 rollout SurfJump "Surface Jumper"
@@ -113,6 +123,10 @@ rollout SurfJump "Surface Jumper"
 	
 	on UI_CreateJumps pressed do
 	(
+		if jumpers != undefined then
+		(
+			deleteKeys globalTracks #allKeys
+		)
 		print(cPoints)
 		jumpTime = UI_JumpFrames.value
 		startTimer = 0
