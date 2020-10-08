@@ -41,12 +41,21 @@ fn createPoint numP cPoints=
 	format "pos: % dir: % \n" sectray.pos sectray.dir
 )
 
+fn getAngle dir01 dir02=
+(
+	dir01 = normalize dir01
+	dir02 = normalize dir02
+	
+	bAngle = acos((dot dir02 dir01))
+	return bAngle
+)
+
 fn simpleJump jumpers point01 point03 initialFrame finalFrame=
 (
 	print "jump"
 	
 	height = distance point01 point03
-	--point02 = [((point01.x + point03.x)/2.0), ((point01.y + point03.y)/2.0), ((point01.z + point03.z)/2.0) + height]
+
 	pointVector = point03 - point01
 	halfVec = [0.5 * pointVector.x, 0.5 * pointVector.y, 0.5 * pointVector.z]
 	halfVecRot = [halfVec.x * cos(90) - halfVec.y * sin(90), halfVec.y * cos(90) + halfVec.x * sin(90), 0]
