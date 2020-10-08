@@ -41,19 +41,37 @@ fn createPoint numP cPoints=
 	format "pos: % dir: % \n" sectray.pos sectray.dir
 )
 
-fn get3DAngle dir01 dir02=
+fn getAngle3D dir01 dir02=
 (
 	dir01 = normalize dir01
 	dir02 = normalize dir02
 	
-	bAngle = acos((dot dir02 dir01))
-	return bAngle
+	-- z to zero
+	tDir01 = [dir01.x, dir01.y, 0]
+	tDir02 = [dir02.x, dir02.y, 0]
+	topAngle = acos(dot tDir02 tDir01)
+	
+	-- y to zero
+	fDir01 = [dir01.x, 0, dir01.z]
+	fDir02 = [dir02.x, 0, dir02.z]
+	frontAngle = acos(dot fDir02 fDir01)
+	
+	-- x to zero 
+	sDir01 = [0, dir01.y, dir01.z]
+	sDir02 = [0, dir02.x, dir02.z]
+	sideAngle = acos(dot sDir02 sDir01)
+	
+	angle3D = [sideAngle, frontAngle, topAngle]
+	
+	return angle3D
 )
 
-fn simpleJump jumpers point01 point03 initialFrame finalFrame=
+fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 (
 	print "jump"
 	
+	point01 = circle01.pos
+	point03 = circle03.pos
 	height = distance point01 point03
 
 	pointVector = point03 - point01
@@ -72,9 +90,9 @@ fn simpleJump jumpers point01 point03 initialFrame finalFrame=
 	midPoint = box length:1 width:1 height:1
 	midPoint.pos = upVec
 	
+	--angle3D = getAngle3D point
+	
 	it = 0
-	
-	
 	Animate on
 	(
 		for t in InitialFrame to FinalFrame by 1 do 
@@ -88,6 +106,8 @@ fn simpleJump jumpers point01 point03 initialFrame finalFrame=
 				Vector03 = (point05 - point04)
 				
 				Jumpers.pos = ((normalize Vector03 )*(((length Vector03)/TimeLapse)*it))+point04
+				
+				
 			)
 			it += 1
 		)
@@ -145,7 +165,7 @@ rollout SurfJump "Surface Jumper"
 			sTimer = (i - 1) * jumpTime
 			eTimer = (i) * jumpTime
 			format "s: % e: % \n" sTimer eTimer
-			simpleJump jumpers cPoints[i].pos cPoints[i + 1].pos sTimer eTimer
+			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer
 		)
 	)
 	
