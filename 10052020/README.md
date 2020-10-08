@@ -2,6 +2,8 @@
 
 ## Notes 
 
+Second test: make a jumping animation using bezier curve. You must add one more functionality that makes the plugin attractive. In my case, I chose to make the jumper 'stick' to any surface where the user clicks.<br />
+
 In order to work, the selected mesh must editable poly, not mesh.<br />
 
 ## Process

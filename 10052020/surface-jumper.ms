@@ -41,7 +41,7 @@ fn createPoint numP cPoints=
 	format "pos: % dir: % \n" sectray.pos sectray.dir
 )
 
-fn getAngle dir01 dir02=
+fn get3DAngle dir01 dir02=
 (
 	dir01 = normalize dir01
 	dir02 = normalize dir02
