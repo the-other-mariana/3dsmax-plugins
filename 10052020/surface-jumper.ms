@@ -56,7 +56,7 @@ fn getAngle3D dir01 dir02=
 	fDir01 = [dir01.x, 0, dir01.z]
 	fDir02 = [dir02.x, 0, dir02.z]
 	frontAngle = acos(dot fDir02 fDir01)
-	
+	print(dot fDir02 fDir01)
 	-- x to zero 
 	sDir01 = [0, dir01.y, dir01.z]
 	sDir02 = [0, dir02.y, dir02.z]
@@ -108,7 +108,14 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 		(
 			at time t
 			(
-				
+				yFactor = dot circle03.dir pointVector
+				if yFactor <= 0 then
+				(
+					yFactor = -1
+				) else
+				(
+					yFactor = 1
+				)
 				
 				point04 = ((normalize Vector01 )*(((length Vector01)/TimeLapse)*it))+point01
 				point05 = ((normalize Vector02 )*(((length Vector02)/TimeLapse)*it))+point02
@@ -116,8 +123,8 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 				
 				Jumpers.pos = ((normalize Vector03 )*(((length Vector03)/TimeLapse)*it))+point04
 				
-				rotate Jumpers (angleaxis (stepZRot) [0,0,1])
-				rotate Jumpers (angleaxis (-stepYRot) [0,1,0])
+				--rotate Jumpers (angleaxis (stepXRot) [0,0,1])
+				rotate Jumpers (angleaxis (yFactor * stepYRot) [0,1,0])
 				--rotate Jumpers (angleaxis (-stepXRot) [0,0,1])
 			)
 			it += 1
