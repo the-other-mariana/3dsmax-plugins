@@ -48,8 +48,8 @@ fn getAngle3D dir01 dir02=
 	format "d01: % d02: % \n" dir01 dir02
 	
 	-- z to zero
-	tDir01 = [dir01.x, dir01.y, 0]
-	tDir02 = [dir02.x, dir02.y, 0]
+	tDir01 = [dir01.x, dir01.y, 1]
+	tDir02 = [dir02.x, dir02.y, 1]
 	topAngle = acos(dot tDir02 tDir01)
 	
 	-- y to zero
@@ -116,9 +116,9 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 				
 				Jumpers.pos = ((normalize Vector03 )*(((length Vector03)/TimeLapse)*it))+point04
 				
-				--rotate Jumpers (angleaxis (stepZRot) [0,0,1])
+				rotate Jumpers (angleaxis (stepZRot) [0,0,1])
 				rotate Jumpers (angleaxis (-stepYRot) [0,1,0])
-				--rotate Jumpers (angleaxis (-stepYRot) [0,1,0])
+				--rotate Jumpers (angleaxis (-stepXRot) [0,0,1])
 			)
 			it += 1
 		)
