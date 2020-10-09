@@ -106,6 +106,11 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 (
 	print "jump"
 	
+	format "circle03: %\n" circle03.dir
+	q = quat 33 circle03.dir
+	circle03.dir = circle03.dir * q
+	format "circle03: %\n" circle03.dir
+	
 	TimeLapse = FinalFrame - InitialFrame
 	point01 = circle01.pos
 	point03 = circle03.pos
@@ -137,6 +142,35 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 	stepYRot = (yFinRot - yRotJumper) / (TimeLapse)
 	stepZRot = (zFinRot - zRotJumper) / (TimeLapse)
 	
+	--format "transf: % \n" jumpers.transform.controller.value
+	--format "transf: % \n" ((quatToEuler jumpers.transform.rotationpart))
+	--format "transf: % \n" jumpers.transform.controller[3].value
+	--format "transf: % \n" jumpers.transform
+	format "transf: % \n" ((jumpers.transform.controller.value).row1) -- [1, 0, 0]
+	
+	xVec = (jumpers.transform.controller.value).row1
+	yVec = (jumpers.transform.controller.value).row2
+	
+	xVec = normalize xVec
+	yVec = normalize yVec
+	
+	
+	pVec = normalize pointVector
+	lookAngle = acos(dot pVec xVec)
+	
+	rotDot = (dot pVec yVec)
+	rotFactor = 1
+	
+	if rotDot <= 0 then rotFactor = -1
+	--format "dot: % \n" rotDot
+	--format "lookat: % \n" lookAngle 
+	--jumpers.transform = (rotateZmatrix (rotFactor * lookAngle)) * jumpers.transform
+	
+	--jumpers.transform = (rotateZmatrix (45)) * jumpers.transform
+	--circle03.transform = (rotateZmatrix 45) * circle03.transform
+	funFactor = 90.0 / TimeLapse
+	
+	
 	it = 0
 	Animate on
 	(
@@ -145,7 +179,7 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 			at time t
 			(
 				yFactor = dot circle03.dir pointVector
-				format "y fac: % \n" yFactor
+				--format "y fac: % \n" yFactor
 				if yFactor <= 0 then
 				(
 					yFactor = -1
@@ -169,7 +203,7 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 				eulerJumper = quatToEuler2 Jumpers.rotation.controller.value
 				
 				
-				format "stepx: % stepy: % stepz: % crot: % jrot: % \n" stepXRot stepYRot stepZRot circle03.dir (jumpers.dir)
+				--format "stepx: % stepy: % stepz: % crot: % jrot: % \n" stepXRot stepYRot stepZRot circle03.dir (jumpers.dir)
 				
 				--rotate Jumpers (angleaxis (stepXRot) [1,0,0])
 				--rotate Jumpers (angleaxis (stepYRot) [0,1,0])
@@ -183,13 +217,18 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 				
 				if t == FinalFrame then
 				(
-					jumpers.dir = circle03.dir
+					--jumpers.dir = circle03.dir
 				)
 				
 				if t == 1 then
 				(
-					jumpers.dir = circle01.dir
+					--jumpers.dir = circle01.dir
 				)
+				
+				-- rotate locally
+				jumpers.transform = (rotateZmatrix (funFactor * t)) * jumpers.transform
+				
+				
 			)
 			it += 1
 		)
