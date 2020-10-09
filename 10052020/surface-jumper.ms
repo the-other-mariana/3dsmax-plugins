@@ -118,16 +118,16 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 	Vector02 = (point03 - point02)
 	
 	-- look at next point
-	
+	/*
 	angle3D = getAngle3D circle01.dir circle03.dir
 	stepXRot = angle3D[1] / (TimeLapse)
 	stepYRot = angle3D[2] / (TimeLapse)
 	stepZRot = angle3D[3] / (TimeLapse)
-	format "angle3D: % \n" angle3D
+	format "angle3D: % \n" angle3D*/
 	
-	xRotJumper = (Jumpers.dir.x) 
-	yRotJumper = (Jumpers.dir.y)
-	zRotJumper = (Jumpers.dir.z)
+	xRotJumper = (circle01.dir.x) 
+	yRotJumper = (circle01.dir.y)
+	zRotJumper = (circle01.dir.z)
 	
 	xFinRot = (circle03.dir.x)
 	yFinRot = (circle03.dir.y)
@@ -152,6 +152,16 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 				) else
 				(
 					yFactor = 1
+				)
+				
+				if t == FinalFrame then
+				(
+					jumpers.dir = circle03.dir
+				)
+				
+				if t == 1 then
+				(
+					jumpers.dir = circle01.dir
 				)
 				
 				point04 = ((normalize Vector01 )*(((length Vector01)/TimeLapse)*it))+point01
@@ -227,13 +237,16 @@ rollout SurfJump "Surface Jumper"
 			deleteKeys globalTracks #allKeys
 		)
 		print(cPoints)
+		
+		extraFrame = 0
 		jumpTime = UI_JumpFrames.value
 		startTimer = 0
 		endTimer = 0
 		jumpers.dir = cPoints[1].dir
 		for i in 1 to (cPoints.count - 1) by 1 do
 		(
-			sTimer = (i - 1) * jumpTime
+			if i > 1 then extraFrame = 1
+			sTimer = (i - 1) * jumpTime + extraFrame
 			eTimer = (i) * jumpTime
 			format "s: % e: % \n" sTimer eTimer
 			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer
