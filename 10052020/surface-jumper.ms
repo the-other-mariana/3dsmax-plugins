@@ -1,11 +1,8 @@
 fn createPoint numP cPoints=
 (
 	print("added point")
-
-	--label.text = "Points: " + (numP as string)
 	
 	mouseray = mapScreenToWorldRay mouse.pos
-	--format "mouseray: % \n" mouseray
 	localhits = intersectRayScene mouseRay
 	print localhits
 
@@ -23,12 +20,6 @@ fn createPoint numP cPoints=
 			closest_index = i
 		)
 	)
-	--format "closest: % \n" closest
-	
-	--mySurface = (localhits[1])[1]
-	--sectray = intersectRay mySurface mouseray
-	--sectray = (localhits[1])[2]
-	
 	mySurface = closest
 	sectray = (localhits[closest_index])[2]
 	
@@ -37,8 +28,6 @@ fn createPoint numP cPoints=
 	temp.pos = sectray.pos
 	temp.dir = sectray.dir
 	Append cPoints temp
-	
-	--format "pos: % dir: % \n" sectray.pos sectray.dir
 )
 
 fn getAngle3D dir01 dir02=
@@ -95,14 +84,13 @@ fn getQuatMiddle point01 point03 axis height=
 	
 	heightVec = (normalize (cross halfVecRot halfVec)) * height 
 	print(halfVecRot)
-	--upVec = halfVec + heightVec + point01
 	upVec = middle + heightVec
 	midPoint = box length:1 width:1 height:1
 	midPoint.pos = upVec
 	return upVec
 )
 
-fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
+fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp=
 (
 	print "jump"
 	
@@ -114,10 +102,17 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 	TimeLapse = FinalFrame - InitialFrame
 	point01 = circle01.pos
 	point03 = circle03.pos
+	global point02
 	height = distance point01 point03
 	pointVector = point03 - point01
 	
-	point02 = getQuatMiddle point01 point03 circle01.dir height
+	if interp == 1 then
+	(
+		point02 = getQuatMiddle point01 point03 circle01.dir height
+	) else
+	(
+		point02 = getBiasedMiddle point01 point03 height
+	)
 	--point02 = getBiasedMiddle point01 point03 height
 	Vector01 = (point02 - point01)
 	Vector02 = (point03 - point02)
@@ -169,7 +164,7 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 	--jumpers.transform = (rotateZmatrix (45)) * jumpers.transform
 	--circle03.transform = (rotateZmatrix 45) * circle03.transform
 	--funFactor = 90.0 / TimeLapse
-	funFactor = (90.0) / TimeLapse
+	funFactor = (45.0) / TimeLapse
 	
 	it = 0
 	Animate on
@@ -240,14 +235,17 @@ rollout SurfJump "Surface Jumper"
 	pickbutton UI_SelectedObject "Select Jumper"
 	button UI_AddPoint "Add Point"
 	button UI_NumPoints "Points: 0" border:false
-	button UI_CreateJumps "Create Jumps"
+	dropdownlist Interp_dd "Interpolation Style" items:#("Physical", "Biased")
 	spinner UI_JumpFrames "Frames per Jump" range:[10,1000,24] type:#integer
+	button UI_CreateJumps "Create Jumps"
+
 	
 	global numP = 0
 	global start = false
 	global mySurface
 	global mouseHandler
 	global cPoints = #()
+	global interp = 1
 	
 	on UI_SelectedObject picked obj do
 	(
@@ -271,6 +269,12 @@ rollout SurfJump "Surface Jumper"
 		--print(cPoints)
 	)
 	
+	on scale_dd selected i do
+	(
+		interp = i
+		format "You selected '%'! index: % \n" Interp_dd.items[i] i
+	)
+	
 	on UI_CreateJumps pressed do
 	(
 		if jumpers != undefined then
@@ -290,7 +294,7 @@ rollout SurfJump "Surface Jumper"
 			sTimer = (i - 1) * jumpTime + extraFrame
 			eTimer = (i) * jumpTime
 			format "s: % e: % \n" sTimer eTimer
-			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer
+			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer interp
 		)
 		Jumpers.showtrajectory =on
 	)
@@ -311,4 +315,4 @@ tool mouseHandler
 	)
 )
 --startTool mouseHandler
-createdialog SurfJump
+createdialog SurfJump width:200 height:200
