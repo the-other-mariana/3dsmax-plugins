@@ -33,7 +33,7 @@ fn createPoint numP cPoints=
 	sectray = (localhits[closest_index])[2]
 	
 	temp = Circle radius:3
-		
+	temp.wirecolor = color 0 0 0
 	temp.pos = sectray.pos
 	temp.dir = sectray.dir
 	Append cPoints temp
@@ -253,6 +253,7 @@ rollout SurfJump "Surface Jumper"
 			format "s: % e: % \n" sTimer eTimer
 			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer
 		)
+		Jumpers.showtrajectory =on
 	)
 	
 )
