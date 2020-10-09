@@ -20,6 +20,14 @@ The next step was to calculate the middle point for each bezier curve jump. For 
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-01.png?raw=true) <br />
 
+I added quaternion & cross product based (physically jumping) or just cross product (biased jumping) as the interpolation options. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-02.png?raw=true) <br />
+
+Then, I added some roll angle so that each jump the teapot makes a roll and looks funny. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-03.png?raw=true) <br />
+
 [Current Script](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/surface-jumper.ms)
 
 
