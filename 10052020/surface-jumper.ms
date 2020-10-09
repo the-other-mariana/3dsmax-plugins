@@ -168,8 +168,8 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 	
 	--jumpers.transform = (rotateZmatrix (45)) * jumpers.transform
 	--circle03.transform = (rotateZmatrix 45) * circle03.transform
-	funFactor = 90.0 / TimeLapse
-	
+	--funFactor = 90.0 / TimeLapse
+	funFactor = (90.0) / TimeLapse
 	
 	it = 0
 	Animate on
