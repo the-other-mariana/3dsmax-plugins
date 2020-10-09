@@ -112,8 +112,8 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 	height = distance point01 point03
 	pointVector = point03 - point01
 	
-	--point02 = getQuatMiddle point01 point03 circle01.dir height
-	point02 = getBiasedMiddle point01 point03 height
+	point02 = getQuatMiddle point01 point03 circle01.dir height
+	--point02 = getBiasedMiddle point01 point03 height
 	Vector01 = (point02 - point01)
 	Vector02 = (point03 - point02)
 	
