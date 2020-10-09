@@ -253,9 +253,9 @@ rollout SurfJump "Surface Jumper"
 	global mySurface
 	global mouseHandler
 	global cPoints = #()
-
+	global interp = 1
 	global heightVal
-
+	global strenghtOp = 1
 	
 	on UI_SelectedObject picked obj do
 	(
@@ -281,14 +281,14 @@ rollout SurfJump "Surface Jumper"
 	
 	on Interp_dd selected i do
 	(
-		global interp = i
+		interp = i
 		format "You selected '%'! index: % \n" Interp_dd.items[i] i
 	)
 	
 	on Strength_dd selected i do
 	(
-		global strengthOp = i
-		--format "You selected '%'! index: % \n" Strength_dd.items[i] i
+		strengthOp = i
+		format "You selected '%'! index: % \n" Strength_dd.items[i] i
 	)
 	
 	on UI_CreateJumps pressed do
@@ -316,7 +316,6 @@ rollout SurfJump "Surface Jumper"
 			sTimer = (i - 1) * jumpTime + extraFrame
 			eTimer = (i) * jumpTime
 			
-			format "option s: % \n" strengthOp
 			if strengthOp == 2 then
 			(
 				-- distanced
@@ -325,15 +324,12 @@ rollout SurfJump "Surface Jumper"
 			if strengthOp == 3 then
 			(
 				-- decay
-				
-				heightVal = UI_StrengthVal.value * (cPoints.count - (i))
-				format "You selected decay: %" heightVal
+				heightVal = HeightVal * (cPoints.count - (i))
 			)
-			if strengthOp == 4 then
+			if strengthOp == 2 then
 			(
 				-- growth
-				--heightVal = UI_StrengthVal.value + ((i - 1) * (UI_StrengthVal.value * 0.5))
-				heightVal = UI_StrengthVal.value * (i)
+				heightVal = HeightVal * (i)
 			)
 			
 			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer interp rollAngle heightVal
