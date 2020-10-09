@@ -67,6 +67,41 @@ fn getAngle3D dir01 dir02=
 	return angle3D
 )
 
+fn getBiasedMiddle point01 point03 height=
+(
+	
+	pointVector = point03 - point01
+	halfVec = [0.5 * pointVector.x, 0.5 * pointVector.y, 0.5 * pointVector.z]
+	halfVecRot = [halfVec.x * cos(90) - halfVec.y * sin(90), halfVec.y * cos(90) + halfVec.x * sin(90), 0]
+	heightVec = (normalize (cross halfVec halfVecRot)) * height 
+		
+	upVec = halfVec + heightVec + point01
+	midPoint = box length:1 width:1 height:1
+	midPoint.pos = upVec 
+	
+	return upVec
+	
+)
+
+fn getQuatMiddle point01 point03 axis height=
+(
+	
+	pointVector = point03 - point01
+	middle = [(point01.x + point03.x)/2,(point01.y + point03.y)/2,(point01.z + point03.z)/2]
+	
+	q = quat 90 axis
+	halfVec = (middle - point01)
+	halfVecRot = halfVec  * q 
+	
+	heightVec = (normalize (cross halfVecRot halfVec)) * height 
+	print(halfVecRot)
+	--upVec = halfVec + heightVec + point01
+	upVec = middle + heightVec
+	midPoint = box length:1 width:1 height:1
+	midPoint.pos = upVec
+	return upVec
+)
+
 fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 (
 	print "jump"
@@ -75,29 +110,12 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 	point01 = circle01.pos
 	point03 = circle03.pos
 	height = distance point01 point03
-
 	pointVector = point03 - point01
-	halfVec = [0.5 * pointVector.x, 0.5 * pointVector.y, 0.5 * pointVector.z]
-	middle = [(point01.x + point03.x)/2,(point01.y + point03.y)/2,(point01.z + point03.z)/2]
-	halfVecRot = [halfVec.x * cos(90) - halfVec.y * sin(90), halfVec.y * cos(90) + halfVec.x * sin(90), 0]
-	--halfVecRot = [1, 1, 0]
 	
-	q = quat 90 circle01.dir
-	halfVec = (middle - point01)
-	halfVecRot = halfVec  * q 
-	
-	heightVec = (normalize (cross halfVecRot halfVec)) * height 
-	print(halfVecRot)
-		
-	--upVec = halfVec + heightVec + point01
-	upVec = middle + heightVec
-	
-	point02 = upVec
+	--point02 = getQuatMiddle point01 point03 circle01.dir height
+	point02 = getBiasedMiddle point01 point03 height
 	Vector01 = (point02 - point01)
 	Vector02 = (point03 - point02)
-	
-	midPoint = box length:1 width:1 height:1
-	midPoint.pos = upVec
 	
 	-- look at next point
 	
