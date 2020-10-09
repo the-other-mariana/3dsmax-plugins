@@ -154,15 +154,7 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 					yFactor = 1
 				)
 				
-				if t == FinalFrame then
-				(
-					jumpers.dir = circle03.dir
-				)
 				
-				if t == 1 then
-				(
-					jumpers.dir = circle01.dir
-				)
 				
 				point04 = ((normalize Vector01 )*(((length Vector01)/TimeLapse)*it))+point01
 				point05 = ((normalize Vector02 )*(((length Vector02)/TimeLapse)*it))+point02
@@ -188,6 +180,16 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 				jumpers.dir.x += stepXRot
 				jumpers.dir.y += stepYRot
 				jumpers.dir.z += stepZRot
+				
+				if t == FinalFrame then
+				(
+					jumpers.dir = circle03.dir
+				)
+				
+				if t == 1 then
+				(
+					jumpers.dir = circle01.dir
+				)
 			)
 			it += 1
 		)
