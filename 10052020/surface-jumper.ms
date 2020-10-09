@@ -78,12 +78,19 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 
 	pointVector = point03 - point01
 	halfVec = [0.5 * pointVector.x, 0.5 * pointVector.y, 0.5 * pointVector.z]
+	middle = [(point01.x + point03.x)/2,(point01.y + point03.y)/2,(point01.z + point03.z)/2]
 	halfVecRot = [halfVec.x * cos(90) - halfVec.y * sin(90), halfVec.y * cos(90) + halfVec.x * sin(90), 0]
 	--halfVecRot = [1, 1, 0]
-	heightVec = (normalize (cross halfVec halfVecRot)) * height 
+	
+	q = quat 90 circle01.dir
+	halfVec = (middle - point01)
+	halfVecRot = halfVec  * q 
+	
+	heightVec = (normalize (cross halfVecRot halfVec)) * height 
 	print(halfVecRot)
 		
-	upVec = halfVec + heightVec + point01
+	--upVec = halfVec + heightVec + point01
+	upVec = middle + heightVec
 	
 	point02 = upVec
 	Vector01 = (point02 - point01)
@@ -109,6 +116,7 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 			at time t
 			(
 				yFactor = dot circle03.dir pointVector
+				format "y fac: % \n" yFactor
 				if yFactor <= 0 then
 				(
 					yFactor = -1
@@ -123,9 +131,10 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 				
 				Jumpers.pos = ((normalize Vector03 )*(((length Vector03)/TimeLapse)*it))+point04
 				
-				--rotate Jumpers (angleaxis (stepXRot) [0,0,1])
+				--rotate Jumpers (angleaxis (xFactor * stepXRot) [1,0,0])
 				rotate Jumpers (angleaxis (yFactor * stepYRot) [0,1,0])
 				--rotate Jumpers (angleaxis (-stepXRot) [0,0,1])
+				--Jumpers.transform = (rotateYmatrix (yFactor * stepYRot)) * Jumpers.transform
 			)
 			it += 1
 		)
