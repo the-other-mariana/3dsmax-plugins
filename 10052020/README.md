@@ -4,9 +4,11 @@
 
 Second test: make a jumping animation using bezier curve. You must add one more functionality that makes the plugin attractive. In my case, I chose to make the jumper 'stick' to any surface where the user clicks.<br />
 
-In order to work, the selected mesh must editable poly, not mesh.<br />
+Important: In order to work, the selected surface mesh must editable poly, not mesh.<br />
 
 ## Process
+
+### 1st Round
 
 If you click over the selected mesh, you create a small cube in that position. Seems direction is okay. <br />
 
@@ -16,6 +18,8 @@ What I did was call a ray from the mouse position to all objects in the scene wh
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/ray-output-04.png?raw=true) <br />
 
+### 2nd Round
+
 The next step was to calculate the middle point for each bezier curve jump. For this I did some cross product calculation (awesome!) to get it in the middle of the jump no matter its direction. <br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-01.png?raw=true) <br />
@@ -24,9 +28,19 @@ I added quaternion & cross product based (physically jumping) or just cross prod
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-02.png?raw=true) <br />
 
+### 3rd Round
+
 Then, I added some roll angle so that each jump the teapot makes a roll and looks funny. <br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-03.png?raw=true) <br />
+
+### 4th Round
+
+I defined 4 jump height behaviors: constant, distanced, decay and growth. Still of course has the funny roll. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-05.png?raw=true) <br />
+
+### Plugin Script
 
 [Current Script](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/surface-jumper.ms)
 
