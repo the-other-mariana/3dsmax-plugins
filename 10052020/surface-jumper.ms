@@ -90,7 +90,7 @@ fn getQuatMiddle point01 point03 axis height=
 	return upVec
 )
 
-fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp=
+fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle=
 (
 	print "jump"
 	
@@ -164,7 +164,7 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp=
 	--jumpers.transform = (rotateZmatrix (45)) * jumpers.transform
 	--circle03.transform = (rotateZmatrix 45) * circle03.transform
 	--funFactor = 90.0 / TimeLapse
-	funFactor = (45.0) / TimeLapse
+	funFactor = (rollAngle) / TimeLapse
 	
 	it = 0
 	Animate on
@@ -237,6 +237,7 @@ rollout SurfJump "Surface Jumper"
 	button UI_NumPoints "Points: 0" border:false
 	dropdownlist Interp_dd "Interpolation Style" items:#("Physical", "Biased")
 	spinner UI_JumpFrames "Frames per Jump" range:[10,1000,24] type:#integer
+	spinner UI_RollAngle "Roll Angle" range:[45.0,180.0,90.0] type:#float
 	button UI_CreateJumps "Create Jumps"
 
 	
@@ -285,6 +286,7 @@ rollout SurfJump "Surface Jumper"
 		
 		extraFrame = 0
 		jumpTime = UI_JumpFrames.value
+		rollAngle = UI_RollAngle.value
 		startTimer = 0
 		endTimer = 0
 		jumpers.dir = cPoints[1].dir
@@ -294,7 +296,7 @@ rollout SurfJump "Surface Jumper"
 			sTimer = (i - 1) * jumpTime + extraFrame
 			eTimer = (i) * jumpTime
 			format "s: % e: % \n" sTimer eTimer
-			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer interp
+			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer interp rollAngle
 		)
 		Jumpers.showtrajectory =on
 	)
