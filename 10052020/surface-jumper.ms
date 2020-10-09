@@ -125,6 +125,17 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 	stepZRot = angle3D[3] / (TimeLapse)
 	format "angle3D: % \n" angle3D
 	
+	xRotJumper = (Jumpers.dir.x) 
+	yRotJumper = (Jumpers.dir.y)
+	zRotJumper = (Jumpers.dir.z)
+	
+	xFinRot = (circle03.dir.x)
+	yFinRot = (circle03.dir.y)
+	zFinRot = (circle03.dir.z)
+	
+	stepXRot = (xFinRot - xRotJumper) / (TimeLapse)
+	stepYRot = (yFinRot - yRotJumper) / (TimeLapse)
+	stepZRot = (zFinRot - zRotJumper) / (TimeLapse)
 	
 	it = 0
 	Animate on
@@ -150,9 +161,23 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame=
 				Jumpers.pos = ((normalize Vector03 )*(((length Vector03)/TimeLapse)*it))+point04
 				
 				--rotate Jumpers (angleaxis (xFactor * stepXRot) [1,0,0])
-				rotate Jumpers (angleaxis (yFactor * stepYRot) [0,1,0])
+				--rotate Jumpers (angleaxis (yFactor * stepYRot) [0,1,0])
 				--rotate Jumpers (angleaxis (-stepXRot) [0,0,1])
 				--Jumpers.transform = (rotateYmatrix (yFactor * stepYRot)) * Jumpers.transform
+				eulerJumper = quatToEuler2 Jumpers.rotation.controller.value
+				
+				
+				format "stepx: % stepy: % stepz: % crot: % jrot: % \n" stepXRot stepYRot stepZRot circle03.dir (jumpers.dir)
+				
+				--rotate Jumpers (angleaxis (stepXRot) [1,0,0])
+				--rotate Jumpers (angleaxis (stepYRot) [0,1,0])
+				--rotate Jumpers (angleaxis (stepZRot) [0,0,1])
+				--rotate Jumpers (angleaxis (yFactor * stepYRot) [0,1,0])
+				--rotate Jumpers (angleaxis (-stepXRot) [0,0,1])
+				
+				jumpers.dir.x += stepXRot
+				jumpers.dir.y += stepYRot
+				jumpers.dir.z += stepZRot
 			)
 			it += 1
 		)
@@ -205,6 +230,7 @@ rollout SurfJump "Surface Jumper"
 		jumpTime = UI_JumpFrames.value
 		startTimer = 0
 		endTimer = 0
+		jumpers.dir = cPoints[1].dir
 		for i in 1 to (cPoints.count - 1) by 1 do
 		(
 			sTimer = (i - 1) * jumpTime
@@ -213,24 +239,6 @@ rollout SurfJump "Surface Jumper"
 			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer
 		)
 	)
-	
-	/*
-	on UI_CreateJumps pressed do
-	(
-		numP += 1
-		UI_NumPoints.text = "Points: " + (numP as string)
-		print("pressed")
-		mouseray = mapScreenToWorldRay mouse.pos
-		sectray = intersectRay mySurface mouseray
-		
-		temp = Circle radius:3
-		
-		temp.pos = sectray.pos
-		temp.dir = sectray.dir
-		format "pos: % dir: % \n" sectray.pos sectray.dir
-	)
-	*/
-	--createPoint UI_NumPoints numP
 	
 )
 
