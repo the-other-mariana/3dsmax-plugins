@@ -233,15 +233,25 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 
 rollout SurfJump "Surface Jumper"
 (
-	pickbutton UI_SelectedObject "Select Jumper"
-	button UI_AddPoint "Add Point"
-	button UI_NumPoints "Points: 0" border:false
-	dropdownlist Interp_dd "Interpolation Style" items:#("Physical", "Biased")
-	spinner UI_JumpFrames "Frames per Jump" range:[10,1000,24] type:#integer
-	spinner UI_RollAngle "Roll Angle" range:[45.0,180.0,90.0] type:#float
+	group "Getting Started"
+	(
+		pickbutton UI_SelectedObject "Select Jumper"
+		button UI_AddPoint "Add Point"
+		button UI_NumPoints "Points: 0" border:false
+	)
 	
-	dropdownlist Strength_dd "Jump Strength" items:#("Constant", "Distanced", "Decay", "Growth")
-	spinner UI_StrengthVal "Strength Value" range:[5.0,100.0,15.0] type:#float
+	group "Jump Params"
+	(
+		dropdownlist Interp_dd "Interpolation Style" items:#("Physical", "Biased")
+		spinner UI_JumpFrames "Frames per Jump" range:[10,1000,24] type:#integer
+		spinner UI_RollAngle "Roll Angle" range:[45.0,180.0,90.0] type:#float
+	)
+	
+	group "Jump Sequence Params"
+	(
+		dropdownlist Strength_dd "Jump Strength" items:#("Constant", "Distanced", "Decay", "Growth")
+		spinner UI_StrengthVal "Strength Value" range:[5.0,100.0,15.0] type:#float
+	)
 	
 	button UI_CreateJumps "Create Jumps"
 	
@@ -296,6 +306,9 @@ rollout SurfJump "Surface Jumper"
 		if jumpers != undefined then
 		(
 			deleteKeys globalTracks #allKeys
+		) else
+		(
+			messageBox "Please select a jumper object!" title:"Jumper Missing" beep:true
 		)
 		print(cPoints)
 		
@@ -357,4 +370,4 @@ tool mouseHandler
 	)
 )
 --startTool mouseHandler
-createdialog SurfJump width:200 height:300
+createdialog SurfJump width:200 height:350

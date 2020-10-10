@@ -54,3 +54,7 @@ I defined 4 jump height behaviors: constant, distanced, decay and growth. Still 
 [important link 03](https://help.autodesk.com/view/3DSMAX/2019/ENU/?guid=GUID-3CF6FA6C-4CEA-4CC4-BACF-B2E40EF28C53) <br />
 
 [important link 04](https://forums.cgsociety.org/t/script-gives-error-at-first-run-attempt-only/1436432) <br />
+
+## Notes To Self
+Validations: more than 1 point. <br/ >
+Must add squash <br/ >
