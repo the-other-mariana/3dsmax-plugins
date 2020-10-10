@@ -1,7 +1,7 @@
 fn createPoint numP cPoints=
 (
 	print("added point")
-	
+
 	mouseray = mapScreenToWorldRay mouse.pos
 	localhits = intersectRayScene mouseRay
 	print localhits
@@ -255,9 +255,6 @@ rollout SurfJump "Surface Jumper"
 	
 	button UI_CreateJumps "Create Jumps"
 	
-	
-
-	
 	global numP = 0
 	global start = false
 	global mySurface
@@ -284,6 +281,7 @@ rollout SurfJump "Surface Jumper"
 		if start == true then
 		(
 			UI_AddPoint.text = "Add Point"
+			UI_NumPoints.text = "Points: " + (numP as String)
 			start = false
 		)
 		--print(cPoints)
@@ -364,6 +362,7 @@ tool mouseHandler
 		(
 				numP += 1
 				print(numP)
+				
 				createPoint numP cPoints
 		)
 		if click == 3 and start == true then #stop
