@@ -65,8 +65,8 @@ fn getBiasedMiddle point01 point03 height=
 	heightVec = (normalize (cross halfVec halfVecRot)) * height 
 		
 	upVec = halfVec + heightVec + point01
-	midPoint = box length:1 width:1 height:1
-	midPoint.pos = upVec 
+	--midPoint = box length:1 width:1 height:1
+	--midPoint.pos = upVec 
 	
 	return upVec
 	
@@ -85,8 +85,8 @@ fn getQuatMiddle point01 point03 axis height=
 	heightVec = (normalize (cross halfVecRot halfVec)) * height 
 	print(halfVecRot)
 	upVec = middle + heightVec
-	midPoint = box length:1 width:1 height:1
-	midPoint.pos = upVec
+	--midPoint = box length:1 width:1 height:1
+	--midPoint.pos = upVec
 	return upVec
 )
 
