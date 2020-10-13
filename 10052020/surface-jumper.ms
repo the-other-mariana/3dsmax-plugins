@@ -249,7 +249,8 @@ rollout SurfJump "Surface Jumper"
 		dropdownlist Strength_dd "Jump Strength" items:#("Constant", "Distanced", "Decay", "Growth")
 		spinner UI_StrengthVal "Strength Value" range:[5.0,100.0,15.0] type:#float
 		spinner UI_SquashFrames "Squash Frames" range:[1,1000, 5] type:#integer
-		slider UI_SquashLim "Squash Limit" orient:#horizontal ticks:8 range:[0.0,0.8, 0.4]
+		slider UI_SquashLim "Squash Limit" orient:#horizontal ticks:5 range:[0.0,0.5, 0.4]
+		checkbox ConstSquash_cb "Constant Squash"
 	)
 	
 	button UI_CreateJumps "Create Jumps"
@@ -313,15 +314,21 @@ rollout SurfJump "Surface Jumper"
 			deleteKeys globalTracks #allKeys
 		) else
 		(
-			messageBox "Please select a jumper object!" title:"Jumper Missing" beep:true
+			return messageBox "Please select a jumper object!" title:"Jumper Missing" beep:true
 		)
 		print(cPoints)
 		
-		if cPoints.count < 2 then
+		if (isValidNode jumpers) == false then
 		(
-			messageBox "You need more than 1 point to jump!" title:"Points Missing" beep:true
+			jumpers = undefined
+			return messageBox "Please select a jumper object!" title:"Jumper Missing" beep:true
 		)
 		
+		if cPoints.count < 2 then
+		(
+			return messageBox "You need more than 1 point to jump!" title:"Points Missing" beep:true
+		)
+
 		--addModifier jumpers (Stretch())
 		if (for m in jumpers.modifiers where classof m == stretch collect m).count == 0 then
 		(
@@ -342,6 +349,7 @@ rollout SurfJump "Surface Jumper"
 		
 		decayFactor = 1
 		growthFactor = 1
+		stepSquash = squashLim / (cPoints.count - 1)
 		for i in 1 to (cPoints.count - 1) by 1 do
 		(
 			if i > 1 then extraFrame = 1
@@ -358,17 +366,23 @@ rollout SurfJump "Surface Jumper"
 			(
 				-- decay
 				heightVal = UI_StrengthVal.value * (cPoints.count - (i))
+				if (constSquash_cb.checked) == false then
+					squashLim = UI_SquashLim.value - (stepSquash * (i - 1))
 				format "You selected decay: %" heightVal
 			)
 			if strengthOp == 4 then
 			(
 				-- growth
 				heightVal = UI_StrengthVal.value * (i)
+				if (constSquash_cb.checked) == false then
+					squashLim = (UI_SquashLim.value - (stepSquash * (cPoints.count - 1))) + (stepSquash * i)
 			)
 			
 			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer interp rollAngle heightVal squashLim sqTime i
 		)
 		Jumpers.showtrajectory =on
+			
+		jumpers = undefined
 	)
 	
 )
