@@ -6,6 +6,10 @@ Second test: make a jumping animation using bezier curve. You must add one more 
 
 Important: In order to work, the selected surface mesh must editable poly, not mesh.<br />
 
+## Plugin Script
+
+[Current Script](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/surface-jumper.ms)
+
 ## Process
 
 ### 1st Round
@@ -45,11 +49,6 @@ I defined 4 jump height behaviors: constant, distanced, decay and growth. Still 
 I added a simple squash every time the jumper object is approaching the surface. For this I added the parameters for the user: frames for the squash and the maximum amount of squash value. <br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/jumper-output-06.png?raw=true) <br />
-
-### Plugin Script
-
-[Current Script](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/surface-jumper.ms)
-
 
 ## Helpful Info
 
