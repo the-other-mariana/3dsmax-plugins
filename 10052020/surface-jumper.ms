@@ -65,8 +65,6 @@ fn getBiasedMiddle point01 point03 height=
 	heightVec = (normalize (cross halfVec halfVecRot)) * height 
 		
 	upVec = halfVec + heightVec + point01
-	--midPoint = box length:1 width:1 height:1
-	--midPoint.pos = upVec 
 	
 	return upVec
 	
@@ -85,12 +83,10 @@ fn getQuatMiddle point01 point03 axis height=
 	heightVec = (normalize (cross halfVecRot halfVec)) * height 
 	print(halfVecRot)
 	upVec = middle + heightVec
-	--midPoint = box length:1 width:1 height:1
-	--midPoint.pos = upVec
 	return upVec
 )
 
-fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle heightVal=
+fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle heightVal squashLim sqTime index=
 (
 	print "jump"
 	
@@ -103,7 +99,7 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 	point01 = circle01.pos
 	point03 = circle03.pos
 	global point02
-	--height = distance point01 point03
+
 	height = heightVal
 	pointVector = point03 - point01
 	
@@ -167,7 +163,24 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 	--funFactor = 90.0 / TimeLapse
 	funFactor = (rollAngle) / TimeLapse
 	
+	StretchFrames	=#(initialFrame, initialFrame + sqTime, finalFrame - sqTime, finalFrame)
+	StretchValues	=#((-squashLim), 0, 0,(-squashLim))
+	
 	it = 0
+	fr = 0
+	extraSq = false
+	
+	if (index == 1) then 
+	(
+		extraSq = true
+		fr = initialFrame - sqTime
+	)
+	if (index == (cPoints.count - 1)) then 
+	(
+		extraSq = true
+		fr = finalFrame + sqTime
+	)
+	
 	Animate on
 	(
 		for t in InitialFrame to FinalFrame by 1 do 
@@ -228,6 +241,23 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 			)
 			it += 1
 		)
+		
+		for t in 1 to (StretchFrames.count) by 1 do
+		(
+			at time StretchFrames[t]
+			(
+				jumpers.modifiers[#Stretch].Stretch = StretchValues[t]
+			)
+		)
+		
+		if (extraSq == true) then
+		(
+			at time fr 
+			(
+				extraSq = false
+				jumpers.modifiers[#Stretch].Stretch = 0
+			)
+		) 
 	)
 )
 
@@ -251,6 +281,8 @@ rollout SurfJump "Surface Jumper"
 	(
 		dropdownlist Strength_dd "Jump Strength" items:#("Constant", "Distanced", "Decay", "Growth")
 		spinner UI_StrengthVal "Strength Value" range:[5.0,100.0,15.0] type:#float
+		spinner UI_SquashFrames "Squash Frames" range:[1,1000, 5] type:#integer
+		slider UI_SquashLim "Squash Limit" orient:#horizontal ticks:8 range:[0.0,0.8, 0.4]
 	)
 	
 	button UI_CreateJumps "Create Jumps"
@@ -261,7 +293,9 @@ rollout SurfJump "Surface Jumper"
 	global mouseHandler
 	global strengthOp = 1
 	global interp = 1
+	global squashLim = 0.5
 	global cPoints = #()
+	global sqTime = 1
 
 	global heightVal
 
@@ -312,10 +346,14 @@ rollout SurfJump "Surface Jumper"
 		)
 		print(cPoints)
 		
+		addModifier jumpers (Stretch())
+		
 		extraFrame = 0
 		jumpTime = UI_JumpFrames.value
 		rollAngle = UI_RollAngle.value
 		heightVal = UI_StrengthVal.value
+		squashLim = UI_SquashLim.value
+		sqTime = UI_SquashFrames.value
 		
 		startTimer = 0
 		endTimer = 0
@@ -349,7 +387,7 @@ rollout SurfJump "Surface Jumper"
 				heightVal = UI_StrengthVal.value * (i)
 			)
 			
-			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer interp rollAngle heightVal
+			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer interp rollAngle heightVal squashLim sqTime i
 		)
 		Jumpers.showtrajectory =on
 	)
@@ -371,4 +409,4 @@ tool mouseHandler
 	)
 )
 --startTool mouseHandler
-createdialog SurfJump width:200 height:350
+createdialog SurfJump width:200 height:425

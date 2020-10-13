@@ -40,6 +40,12 @@ I defined 4 jump height behaviors: constant, distanced, decay and growth. Still 
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/jumper-output-05.png?raw=true) <br />
 
+### 5th Round
+
+I added a simple squash every time the jumper object is approaching the surface. For this I added the parameters for the user: frames for the squash and the maximum amount of squash value. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/jumper-output-06.png?raw=true) <br />
+
 ### Plugin Script
 
 [Current Script](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/surface-jumper.ms)
