@@ -110,17 +110,8 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 	(
 		point02 = getBiasedMiddle point01 point03 height
 	)
-	--point02 = getBiasedMiddle point01 point03 height
 	Vector01 = (point02 - point01)
 	Vector02 = (point03 - point02)
-	
-	-- look at next point
-	/*
-	angle3D = getAngle3D circle01.dir circle03.dir
-	stepXRot = angle3D[1] / (TimeLapse)
-	stepYRot = angle3D[2] / (TimeLapse)
-	stepZRot = angle3D[3] / (TimeLapse)
-	format "angle3D: % \n" angle3D*/
 	
 	xRotJumper = (circle01.dir.x) 
 	yRotJumper = (circle01.dir.y)
@@ -134,10 +125,6 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 	stepYRot = (yFinRot - yRotJumper) / (TimeLapse)
 	stepZRot = (zFinRot - zRotJumper) / (TimeLapse)
 	
-	--format "transf: % \n" jumpers.transform.controller.value
-	--format "transf: % \n" ((quatToEuler jumpers.transform.rotationpart))
-	--format "transf: % \n" jumpers.transform.controller[3].value
-	--format "transf: % \n" jumpers.transform
 	format "transf: % \n" ((jumpers.transform.controller.value).row1) -- [1, 0, 0]
 	
 	xVec = (jumpers.transform.controller.value).row1
@@ -154,13 +141,6 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 	rotFactor = 1
 	
 	if rotDot <= 0 then rotFactor = -1
-	--format "dot: % \n" rotDot
-	--format "lookat: % \n" lookAngle 
-	--jumpers.transform = (rotateZmatrix (rotFactor * lookAngle)) * jumpers.transform
-	
-	--jumpers.transform = (rotateZmatrix (45)) * jumpers.transform
-	--circle03.transform = (rotateZmatrix 45) * circle03.transform
-	--funFactor = 90.0 / TimeLapse
 	funFactor = (rollAngle) / TimeLapse
 	
 	StretchFrames	=#(initialFrame, initialFrame + sqTime, finalFrame - sqTime, finalFrame)
@@ -205,20 +185,7 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 				
 				Jumpers.pos = ((normalize Vector03 )*(((length Vector03)/TimeLapse)*it))+point04
 				
-				--rotate Jumpers (angleaxis (xFactor * stepXRot) [1,0,0])
-				--rotate Jumpers (angleaxis (yFactor * stepYRot) [0,1,0])
-				--rotate Jumpers (angleaxis (-stepXRot) [0,0,1])
-				--Jumpers.transform = (rotateYmatrix (yFactor * stepYRot)) * Jumpers.transform
 				eulerJumper = quatToEuler2 Jumpers.rotation.controller.value
-				
-				
-				--format "stepx: % stepy: % stepz: % crot: % jrot: % \n" stepXRot stepYRot stepZRot circle03.dir (jumpers.dir)
-				
-				--rotate Jumpers (angleaxis (stepXRot) [1,0,0])
-				--rotate Jumpers (angleaxis (stepYRot) [0,1,0])
-				--rotate Jumpers (angleaxis (stepZRot) [0,0,1])
-				--rotate Jumpers (angleaxis (yFactor * stepYRot) [0,1,0])
-				--rotate Jumpers (angleaxis (-stepXRot) [0,0,1])
 				
 				jumpers.dir.x += stepXRot
 				jumpers.dir.y += stepYRot
@@ -304,6 +271,9 @@ rollout SurfJump "Surface Jumper"
 	(
 		global jumpers = obj
 		UI_SelectedObject.text = obj.name
+		cPoints = #()
+		numP = 0
+		UI_NumPoints.text = "Points: " + (numP as String)
 	)
 	
 	on UI_AddPoint pressed do
@@ -337,6 +307,7 @@ rollout SurfJump "Surface Jumper"
 	
 	on UI_CreateJumps pressed do
 	(
+		UI_SelectedObject.text = "Select Jumper"
 		if jumpers != undefined then
 		(
 			deleteKeys globalTracks #allKeys
@@ -346,7 +317,17 @@ rollout SurfJump "Surface Jumper"
 		)
 		print(cPoints)
 		
-		addModifier jumpers (Stretch())
+		if cPoints.count < 2 then
+		(
+			messageBox "You need more than 1 point to jump!" title:"Points Missing" beep:true
+		)
+		
+		--addModifier jumpers (Stretch())
+		if (for m in jumpers.modifiers where classof m == stretch collect m).count == 0 then
+		(
+			addModifier jumpers (Stretch())
+		)
+		
 		
 		extraFrame = 0
 		jumpTime = UI_JumpFrames.value
@@ -376,14 +357,12 @@ rollout SurfJump "Surface Jumper"
 			if strengthOp == 3 then
 			(
 				-- decay
-				
 				heightVal = UI_StrengthVal.value * (cPoints.count - (i))
 				format "You selected decay: %" heightVal
 			)
 			if strengthOp == 4 then
 			(
 				-- growth
-				--heightVal = UI_StrengthVal.value + ((i - 1) * (UI_StrengthVal.value * 0.5))
 				heightVal = UI_StrengthVal.value * (i)
 			)
 			
@@ -409,4 +388,4 @@ tool mouseHandler
 	)
 )
 --startTool mouseHandler
-createdialog SurfJump width:200 height:425
+createdialog SurfJump width:200 height:450
