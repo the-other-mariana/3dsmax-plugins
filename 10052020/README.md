@@ -12,33 +12,33 @@ Important: In order to work, the selected surface mesh must editable poly, not m
 
 If you click over the selected mesh, you create a small cube in that position. Seems direction is okay. <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/ray-output-02.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/ray-output-02.png?raw=true) <br />
 
 What I did was call a ray from the mouse position to all objects in the scene whenever the user hit a click. Then, I looped over all the intersections of that ray to find the closest, which would become the surface object where the next control point would be. <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/ray-output-04.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/ray-output-04.png?raw=true) <br />
 
 ### 2nd Round
 
 The next step was to calculate the middle point for each bezier curve jump. For this I did some cross product calculation (awesome!) to get it in the middle of the jump no matter its direction. <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-01.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/jumper-output-01.png?raw=true) <br />
 
 I added quaternion & cross product based (physically jumping) or just cross product (biased jumping) as the interpolation options. <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-02.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/jumper-output-02.png?raw=true) <br />
 
 ### 3rd Round
 
 Then, I added some roll angle so that each jump the teapot makes a roll and looks funny. <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-03.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/jumper-output-03.png?raw=true) <br />
 
 ### 4th Round
 
 I defined 4 jump height behaviors: constant, distanced, decay and growth. Still of course has the funny roll. <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/jumper-output-05.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/jumper-output-05.png?raw=true) <br />
 
 ### Plugin Script
 
@@ -56,5 +56,5 @@ I defined 4 jump height behaviors: constant, distanced, decay and growth. Still 
 [important link 04](https://forums.cgsociety.org/t/script-gives-error-at-first-run-attempt-only/1436432) <br />
 
 ## Notes To Self
-Validations: more than 1 point. <br/ >
-Must add squash <br/ >
+Validations: more than 1 point. <br />
+Must add squash <br />
