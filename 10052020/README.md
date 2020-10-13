@@ -61,5 +61,5 @@ I added a simple squash every time the jumper object is approaching the surface.
 [important link 04](https://forums.cgsociety.org/t/script-gives-error-at-first-run-attempt-only/1436432) <br />
 
 ## Notes To Self
-Validations: more than 1 point. <br />
-Must add squash <br />
+
+Check new scene
