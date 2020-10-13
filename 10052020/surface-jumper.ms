@@ -259,6 +259,8 @@ rollout SurfJump "Surface Jumper"
 	global start = false
 	global mySurface
 	global mouseHandler
+	global strengthOp = 1
+	global interp = 1
 	global cPoints = #()
 
 	global heightVal
@@ -289,13 +291,13 @@ rollout SurfJump "Surface Jumper"
 	
 	on Interp_dd selected i do
 	(
-		global interp = i
+		interp = i
 		format "You selected '%'! index: % \n" Interp_dd.items[i] i
 	)
 	
 	on Strength_dd selected i do
 	(
-		global strengthOp = i
+		strengthOp = i
 		--format "You selected '%'! index: % \n" Strength_dd.items[i] i
 	)
 	
