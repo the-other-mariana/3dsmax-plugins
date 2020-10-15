@@ -295,6 +295,11 @@ rollout SurfJump "Surface Jumper"
 			sTimer = (i - 1) * jumpTime + extraFrame
 			eTimer = (i) * jumpTime
 			
+			if strengthOp == 1 then
+			(
+				-- constant
+				heightVal = UI_StrengthVal.value
+			)
 			if strengthOp == 2 then
 			(
 				-- distanced
