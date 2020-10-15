@@ -91,8 +91,8 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 	print "jump"
 	
 	format "circle03: %\n" circle03.dir
-	q = quat 33 circle03.dir
-	circle03.dir = circle03.dir * q
+	--q = quat 33 circle03.dir
+	--circle03.dir = circle03.dir * q
 	format "circle03: %\n" circle03.dir
 	
 	TimeLapse = FinalFrame - InitialFrame
@@ -241,7 +241,7 @@ rollout SurfJump "Surface Jumper"
 	(
 		dropdownlist Interp_dd "Interpolation Style" items:#("Physical", "Biased")
 		spinner UI_JumpFrames "Frames per Jump" range:[10,1000,24] type:#integer
-		spinner UI_RollAngle "Roll Angle" range:[45.0,180.0,90.0] type:#float
+		spinner UI_RollAngle "Roll Angle" range:[10.0,120.0,90.0] type:#float
 	)
 	
 	group "Jump Sequence Params"
