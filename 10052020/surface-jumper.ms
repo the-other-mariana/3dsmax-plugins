@@ -1,6 +1,5 @@
 fn createPoint numP cPoints=
 (
-	print("added point")
 
 	mouseray = mapScreenToWorldRay mouse.pos
 	localhits = intersectRayScene mouseRay
@@ -27,32 +26,6 @@ fn createPoint numP cPoints=
 	temp.pos = sectray.pos
 	temp.dir = sectray.dir
 	Append cPoints temp
-)
-
-fn getAngle3D dir01 dir02=
-(
-	dir01 = normalize dir01
-	dir02 = normalize dir02
-	format "d01: % d02: % \n" dir01 dir02
-	
-	-- z to zero
-	tDir01 = [dir01.x, dir01.y, 1]
-	tDir02 = [dir02.x, dir02.y, 1]
-	topAngle = acos(dot tDir02 tDir01)
-	
-	-- y to zero
-	fDir01 = [dir01.x, 0, dir01.z]
-	fDir02 = [dir02.x, 0, dir02.z]
-	frontAngle = acos(dot fDir02 fDir01)
-	print(dot fDir02 fDir01)
-	-- x to zero 
-	sDir01 = [0, dir01.y, dir01.z]
-	sDir02 = [0, dir02.y, dir02.z]
-	sideAngle = acos(dot sDir02 sDir01)
-	
-	angle3D = [sideAngle, frontAngle, topAngle]
-	
-	return angle3D
 )
 
 fn getBiasedMiddle point01 point03 height=
@@ -322,7 +295,6 @@ rollout SurfJump "Surface Jumper"
 			sTimer = (i - 1) * jumpTime + extraFrame
 			eTimer = (i) * jumpTime
 			
-			format "option s: % \n" strengthOp
 			if strengthOp == 2 then
 			(
 				-- distanced
@@ -334,7 +306,6 @@ rollout SurfJump "Surface Jumper"
 				heightVal = UI_StrengthVal.value * (cPoints.count - (i))
 				if (constSquash_cb.checked) == false then
 					squashLim = UI_SquashLim.value - (stepSquash * (i - 1))
-				format "You selected decay: %" heightVal
 			)
 			if strengthOp == 4 then
 			(
@@ -360,7 +331,6 @@ tool mouseHandler
 		if click == 1 and start == true then
 		(
 				numP += 1
-				print(numP)
 				
 				createPoint numP cPoints
 		)
