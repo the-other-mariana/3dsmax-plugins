@@ -193,7 +193,7 @@ rollout SurfJump "Surface Jumper"
 	(
 		dropdownlist Strength_dd "Jump Strength" items:#("Constant", "Distanced", "Decay", "Growth")
 		spinner UI_StrengthVal "Strength Value" range:[5.0,100.0,15.0] type:#float
-		spinner UI_SquashFrames "Squash Frames" range:[1,1000, 5] type:#integer
+		spinner UI_SquashFrames "Squash Frames" range:[1,500, 5] type:#integer
 		slider UI_SquashLim "Squash Limit" orient:#horizontal ticks:5 range:[0.0,0.5, 0.4]
 		checkbox ConstSquash_cb "Constant Squash"
 	)
@@ -224,6 +224,11 @@ rollout SurfJump "Surface Jumper"
 	
 	on UI_AddPoint pressed do
 	(
+		if (isValidNode jumpers) == false then
+		(
+			jumpers = undefined
+			return messageBox "Please select a jumper object!" title:"Jumper Missing" beep:true
+		)
 		if start == false then
 		(
 			UI_AddPoint.text = "Right Click!"

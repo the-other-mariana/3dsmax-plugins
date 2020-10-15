@@ -50,6 +50,12 @@ I added a simple squash every time the jumper object is approaching the surface.
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/jumper-output-06.png?raw=true) <br />
 
+### Final Touches
+
+Added validations: you cannot add points if you have not chosen a jumper, if jumper is undefined returns a messagebox, etc. I doesnt let the code crash, it just gives you alerts and you can continue without restarting. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/10052020/images/jumper-output-07.png?raw=true) <br />
+
 ## Helpful Info
 
 [important link 01](https://forums.cgsociety.org/t/getting-explicit-normal-of-a-surface-with-a-ray-intersection/1846022) <br />
