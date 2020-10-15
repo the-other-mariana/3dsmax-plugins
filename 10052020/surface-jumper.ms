@@ -8,6 +8,11 @@ fn createPoint numP cPoints=
 	global closest
 	global closest_index = 1
 	
+	if localhits.count == 0 then
+	(
+		return messageBox "Place a point in a surface!" title:"No Surface Found" beep:true
+	)
+	
 	for i in 1 to (localhits.count) by 1 do
 	(
 		cdist = distance (localhits[i])[2].position mouseray.pos
@@ -58,7 +63,7 @@ fn getQuatMiddle point01 point03 axis height=
 	return upVec
 )
 
-fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle heightVal squashLim sqTime index=
+fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle heightVal squashLim sqTime index cPoints=
 (
 	
 	TimeLapse = FinalFrame - InitialFrame
@@ -325,7 +330,7 @@ rollout SurfJump "Surface Jumper"
 					squashLim = (UI_SquashLim.value - (stepSquash * (cPoints.count - 1))) + (stepSquash * i)
 			)
 			
-			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer interp rollAngle heightVal squashLim sqTime i
+			simpleJump jumpers cPoints[i] cPoints[i + 1] sTimer eTimer interp rollAngle heightVal squashLim sqTime i cPoints
 		)
 		Jumpers.showtrajectory =on
 			
