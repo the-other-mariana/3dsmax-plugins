@@ -4,7 +4,6 @@ fn createPoint numP cPoints=
 
 	mouseray = mapScreenToWorldRay mouse.pos
 	localhits = intersectRayScene mouseRay
-	print localhits
 
 	max_dist = 1000000
 	global closest
@@ -81,19 +80,13 @@ fn getQuatMiddle point01 point03 axis height=
 	halfVecRot = halfVec  * q 
 	
 	heightVec = (normalize (cross halfVecRot halfVec)) * height 
-	print(halfVecRot)
+	
 	upVec = middle + heightVec
 	return upVec
 )
 
 fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle heightVal squashLim sqTime index=
 (
-	print "jump"
-	
-	format "circle03: %\n" circle03.dir
-	--q = quat 33 circle03.dir
-	--circle03.dir = circle03.dir * q
-	format "circle03: %\n" circle03.dir
 	
 	TimeLapse = FinalFrame - InitialFrame
 	point01 = circle01.pos
@@ -110,6 +103,7 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 	(
 		point02 = getBiasedMiddle point01 point03 height
 	)
+	
 	Vector01 = (point02 - point01)
 	Vector02 = (point03 - point02)
 	
@@ -125,7 +119,7 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 	stepYRot = (yFinRot - yRotJumper) / (TimeLapse)
 	stepZRot = (zFinRot - zRotJumper) / (TimeLapse)
 	
-	format "transf: % \n" ((jumpers.transform.controller.value).row1) -- [1, 0, 0]
+	--format "transf: % \n" ((jumpers.transform.controller.value).row1) -- [1, 0, 0]
 	
 	xVec = (jumpers.transform.controller.value).row1
 	yVec = (jumpers.transform.controller.value).row2
@@ -141,6 +135,8 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 	rotFactor = 1
 	
 	if rotDot <= 0 then rotFactor = -1
+	
+	
 	funFactor = (rollAngle) / TimeLapse
 	
 	StretchFrames	=#(initialFrame, initialFrame + sqTime, finalFrame - sqTime, finalFrame)
@@ -167,44 +163,20 @@ fn simpleJump jumpers circle01 circle03 initialFrame finalFrame interp rollAngle
 		(
 			at time t
 			(
-				yFactor = dot circle03.dir pointVector
-				--format "y fac: % \n" yFactor
-				if yFactor <= 0 then
-				(
-					yFactor = -1
-				) else
-				(
-					yFactor = 1
-				)
-				
-				
-				
 				point04 = ((normalize Vector01 )*(((length Vector01)/TimeLapse)*it))+point01
 				point05 = ((normalize Vector02 )*(((length Vector02)/TimeLapse)*it))+point02
 				Vector03 = (point05 - point04)
 				
 				Jumpers.pos = ((normalize Vector03 )*(((length Vector03)/TimeLapse)*it))+point04
 				
-				eulerJumper = quatToEuler2 Jumpers.rotation.controller.value
+				--eulerJumper = quatToEuler2 Jumpers.rotation.controller.value
 				
 				jumpers.dir.x += stepXRot
 				jumpers.dir.y += stepYRot
 				jumpers.dir.z += stepZRot
 				
-				if t == FinalFrame then
-				(
-					--jumpers.dir = circle03.dir
-				)
-				
-				if t == 1 then
-				(
-					--jumpers.dir = circle01.dir
-				)
-				
 				-- rotate locally
 				jumpers.transform = (rotateZmatrix (funFactor * t)) * jumpers.transform
-				
-				
 			)
 			it += 1
 		)
@@ -291,19 +263,16 @@ rollout SurfJump "Surface Jumper"
 			UI_NumPoints.text = "Points: " + (numP as String)
 			start = false
 		)
-		--print(cPoints)
 	)
 	
 	on Interp_dd selected i do
 	(
 		interp = i
-		format "You selected '%'! index: % \n" Interp_dd.items[i] i
 	)
 	
 	on Strength_dd selected i do
 	(
 		strengthOp = i
-		--format "You selected '%'! index: % \n" Strength_dd.items[i] i
 	)
 	
 	on UI_CreateJumps pressed do
@@ -316,7 +285,6 @@ rollout SurfJump "Surface Jumper"
 		(
 			return messageBox "Please select a jumper object!" title:"Jumper Missing" beep:true
 		)
-		print(cPoints)
 		
 		if (isValidNode jumpers) == false then
 		(
@@ -329,12 +297,10 @@ rollout SurfJump "Surface Jumper"
 			return messageBox "You need more than 1 point to jump!" title:"Points Missing" beep:true
 		)
 
-		--addModifier jumpers (Stretch())
 		if (for m in jumpers.modifiers where classof m == stretch collect m).count == 0 then
 		(
 			addModifier jumpers (Stretch())
 		)
-		
 		
 		extraFrame = 0
 		jumpTime = UI_JumpFrames.value
@@ -401,5 +367,5 @@ tool mouseHandler
 		if click == 3 and start == true then #stop
 	)
 )
---startTool mouseHandler
+
 createdialog SurfJump width:200 height:450
