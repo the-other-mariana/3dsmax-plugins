@@ -1,0 +1,13 @@
+NAME OF THE PROJECT: Snowflaker Plugin
+
+FINAL OBJECTIVES:
+	A plugin that creates a snowflake mesh object that has customizable parameters: number of spikes, subspikes and form in general.
+
+PARTIAL OBJECTIVES:
+	PROJECT STAGES
+		1. Create a simple mesh ring with customizable sides
+		2. Add a spike per 2 sides to the ring
+		3. Add a factor that reduces the spikes' size with respect to its distance to the origin.
+		4. Create subspikes with constant size.
+		5. Create subspikes with reduced size, with a factor with respect to its father spike length.
+		6. Create customizable form: in reality, it will be customizable subspike size. Maybe implementing this will involve different functions for length and a dropdown menu.
