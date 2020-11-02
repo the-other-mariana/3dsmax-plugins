@@ -16,3 +16,7 @@ The first thing is to create a ring of points, which will be the *inner ring* of
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/ring.png?raw=true) <br />
 
+## Helpful Links
+
+[Quat Rotation](https://cathyatseneca.gitbooks.io/3d-modelling-for-programmers/content/mathematical_background/quaternions.html) <br />
+
