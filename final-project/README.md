@@ -6,6 +6,7 @@ My final project for this course will be a plugin that generates snowflakes proc
 
 3dsMax Version: `Autodesk 3dsMax 2020` <br />
 Language: `MAXScript` <br />
+Plugin: [Current Script](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/snowflaker.ms)
 
 ## Process & Logic
 
