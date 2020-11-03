@@ -9,7 +9,9 @@ category:"Snowflaker Plugin"
 		P_Height type:#worldUnits ui:UI_Height	default:4
 		P_Spikes type:#integer ui:UI_Spikes	default:4
 		P_Thick type:#float ui: UI_Thick default: 2.0
+		
 		P_SpSize type: #integer ui: UI_SpSize default: 30
+		P_SpSeg type: #integer ui: UI_SpSeg default: 3
 	)
 	
 	rollout SF_Params "Parameters"
@@ -23,7 +25,8 @@ category:"Snowflaker Plugin"
 		)
 		group "Spikes"
 		(
-			spinner UI_SpSize "Spike Size" type:#integer range:[0, 1000, 30]
+			spinner UI_SpSize "Spike Size" type:#integer range:[20, 1000, 30]
+			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 100, 3]
 		)
 	)
 	
@@ -32,8 +35,9 @@ category:"Snowflaker Plugin"
 		print(msg)
 	)
 	
-	fn createSpike p0 p1 size deg=
+	fn createSpike p0 p1 size deg vertices=
 	(
+		s = sphere radius: 1.0 pos:p0
 		midpoint = [p0.x + p1.x, p0.y + p1.y, p0.z + p1.z]
 		midpoint = midpoint * 0.5
 		axis = [0, 0, 1]
@@ -45,6 +49,37 @@ category:"Snowflaker Plugin"
 		vect2 = normalize vect2
 		
 		spikePos = (vect2 * size) + midpoint
+		newSpike1 = spikePos
+		newSpike2 = [newSpike1.x, newSpike1.y, P_Height]
+		
+		--Append vertices newSpike1
+		--Append vertices newSpike2
+		
+		-- spike segments points
+		factor = 1.0 / P_SpSeg
+		
+		
+		dir1 = newSpike1 - p0
+		dist1 = distance newSpike1 p0
+		dir1 = normalize dir1
+		
+		c = Cone radius1:0.5 radius2:0 height:dist1 pos:p0
+
+		c.dir = dir1
+		
+		dir2 = newSpike1 - p1
+		dist2 = length dir2
+		dir2 = normalize dir2
+		
+		for i in 1 to (P_SpSeg - 1) by 1 do
+		(
+			temp1 = p0 + ((factor * i * dist1) * dir1)
+			--Append vertices temp1
+			print(temp1)
+			--temp2 = p1 + ((factor * i * dist2) * dir2)
+			--Append vertices temp2
+		)
+		
 		return spikePos
 	)
 	
@@ -81,6 +116,7 @@ category:"Snowflaker Plugin"
 		)
 		
 		-- main spike points (2)
+		sp_pts = #()
 		for i in 1 to (P_Sides) by 1 do
 		(
 			if (mod i 2) == 1 then
@@ -89,13 +125,18 @@ category:"Snowflaker Plugin"
 				p1 = vertices[i + 1]
 				--format "% and % \n" (i) (i + 1)
 				
-				newSpike1 = createSpike p0 p1 P_SpSize 90.0
+				newSpike1 = createSpike p0 p1 P_SpSize -90.0 vertices
 				newSpike2 = [newSpike1.x, newSpike1.y, P_Height]
 				
-				print(newSpike1)
-				Append vertices newSpike1
-				Append vertices newSpike2
+				Append sp_pts newSpike1
+				Append sp_pts newSpike2
 			)
+		)
+		
+		for i in 1 to (sp_pts.count) by 1 do
+		(
+			Append vertices sp_pts[i]
+
 		)
 		
 		setMesh mesh verts:vertices faces:faces

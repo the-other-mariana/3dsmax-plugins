@@ -26,6 +26,11 @@ A 4-spiked snowflake: <br />
 A 6-spiked snowflake: <br />
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-02.png?raw=true) <br />
 
+### 3rd Round
+
+I fixed the angle of the main spike point, which was opposite. Now, every p0 points to its main psike point. <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-03.png?raw=true) <br />
+
 ## Helpful Links
 
 [Quat Rotation](https://cathyatseneca.gitbooks.io/3d-modelling-for-programmers/content/mathematical_background/quaternions.html) <br />
