@@ -16,6 +16,16 @@ The first thing is to create a ring of points, which will be the *inner ring* of
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/ring.png?raw=true) <br />
 
+### 2nd Round
+
+I added the main spike points: every 2 sides, there must be one spike. This was using quaternions so that the point is in the direction that the user specifies. <br />
+
+A 4-spiked snowflake: <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-01.png?raw=true) <br />
+
+A 6-spiked snowflake: <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-02.png?raw=true) <br />
+
 ## Helpful Links
 
 [Quat Rotation](https://cathyatseneca.gitbooks.io/3d-modelling-for-programmers/content/mathematical_background/quaternions.html) <br />

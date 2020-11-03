@@ -7,7 +7,7 @@ category:"Snowflaker Plugin"
 	(
 		P_Radius type:#worldUnits ui:UI_Radius	default:10
 		P_Height type:#worldUnits ui:UI_Height	default:4
-		P_Spikes type:#integer ui:UI_Spikes	default:4
+		P_Spikes type:#integer ui:UI_Spikes	default:6
 		P_Thick type:#float ui: UI_Thick default: 2.0
 	)
 	
@@ -17,9 +17,30 @@ category:"Snowflaker Plugin"
 		(
 			spinner UI_Radius "Radius" type:#worldUnits range:[0, 1000, 10]
 			spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 4]
-			spinner UI_Spikes "Spikes" type:#integer range:[3, 30, 4]
+			spinner UI_Spikes "Spikes" type:#integer range:[3, 30, 6]
 			spinner UI_Thick "Thickness" type:#integer range:[0.1, 30.0, 2.0]
 		)
+	)
+	
+	fn greetings msg=
+	(
+		print(msg)
+	)
+	
+	fn createSpike p0 p1 size deg=
+	(
+		midpoint = [p0.x + p1.x, p0.y + p1.y, p0.z + p1.z]
+		midpoint = midpoint * 0.5
+		axis = [0, 0, 1]
+		axis = normalize axis
+		
+		vect1 = p0 - midpoint
+		q = quat deg axis
+		vect2 = vect1 * q
+		vect2 = normalize vect2
+		
+		spikePos = (vect2 * size) + midpoint
+		return spikePos
 	)
 	
 	on buildMesh do
@@ -49,10 +70,24 @@ category:"Snowflaker Plugin"
 					vert = [xPos, yPos, zPos]
 					Append vertices vert
 					
-					print("vertices")
-					print(vert)
-					greetings "hello world"
+					
 				)
+			)
+		)
+		
+		-- main spike point
+		for i in 1 to (P_Sides) by 1 do
+		(
+			if (mod i 2) == 1 then
+			(
+				p0 = vertices[i]
+				p1 = vertices[i + 1]
+				--format "% and % \n" (i) (i + 1)
+				
+				newSpike = createSpike p0 p1 30.0 90.0
+				
+				print(newSpike)
+				Append vertices newSpike
 			)
 		)
 		
@@ -80,9 +115,6 @@ category:"Snowflaker Plugin"
 		)
 	)
 	
-	fn greetings msg=
-	(
-		print(msg)
-	)
+	
 )
 
