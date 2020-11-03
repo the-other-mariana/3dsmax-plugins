@@ -7,11 +7,11 @@ category:"Snowflaker Plugin"
 	(
 		P_Radius type:#worldUnits ui:UI_Radius	default:10
 		P_Height type:#worldUnits ui:UI_Height	default:4
-		P_Spikes type:#integer ui:UI_Spikes	default:4
+		P_Spikes type:#integer ui:UI_Spikes	default:5
 		P_Thick type:#float ui: UI_Thick default: 2.0
 		
 		P_SpSize type: #integer ui: UI_SpSize default: 30
-		P_SpSeg type: #integer ui: UI_SpSeg default: 3
+		P_SpSeg type: #integer ui: UI_SpSeg default: 8
 	)
 	
 	rollout SF_Params "Parameters"
@@ -20,13 +20,13 @@ category:"Snowflaker Plugin"
 		(
 			spinner UI_Radius "Radius" type:#worldUnits range:[0, 1000, 10]
 			spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 4]
-			spinner UI_Spikes "Spikes" type:#integer range:[3, 30, 4]
+			spinner UI_Spikes "Spikes" type:#integer range:[3, 30, 5]
 			spinner UI_Thick "Thickness" type:#float range:[0.1, 30.0, 2.0]
 		)
 		group "Spikes"
 		(
 			spinner UI_SpSize "Spike Size" type:#integer range:[20, 1000, 30]
-			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 100, 3]
+			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 100, 8]
 		)
 	)
 	
@@ -35,9 +35,8 @@ category:"Snowflaker Plugin"
 		print(msg)
 	)
 	
-	fn createSpike p0 p1 size deg vertices=
+	fn createSpike p0 p1 size deg pts=
 	(
-		s = sphere radius: 1.0 pos:p0
 		midpoint = [p0.x + p1.x, p0.y + p1.y, p0.z + p1.z]
 		midpoint = midpoint * 0.5
 		axis = [0, 0, 1]
@@ -52,8 +51,8 @@ category:"Snowflaker Plugin"
 		newSpike1 = spikePos
 		newSpike2 = [newSpike1.x, newSpike1.y, P_Height]
 		
-		--Append vertices newSpike1
-		--Append vertices newSpike2
+		Append pts newSpike1
+		Append pts newSpike2
 		
 		-- spike segments points
 		factor = 1.0 / P_SpSeg
@@ -63,24 +62,31 @@ category:"Snowflaker Plugin"
 		dist1 = distance newSpike1 p0
 		dir1 = normalize dir1
 		
-		c = Cone radius1:0.5 radius2:0 height:dist1 pos:p0
-
-		c.dir = dir1
+		--c1 = Cone radius1:0.5 radius2:0 height:dist1 pos:p0
+		--c1.dir = dir1
 		
 		dir2 = newSpike1 - p1
 		dist2 = length dir2
 		dir2 = normalize dir2
 		
+		--c2 = Cone radius1:0.5 radius2:0 height:dist2 pos:p1
+		--c2.dir = dir2
+		
 		for i in 1 to (P_SpSeg - 1) by 1 do
 		(
-			temp1 = p0 + ((factor * i * dist1) * dir1)
-			--Append vertices temp1
-			print(temp1)
-			--temp2 = p1 + ((factor * i * dist2) * dir2)
-			--Append vertices temp2
+			temp1Bottom = p0 + ((factor * i * dist1) * dir1)
+			temp1Top = [temp1Bottom.x, temp1Bottom.y, P_Height]
+			Append pts temp1Bottom
+			Append pts temp1Top
+			--print(temp1)
+			
+			temp2Bottom = p1 + ((factor * i * dist2) * dir2)
+			temp2Top = [temp2Bottom.x, temp2Bottom.y, P_Height]
+			Append pts temp2Bottom
+			Append pts temp2Top
 		)
 		
-		return spikePos
+		--return sp_pts
 	)
 	
 	on buildMesh do
@@ -125,11 +131,7 @@ category:"Snowflaker Plugin"
 				p1 = vertices[i + 1]
 				--format "% and % \n" (i) (i + 1)
 				
-				newSpike1 = createSpike p0 p1 P_SpSize -90.0 vertices
-				newSpike2 = [newSpike1.x, newSpike1.y, P_Height]
-				
-				Append sp_pts newSpike1
-				Append sp_pts newSpike2
+				createSpike p0 p1 P_SpSize -90.0 sp_pts
 			)
 		)
 		
