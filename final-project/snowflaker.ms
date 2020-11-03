@@ -51,6 +51,7 @@ category:"Snowflaker Plugin"
 					
 					print("vertices")
 					print(vert)
+					greetings "hello world"
 				)
 			)
 		)
@@ -78,4 +79,10 @@ category:"Snowflaker Plugin"
 			)
 		)
 	)
+	
+	fn greetings msg=
+	(
+		print(msg)
+	)
 )
+
