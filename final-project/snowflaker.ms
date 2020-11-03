@@ -7,8 +7,9 @@ category:"Snowflaker Plugin"
 	(
 		P_Radius type:#worldUnits ui:UI_Radius	default:10
 		P_Height type:#worldUnits ui:UI_Height	default:4
-		P_Spikes type:#integer ui:UI_Spikes	default:6
+		P_Spikes type:#integer ui:UI_Spikes	default:4
 		P_Thick type:#float ui: UI_Thick default: 2.0
+		P_SpSize type: #integer ui: UI_SpSize default: 30
 	)
 	
 	rollout SF_Params "Parameters"
@@ -17,8 +18,12 @@ category:"Snowflaker Plugin"
 		(
 			spinner UI_Radius "Radius" type:#worldUnits range:[0, 1000, 10]
 			spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 4]
-			spinner UI_Spikes "Spikes" type:#integer range:[3, 30, 6]
-			spinner UI_Thick "Thickness" type:#integer range:[0.1, 30.0, 2.0]
+			spinner UI_Spikes "Spikes" type:#integer range:[3, 30, 4]
+			spinner UI_Thick "Thickness" type:#float range:[0.1, 30.0, 2.0]
+		)
+		group "Spikes"
+		(
+			spinner UI_SpSize "Spike Size" type:#integer range:[0, 1000, 30]
 		)
 	)
 	
@@ -55,9 +60,9 @@ category:"Snowflaker Plugin"
 		zPos = 0.0
 		
 		-- inner ring
-		for j in 1 to (2) by 1 do
+		for k in 1 to (2) by 1 do
 		(
-			for k in 1 to (2) by 1 do
+			for j in 1 to (2) by 1 do
 			(
 				
 				for i in 1 to (P_Sides) by 1 do
@@ -75,7 +80,7 @@ category:"Snowflaker Plugin"
 			)
 		)
 		
-		-- main spike point
+		-- main spike points (2)
 		for i in 1 to (P_Sides) by 1 do
 		(
 			if (mod i 2) == 1 then
@@ -84,10 +89,12 @@ category:"Snowflaker Plugin"
 				p1 = vertices[i + 1]
 				--format "% and % \n" (i) (i + 1)
 				
-				newSpike = createSpike p0 p1 30.0 90.0
+				newSpike1 = createSpike p0 p1 P_SpSize 90.0
+				newSpike2 = [newSpike1.x, newSpike1.y, P_Height]
 				
-				print(newSpike)
-				Append vertices newSpike
+				print(newSpike1)
+				Append vertices newSpike1
+				Append vertices newSpike2
 			)
 		)
 		
