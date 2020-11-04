@@ -10,8 +10,9 @@ category:"Snowflaker Plugin"
 		P_Spikes type:#integer ui:UI_Spikes	default:5
 		P_Thick type:#float ui: UI_Thick default: 2.0
 		
-		P_SpSize type: #integer ui: UI_SpSize default: 30
-		P_SpSeg type: #integer ui: UI_SpSeg default: 8
+		P_SpSize type: #integer ui: UI_SpSize default: 50
+		P_SpSeg type: #integer ui: UI_SpSeg default: 16
+		P_SSpSeg type: #integer ui: UI_SSpSeg default: 6
 	)
 	
 	rollout SF_Params "Parameters"
@@ -25,8 +26,13 @@ category:"Snowflaker Plugin"
 		)
 		group "Spikes"
 		(
-			spinner UI_SpSize "Spike Size" type:#integer range:[20, 1000, 30]
-			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 100, 8]
+			spinner UI_SpSize "Spike Size" type:#integer range:[20, 1000, 50]
+			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 100, 16]
+		)
+		
+		group "Sub-spikes"
+		(
+			spinner UI_SSpSeg "Sub-spike Segments" type:#integer range:[1, 100, 6]
 		)
 	)
 	
@@ -35,7 +41,7 @@ category:"Snowflaker Plugin"
 		print(msg)
 	)
 	
-	fn createSpike p0 p1 size deg pts=
+	fn createSpike p0 p1 size deg pts segs=
 	(
 		midpoint = [p0.x + p1.x, p0.y + p1.y, p0.z + p1.z]
 		midpoint = midpoint * 0.5
@@ -55,7 +61,7 @@ category:"Snowflaker Plugin"
 		Append pts newSpike2
 		
 		-- spike segments points
-		factor = 1.0 / P_SpSeg
+		factor = 1.0 / segs
 		
 		
 		dir1 = newSpike1 - p0
@@ -72,7 +78,7 @@ category:"Snowflaker Plugin"
 		--c2 = Cone radius1:0.5 radius2:0 height:dist2 pos:p1
 		--c2.dir = dir2
 		
-		for i in 1 to (P_SpSeg - 1) by 1 do
+		for i in 1 to (segs - 1) by 1 do
 		(
 			temp1Bottom = p0 + ((factor * i * dist1) * dir1)
 			temp1Top = [temp1Bottom.x, temp1Bottom.y, P_Height]
@@ -100,7 +106,12 @@ category:"Snowflaker Plugin"
 		yPos = 0.0
 		zPos = 0.0
 		
-		-- inner ring
+		-- inner ring points
+		-- order:
+		-- 1) outside bottom ring (1 - (1*sides))
+		-- 2) outside top ring ((1*sides+1) - (2*sides))
+		-- 3) inside bottom ring ((2*sides+1) - (3*sides))
+		-- 4) inside top ring ((3*sides+1) - (4*sides))
 		for k in 1 to (2) by 1 do
 		(
 			for j in 1 to (2) by 1 do
@@ -121,7 +132,7 @@ category:"Snowflaker Plugin"
 			)
 		)
 		
-		-- main spike points (2)
+		-- main spike points
 		sp_pts = #()
 		for i in 1 to (P_Sides) by 1 do
 		(
@@ -131,14 +142,48 @@ category:"Snowflaker Plugin"
 				p1 = vertices[i + 1]
 				--format "% and % \n" (i) (i + 1)
 				
-				createSpike p0 p1 P_SpSize -90.0 sp_pts
+				createSpike p0 p1 P_SpSize -90.0 sp_pts P_SpSeg
 			)
 		)
 		
 		for i in 1 to (sp_pts.count) by 1 do
 		(
 			Append vertices sp_pts[i]
-
+		)
+		
+		-- sub spike points
+		ssp_pts = #()
+		index = 1
+		for j in 1 to (P_Spikes) by 1 do
+		(
+			if j == 1 then
+			(
+				index += (P_Sides * 4) + 2
+			) else
+			(
+				index += ((P_SpSeg - 1) * 4) + 2
+			)
+			for i in 1 to (P_SpSeg - 2) by 1 do
+			(
+				--index += 2
+				--format "% and % \n" (index + ((i - 1)*4)) (index + ((i - 1)*4) + 4)
+				if (mod i 2) == 1 then
+				(
+					p0_1 = vertices[(index + ((i - 1)*4))]
+					p1_1 = vertices[(index + ((i - 1)*4) + 4)]
+					
+					p0_2 = vertices[(index + ((i - 1)*4)) + 2]
+					p1_2 = vertices[(index + ((i - 1)*4) + 4) + 2]
+					
+					createSpike p0_1 p1_1 (P_SpSize / 3.0) -120.0 ssp_pts P_SSpSeg
+					createSpike p0_2 p1_2 (P_SpSize / 3.0) 120.0 ssp_pts P_SSpSeg
+				)
+			)
+		)
+		
+		for i in 1 to (ssp_pts.count) by 1 do
+		(
+			Append vertices ssp_pts[i]
 		)
 		
 		setMesh mesh verts:vertices faces:faces

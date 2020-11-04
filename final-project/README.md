@@ -20,10 +20,6 @@ The first thing is to create a ring of points, which will be the *inner ring* of
 
 I added the main spike points: every 2 sides, there must be one spike. This was using quaternions so that the point is in the direction that the user specifies. <br />
 
-A 4-spiked snowflake: <br />
-
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-01.png?raw=true) <br />
-
 A 6-spiked snowflake: <br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-02.png?raw=true) <br />
@@ -37,6 +33,12 @@ I fixed the angle of the main spike point, which was opposite. Now, every p0 poi
 I created the main spike's points, with respect to how many segments per spike the user wants. For a 5-spike snowflake, it would work as follows: <br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-06.png?raw=true) <br />
+
+## 4th Round
+
+I used the same *createSpike()* function to generate the subspikes by just adjusting the angle: instead of 90 degrees with respect to the spike's middlepoint, now this angle would be 120, for example. Now the next step is to calculate the limit length of the subspike and decrease this length for each level of subspikes. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-07.png?raw=true) <br />
 
 ## Helpful Links
 
