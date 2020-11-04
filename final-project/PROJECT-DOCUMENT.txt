@@ -12,4 +12,5 @@ PARTIAL OBJECTIVES:
 		5. Create subspikes with reduced size, with a factor with respect to its father spike length.
 		6. Create customizable form: in reality, it will be customizable subspike size. Maybe implementing this will involve different functions for length and a dropdown menu.
 		7. Play with randomness.
-		8. Fix smoothing groups.
+		8. Join vertices as faces.
+		9. Fix smoothing groups.
