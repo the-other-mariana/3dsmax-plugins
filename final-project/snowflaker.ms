@@ -15,6 +15,7 @@ category:"Snowflaker Plugin"
 		
 		P_SSpSeg type: #integer ui: UI_SSpSeg default: 6
 		P_SSpSize type: #float ui: UI_SSpSize default: 13.0
+		P_Skip type: #integer ui: UI_Skip default: 1
 		P_OnlyTip type: #boolean ui: OnlyTip_cb default: false
 	)
 	
@@ -30,13 +31,14 @@ category:"Snowflaker Plugin"
 		group "Spikes"
 		(
 			spinner UI_SpSize "Spike Size" type:#float range:[20.0, 1000.0, 50.0]
-			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 100, 16]
+			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 1000, 16]
 		)
 		
 		group "Sub-spikes"
 		(
 			spinner UI_SSpSeg "Sub-spike Segments" type:#integer range:[1, 100, 6]
 			spinner UI_SSpSize "Sub-spike Size" type:#float range:[1.0, 1000.0, 13.0]
+			spinner UI_Skip "Skip Degree" type:#integer range:[1, 5, 1]
 			checkbox OnlyTip_cb "Only In Tip"
 		)
 	)
@@ -157,10 +159,12 @@ category:"Snowflaker Plugin"
 		)
 		
 		-- sub spike points
+		counter = 0
 		ssp_pts = #()
 		index = 1
 		ds = (P_SSpSize / 2.0) / P_SpSeg
 		minimum = 1
+		modNum = P_Skip * 2
 		
 		if P_OnlyTip == true then minimum = (P_SpSeg / 2.0 as integer) else minimum = 1
 		
@@ -177,7 +181,7 @@ category:"Snowflaker Plugin"
 			(
 				--index += 2
 				--format "% and % \n" (index + ((i - 1)*4)) (index + ((i - 1)*4) + 4)
-				if (mod i 2) == 1 and i >= minimum then
+				if (mod i modNum) == 1 and i >= minimum then
 				(
 					p0_1 = vertices[(index + ((i - 1)*4))]
 					p1_1 = vertices[(index + ((i - 1)*4) + 4)]
@@ -187,9 +191,13 @@ category:"Snowflaker Plugin"
 					
 					createSpike p0_1 p1_1 (P_SSpSize - ds * i) -120.0 ssp_pts P_SSpSeg
 					createSpike p0_2 p1_2 (P_SSpSize - ds * i) 120.0 ssp_pts P_SSpSeg
+					
+					counter += 2
 				)
 			)
 		)
+		
+		if counter == 0 then return messageBox "No Sub-spikes could be made. Increase segments!" title:"No Sub-spikes" beep:true
 		
 		for i in 1 to (ssp_pts.count) by 1 do
 		(
