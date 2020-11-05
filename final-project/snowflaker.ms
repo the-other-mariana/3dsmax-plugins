@@ -15,6 +15,7 @@ category:"Snowflaker Plugin"
 		
 		P_SSpSeg type: #integer ui: UI_SSpSeg default: 6
 		P_SSpSize type: #float ui: UI_SSpSize default: 13.0
+		P_OnlyTip type: #boolean ui: OnlyTip_cb default: false
 	)
 	
 	rollout SF_Params "Parameters"
@@ -36,6 +37,7 @@ category:"Snowflaker Plugin"
 		(
 			spinner UI_SSpSeg "Sub-spike Segments" type:#integer range:[1, 100, 6]
 			spinner UI_SSpSize "Sub-spike Size" type:#float range:[1.0, 1000.0, 13.0]
+			checkbox OnlyTip_cb "Only In Tip"
 		)
 	)
 	
@@ -158,6 +160,10 @@ category:"Snowflaker Plugin"
 		ssp_pts = #()
 		index = 1
 		ds = (P_SSpSize / 2.0) / P_SpSeg
+		minimum = 1
+		
+		if P_OnlyTip == true then minimum = (P_SpSeg / 2.0 as integer) else minimum = 1
+		
 		for j in 1 to (P_Spikes) by 1 do
 		(
 			if j == 1 then
@@ -171,7 +177,7 @@ category:"Snowflaker Plugin"
 			(
 				--index += 2
 				--format "% and % \n" (index + ((i - 1)*4)) (index + ((i - 1)*4) + 4)
-				if (mod i 2) == 1 then
+				if (mod i 2) == 1 and i >= minimum then
 				(
 					p0_1 = vertices[(index + ((i - 1)*4))]
 					p1_1 = vertices[(index + ((i - 1)*4) + 4)]

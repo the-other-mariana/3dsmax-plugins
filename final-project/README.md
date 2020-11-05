@@ -34,11 +34,17 @@ I created the main spike's points, with respect to how many segments per spike t
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-06.png?raw=true) <br />
 
-## 4th Round
+### 4th Round
 
 I used the same *createSpike()* function to generate the subspikes by just adjusting the angle: instead of 90 degrees with respect to the spike's middlepoint, now this angle would be 120, for example. Now the next step is to calculate the limit length of the subspike and decrease this length for each level of subspikes. <br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-07.png?raw=true) ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-08.png?raw=true) <br />
+
+### 5th Round
+
+What I did was create a boolean parameter that if checked, the spikes only appear on the tip of each father spike, else the spikes are all over. Need to implement the other styles of lengths. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-07.png?raw=true) ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-09.png?raw=true) <br />
 
 ## Helpful Links
 
