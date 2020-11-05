@@ -44,7 +44,7 @@ I used the same *createSpike()* function to generate the subspikes by just adjus
 
 What I did was create a boolean parameter that if checked, the spikes only appear on the tip of each father spike, else the spikes are all over. Need to implement the other styles of lengths. <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-07.png?raw=true) ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-09.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-09.png?raw=true) <br />
 
 ## Helpful Links
 
