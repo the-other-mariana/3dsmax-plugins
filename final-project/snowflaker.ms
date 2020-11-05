@@ -10,9 +10,11 @@ category:"Snowflaker Plugin"
 		P_Spikes type:#integer ui:UI_Spikes	default:5
 		P_Thick type:#float ui: UI_Thick default: 2.0
 		
-		P_SpSize type: #integer ui: UI_SpSize default: 50
+		P_SpSize type: #float ui: UI_SpSize default: 50.0
 		P_SpSeg type: #integer ui: UI_SpSeg default: 16
+		
 		P_SSpSeg type: #integer ui: UI_SSpSeg default: 6
+		P_SSpSize type: #float ui: UI_SSpSize default: 13.0
 	)
 	
 	rollout SF_Params "Parameters"
@@ -26,13 +28,14 @@ category:"Snowflaker Plugin"
 		)
 		group "Spikes"
 		(
-			spinner UI_SpSize "Spike Size" type:#integer range:[20, 1000, 50]
+			spinner UI_SpSize "Spike Size" type:#float range:[20.0, 1000.0, 50.0]
 			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 100, 16]
 		)
 		
 		group "Sub-spikes"
 		(
 			spinner UI_SSpSeg "Sub-spike Segments" type:#integer range:[1, 100, 6]
+			spinner UI_SSpSize "Sub-spike Size" type:#float range:[1.0, 1000.0, 13.0]
 		)
 	)
 	
@@ -154,6 +157,7 @@ category:"Snowflaker Plugin"
 		-- sub spike points
 		ssp_pts = #()
 		index = 1
+		ds = (P_SSpSize / 2.0) / P_SpSeg
 		for j in 1 to (P_Spikes) by 1 do
 		(
 			if j == 1 then
@@ -175,8 +179,8 @@ category:"Snowflaker Plugin"
 					p0_2 = vertices[(index + ((i - 1)*4)) + 2]
 					p1_2 = vertices[(index + ((i - 1)*4) + 4) + 2]
 					
-					createSpike p0_1 p1_1 (P_SpSize / 3.0) -120.0 ssp_pts P_SSpSeg
-					createSpike p0_2 p1_2 (P_SpSize / 3.0) 120.0 ssp_pts P_SSpSeg
+					createSpike p0_1 p1_1 (P_SSpSize - ds * i) -120.0 ssp_pts P_SSpSeg
+					createSpike p0_2 p1_2 (P_SSpSize - ds * i) 120.0 ssp_pts P_SSpSeg
 				)
 			)
 		)
