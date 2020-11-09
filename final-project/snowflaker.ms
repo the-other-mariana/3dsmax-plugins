@@ -16,6 +16,10 @@ category:"Snowflaker Plugin"
 		P_SSpSeg type: #integer ui: UI_SSpSeg default: 6
 		P_SSpSize type: #float ui: UI_SSpSize default: 13.0
 		P_Skip type: #integer ui: UI_Skip default: 1
+		
+		P_Freq type: #integer ui: UI_Freq default: 30
+		P_Ampl type: #float ui: UI_Ampl default: 0.3
+		
 		P_OnlyTip type: #boolean ui: OnlyTip_cb default: false
 	)
 	
@@ -39,6 +43,10 @@ category:"Snowflaker Plugin"
 			spinner UI_SSpSeg "Sub-spike Segments" type:#integer range:[1, 100, 6]
 			spinner UI_SSpSize "Sub-spike Size" type:#float range:[1.0, 1000.0, 13.0]
 			spinner UI_Skip "Skip Degree" type:#integer range:[1, 5, 1]
+			
+			spinner UI_Freq "Frequency" type:#integer range:[1, 1000, 30]
+			spinner UI_Ampl "Impact" type:#float range:[0.0, 0.9, 0.3]
+			
 			checkbox OnlyTip_cb "Only In Tip"
 		)
 	)
@@ -189,8 +197,9 @@ category:"Snowflaker Plugin"
 					p0_2 = vertices[(index + ((i - 1)*4)) + 2]
 					p1_2 = vertices[(index + ((i - 1)*4) + 4) + 2]
 					
-					createSpike p0_1 p1_1 (P_SSpSize - ds * i) -120.0 ssp_pts P_SSpSeg
-					createSpike p0_2 p1_2 (P_SSpSize - ds * i) 120.0 ssp_pts P_SSpSeg
+					size = (P_SSpSize - ds * i) + (P_SSpSize * sin(P_Freq*i) * P_Ampl)
+					createSpike p0_1 p1_1 (size) -120.0 ssp_pts P_SSpSeg
+					createSpike p0_2 p1_2 (size) 120.0 ssp_pts P_SSpSeg
 					
 					counter += 2
 				)
