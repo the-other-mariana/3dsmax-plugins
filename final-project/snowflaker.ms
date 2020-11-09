@@ -40,14 +40,23 @@ category:"Snowflaker Plugin"
 		
 		group "Sub-spikes"
 		(
-			spinner UI_SSpSeg "Sub-spike Segments" type:#integer range:[1, 100, 6]
-			spinner UI_SSpSize "Sub-spike Size" type:#float range:[1.0, 1000.0, 13.0]
+			spinner UI_SSpSeg "Segments" type:#integer range:[1, 100, 6]
+			spinner UI_SSpSize "Size" type:#float range:[1.0, 1000.0, 13.0]
 			spinner UI_Skip "Skip Degree" type:#integer range:[1, 5, 1]
 			
+			dropdownlist shape_dd "Shape" items:#("Decay", "Growth", "Sinusoidal", "Constant")
 			spinner UI_Freq "Frequency" type:#integer range:[1, 1000, 30]
 			spinner UI_Ampl "Impact" type:#float range:[0.0, 0.9, 0.3]
 			
 			checkbox OnlyTip_cb "Only In Tip"
+		)
+		
+		global shapeOp = 1
+		
+		on shape_dd selected i do
+		(
+			shapeOp = i
+			format "You chose %! \n" shapeOp
 		)
 	)
 	
@@ -197,7 +206,26 @@ category:"Snowflaker Plugin"
 					p0_2 = vertices[(index + ((i - 1)*4)) + 2]
 					p1_2 = vertices[(index + ((i - 1)*4) + 4) + 2]
 					
-					size = (P_SSpSize - ds * i) + (P_SSpSize * sin(P_Freq*i) * P_Ampl)
+					delta = 0
+					size = P_SSpSize
+					
+					if shapeOp == 1 then
+					(
+						size = P_SSpSize - (ds * i)
+					)
+					if shapeOp == 2 then
+					(
+						size = (P_SSpSize / 2.0) + 2*(ds * i)
+					)
+					if shapeOp == 3 then
+					(
+						size = P_SSpSize + (P_SSpSize * sin(P_Freq*i) * P_Ampl)
+					)
+					if shapeOp == 4 then
+					(
+						size = P_SSpSize
+					)
+					
 					createSpike p0_1 p1_1 (size) -120.0 ssp_pts P_SSpSeg
 					createSpike p0_2 p1_2 (size) 120.0 ssp_pts P_SSpSeg
 					
