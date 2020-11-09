@@ -46,6 +46,12 @@ What I did was create a boolean parameter that if checked, the spikes only appea
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-09.png?raw=true) <br />
 
+### 6th Round
+
+Now I implemented four different types of sub-spike length: decay, growth, sinusoidal and constant. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-11.png?raw=true) <br />
+
 ## Helpful Links
 
 [Quat Rotation](https://cathyatseneca.gitbooks.io/3d-modelling-for-programmers/content/mathematical_background/quaternions.html) <br />
