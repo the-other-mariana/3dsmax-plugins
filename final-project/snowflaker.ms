@@ -241,7 +241,84 @@ category:"Snowflaker Plugin"
 			Append vertices ssp_pts[i]
 		)
 		
+		-- create faces once vertices are ready
+		
+		-- inner ring faces: top + bottom
+		smooth_g = #()
+		exc = 0
+		for j in 1 to 2 by 1 do
+		(
+			exc = 0
+			for i in 1 to (P_Sides) by 1 do
+			(
+				if i == P_Sides then
+				(
+					exc = P_Sides
+				)
+				sg = 2^(j - 1)
+				v1 = (i + 1 - exc) + ((j - 1) * P_Sides)
+				v2 = i + ((j - 1) * P_Sides)
+				v3 = ((P_Sides * 2) + i) + ((j - 1) * P_Sides)
+				
+				v = [v1, v2, v3]
+				if (j == 2) then v = [v3, v2, v1]
+				
+				Append faces v
+				Append smooth_g [faces.count, sg]
+				
+				v1 = ((P_Sides * 2) + i) + ((j - 1) * P_Sides)
+				v2 = ((P_Sides * 2) + (i + 1) - exc) + ((j - 1) * P_Sides)
+				v3 = (i + 1 - exc) + ((j - 1) * P_Sides)
+				
+				v = [v1, v2, v3]
+				if (j == 2) then v = [v3, v2, v1]
+				
+				Append faces v
+				Append smooth_g [faces.count, sg]
+			)
+		)
+		
+		exc = 0
+		base = 0
+		for j in 1 to 2 by 1 do
+		(
+			exc = 0
+			base += 1
+			for i in 1 to (P_Sides) by 1 do
+			(
+				if i == P_Sides then
+				(
+					exc = P_Sides
+				)
+				if ((j == 1) and (mod i 2 == 0)) or (j == 2) then
+				(
+					sg = 2^(j + 1)
+					v1 = (P_Sides * (base - 1)) + i 
+					v2 = (P_Sides * (base)) + i 
+					v3 = (P_Sides * (base)) + (i + 1) - exc
+					
+					v = [v1, v2, v3]
+					Append faces v
+					Append smooth_g [faces.count, sg]
+					
+					v1 = (P_Sides * (base)) + (i + 1) - exc 
+					v2 = (P_Sides * (base - 1)) + (i + 1) - exc 
+					v3 = (P_Sides * (base - 1)) + i
+					
+					v = [v1, v2, v3]
+					Append faces v
+					Append smooth_g [faces.count, sg]
+				)
+			)
+			base += 1
+		)
+		
 		setMesh mesh verts:vertices faces:faces
+		
+		for i in 1 to (smooth_g.count) by 1 do
+		(
+			setFaceSmoothGroup mesh ((smooth_g[i])[1]) ((smooth_g[i])[2])
+		)
 	)
 	
 	tool create

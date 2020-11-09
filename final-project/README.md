@@ -52,6 +52,12 @@ Now I implemented four different types of sub-spike length: decay, growth, sinus
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-11.png?raw=true) <br />
 
+### 7th Round
+
+The next step is to finally connect the vertices in a mesh object. I first created the main ring faces, with holes for each spike faces. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-12.png?raw=true) <br />
+
 ## Helpful Links
 
 [Quat Rotation](https://cathyatseneca.gitbooks.io/3d-modelling-for-programmers/content/mathematical_background/quaternions.html) <br />
