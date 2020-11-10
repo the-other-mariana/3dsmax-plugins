@@ -313,6 +313,39 @@ category:"Snowflaker Plugin"
 			base += 1
 		)
 		
+		index = 0
+		for j in 1 to (P_Spikes) by 1 do
+		(
+			if j == 1 then
+			(
+				index += (P_Sides * 4) + 2
+			) else
+			(
+				index += ((P_SpSeg - 1) * 4) + 2
+			)
+			for t in 0 to 1 by 1 do
+			(
+				for i in 1 to (P_SpSeg - 2) by 1 do
+				(
+					v1 = index + ((i - 1) * 4) + 7 + t
+					v2 = index + ((i - 1) * 4) + 5 + t
+					v3 = index + ((i - 1) * 4) + 1 + t
+					v = [v1, v2, v3]
+					
+					if t == 1 then v = [v3, v2, v1]
+					Append faces v
+					
+					v1 = index + ((i - 1) * 4) + 1 + t
+					v2 = index + ((i - 1) * 4) + 3 + t
+					v3 = index + ((i - 1) * 4) + 7 + t
+					v = [v1, v2, v3]
+					
+					if t == 1 then v = [v3, v2, v1]
+					Append faces v
+				)
+			)
+		)
+		
 		setMesh mesh verts:vertices faces:faces
 		
 		for i in 1 to (smooth_g.count) by 1 do
