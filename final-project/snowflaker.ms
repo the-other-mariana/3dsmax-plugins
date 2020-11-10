@@ -11,9 +11,9 @@ category:"Snowflaker Plugin"
 		P_Thick type:#float ui: UI_Thick default: 2.0
 		
 		P_SpSize type: #float ui: UI_SpSize default: 50.0
-		P_SpSeg type: #integer ui: UI_SpSeg default: 16
+		P_SpSeg type: #integer ui: UI_SpSeg default: 6
 		
-		P_SSpSeg type: #integer ui: UI_SSpSeg default: 6
+		P_SSpSeg type: #integer ui: UI_SSpSeg default: 4
 		P_SSpSize type: #float ui: UI_SSpSize default: 13.0
 		P_Skip type: #integer ui: UI_Skip default: 1
 		
@@ -35,12 +35,12 @@ category:"Snowflaker Plugin"
 		group "Spikes"
 		(
 			spinner UI_SpSize "Spike Size" type:#float range:[20.0, 1000.0, 50.0]
-			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 1000, 16]
+			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 1000, 6]
 		)
 		
 		group "Sub-spikes"
 		(
-			spinner UI_SSpSeg "Segments" type:#integer range:[1, 100, 6]
+			spinner UI_SSpSeg "Segments" type:#integer range:[1, 100, 4]
 			spinner UI_SSpSize "Size" type:#float range:[1.0, 1000.0, 13.0]
 			spinner UI_Skip "Skip Degree" type:#integer range:[1, 5, 1]
 			
@@ -325,23 +325,47 @@ category:"Snowflaker Plugin"
 			)
 			for t in 0 to 1 by 1 do
 			(
-				for i in 1 to (P_SpSeg - 2) by 1 do
+				for i in 0 to (P_SpSeg - 2) by 1 do
 				(
-					v1 = index + ((i - 1) * 4) + 7 + t
-					v2 = index + ((i - 1) * 4) + 5 + t
-					v3 = index + ((i - 1) * 4) + 1 + t
-					v = [v1, v2, v3]
-					
-					if t == 1 then v = [v3, v2, v1]
-					Append faces v
-					
-					v1 = index + ((i - 1) * 4) + 1 + t
-					v2 = index + ((i - 1) * 4) + 3 + t
-					v3 = index + ((i - 1) * 4) + 7 + t
-					v = [v1, v2, v3]
-					
-					if t == 1 then v = [v3, v2, v1]
-					Append faces v
+					if i == 0 then
+					(
+						v1 = index + ((i) * 4) + 3 + t
+						v2 = index + ((i) * 4) + 1 + t
+						v3 = ((j * 2) - 1) + P_Sides * (t)
+						v = [v1, v2, v3]
+						print("face")
+						format "1: % 2: % 3: % J: %\n" v1 v2 v3 j
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+						
+						v1 = ((j * 2) - 1) + P_Sides * (t)
+						v2 = (j * 2) + P_Sides * (t)
+						v3 = index + ((i) * 4) + 3 + t
+						v = [v1, v2, v3]
+						format "1: % 2: % 3: % \n" v1 v2 v3
+						
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+					) else
+					(
+						v1 = index + ((i - 1) * 4) + 7 + t
+						v2 = index + ((i - 1) * 4) + 5 + t
+						v3 = index + ((i - 1) * 4) + 1 + t
+						v = [v1, v2, v3]
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+						
+						v1 = index + ((i - 1) * 4) + 1 + t
+						v2 = index + ((i - 1) * 4) + 3 + t
+						v3 = index + ((i - 1) * 4) + 7 + t
+						v = [v1, v2, v3]
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+					)
 				)
 			)
 		)
