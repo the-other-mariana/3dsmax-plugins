@@ -56,7 +56,7 @@ Now I implemented four different types of sub-spike length: decay, growth, sinus
 
 The next step is to finally connect the vertices in a mesh object. I first created the main ring faces, with holes for each spike faces. Then, I created the main spike faces for top and bottom. <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-13.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-14.png?raw=true) <br />
 
 ## Helpful Links
 
