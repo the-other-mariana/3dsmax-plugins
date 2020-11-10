@@ -325,7 +325,7 @@ category:"Snowflaker Plugin"
 			)
 			for t in 0 to 1 by 1 do
 			(
-				for i in 0 to (P_SpSeg - 2) by 1 do
+				for i in 0 to (P_SpSeg - 1) by 1 do
 				(
 					if i == 0 then
 					(
@@ -333,8 +333,6 @@ category:"Snowflaker Plugin"
 						v2 = index + ((i) * 4) + 1 + t
 						v3 = ((j * 2) - 1) + P_Sides * (t)
 						v = [v1, v2, v3]
-						print("face")
-						format "1: % 2: % 3: % J: %\n" v1 v2 v3 j
 						
 						if t == 1 then v = [v3, v2, v1]
 						Append faces v
@@ -343,12 +341,11 @@ category:"Snowflaker Plugin"
 						v2 = (j * 2) + P_Sides * (t)
 						v3 = index + ((i) * 4) + 3 + t
 						v = [v1, v2, v3]
-						format "1: % 2: % 3: % \n" v1 v2 v3
-						
 						
 						if t == 1 then v = [v3, v2, v1]
 						Append faces v
-					) else
+					) 
+					if (i > 0 and i < (P_SpSeg - 1)) then
 					(
 						v1 = index + ((i - 1) * 4) + 7 + t
 						v2 = index + ((i - 1) * 4) + 5 + t
@@ -361,6 +358,16 @@ category:"Snowflaker Plugin"
 						v1 = index + ((i - 1) * 4) + 1 + t
 						v2 = index + ((i - 1) * 4) + 3 + t
 						v3 = index + ((i - 1) * 4) + 7 + t
+						v = [v1, v2, v3]
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+					)
+					if i == (P_SpSeg - 1) then
+					(
+						v1 = index + ((i - 1) * 4) + 3 + t
+						v2 = index - 1 + t
+						v3 = index + ((i - 1) * 4) + 1 + t
 						v = [v1, v2, v3]
 						
 						if t == 1 then v = [v3, v2, v1]
