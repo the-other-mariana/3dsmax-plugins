@@ -394,59 +394,62 @@ category:"Snowflaker Plugin"
 			(
 				for i in 0 to (P_SpSeg - 1) by 1 do
 				(
-					if i == 0 then
+					if ((mod i modNum) != 1 or i < minimum or i == (P_SpSeg - 1)) then
 					(
-						v1 = index + ((i) * 4) + 1 + (t * 2)
-						v2 = index + ((i) * 4) + 2 + (t * 2)
-						v3 = ((j * 2) - 1) + P_Sides + t
-						v = [v1, v2, v3]
-						
-						if t == 1 then v = [v3, v2, v1]
-						Append faces v
-						
-						v1 = ((j * 2) - 1) + P_Sides + t
-						v2 = ((j * 2) - 1) + t
-						v3 = index + ((i) * 4) + 1 + (t * 2)
-						v = [v1, v2, v3]
-						
-						if t == 1 then v = [v3, v2, v1]
-						Append faces v
-					)
-					if (i > 0 and i < (P_SpSeg - 1)) then
-					(
-						v1 = index + ((i - 1) * 4) + 5 + (t * 2)
-						v2 = index + ((i - 1) * 4) + 6 + (t * 2)
-						v3 = index + ((i - 1) * 4) + 2 + (t * 2)
-						v = [v1, v2, v3]
-						
-						if t == 1 then v = [v3, v2, v1]
-						Append faces v
-						
-						v1 = index + ((i - 1) * 4) + 2 + (t * 2)
-						v2 = index + ((i - 1) * 4) + 1 + (t * 2)
-						v3 = index + ((i - 1) * 4) + 5 + (t * 2)
-						v = [v1, v2, v3]
-						
-						if t == 1 then v = [v3, v2, v1]
-						Append faces v
-					)
-					if i == (P_SpSeg - 1) then
-					(
-						v1 = index + ((i - 1) * 4) + 2 + (t * 2)
-						v2 = index
-						v3 = index - 1
-						v = [v1, v2, v3]
-						
-						if t == 1 then v = [v3, v2, v1]
-						Append faces v
-						
-						v1 = index + ((i - 1) * 4) + 2 + (t * 2)
-						v2 = index + ((i - 1) * 4) + 1 + (t * 2)
-						v3 = index - 1
-						v = [v1, v2, v3]
-						
-						if t == 1 then v = [v3, v2, v1]
-						Append faces v
+						if i == 0 then
+						(
+							v1 = index + ((i) * 4) + 1 + (t * 2)
+							v2 = index + ((i) * 4) + 2 + (t * 2)
+							v3 = ((j * 2) - 1) + P_Sides + t
+							v = [v1, v2, v3]
+							
+							if t == 1 then v = [v3, v2, v1]
+							Append faces v
+							
+							v1 = ((j * 2) - 1) + P_Sides + t
+							v2 = ((j * 2) - 1) + t
+							v3 = index + ((i) * 4) + 1 + (t * 2)
+							v = [v1, v2, v3]
+							
+							if t == 1 then v = [v3, v2, v1]
+							Append faces v
+						)
+						if (i > 0 and i < (P_SpSeg - 1)) then
+						(
+							v1 = index + ((i - 1) * 4) + 5 + (t * 2)
+							v2 = index + ((i - 1) * 4) + 6 + (t * 2)
+							v3 = index + ((i - 1) * 4) + 2 + (t * 2)
+							v = [v1, v2, v3]
+							
+							if t == 1 then v = [v3, v2, v1]
+							Append faces v
+							
+							v1 = index + ((i - 1) * 4) + 2 + (t * 2)
+							v2 = index + ((i - 1) * 4) + 1 + (t * 2)
+							v3 = index + ((i - 1) * 4) + 5 + (t * 2)
+							v = [v1, v2, v3]
+							
+							if t == 1 then v = [v3, v2, v1]
+							Append faces v
+						)
+						if i == (P_SpSeg - 1) then
+						(
+							v1 = index + ((i - 1) * 4) + 2 + (t * 2)
+							v2 = index
+							v3 = index - 1
+							v = [v1, v2, v3]
+							
+							if t == 1 then v = [v3, v2, v1]
+							Append faces v
+							
+							v1 = index + ((i - 1) * 4) + 2 + (t * 2)
+							v2 = index + ((i - 1) * 4) + 1 + (t * 2)
+							v3 = index - 1
+							v = [v1, v2, v3]
+							
+							if t == 1 then v = [v3, v2, v1]
+							Append faces v
+						)
 					)
 				)
 			)
