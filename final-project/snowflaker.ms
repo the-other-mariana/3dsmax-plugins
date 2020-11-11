@@ -278,6 +278,7 @@ category:"Snowflaker Plugin"
 			)
 		)
 		
+		-- side ring faces
 		exc = 0
 		base = 0
 		for j in 1 to 2 by 1 do
@@ -313,6 +314,7 @@ category:"Snowflaker Plugin"
 			base += 1
 		)
 		
+		-- top and bottom main spike faces
 		index = 0
 		for j in 1 to (P_Spikes) by 1 do
 		(
@@ -368,6 +370,79 @@ category:"Snowflaker Plugin"
 						v1 = index + ((i - 1) * 4) + 3 + t
 						v2 = index - 1 + t
 						v3 = index + ((i - 1) * 4) + 1 + t
+						v = [v1, v2, v3]
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+					)
+				)
+			)
+		)
+		
+		-- side faces main spike
+		index = 0
+		for j in 1 to (P_Spikes) by 1 do
+		(
+			if j == 1 then
+			(
+				index += (P_Sides * 4) + 2
+			) else
+			(
+				index += ((P_SpSeg - 1) * 4) + 2
+			)
+			for t in 0 to 1 by 1 do
+			(
+				for i in 0 to (P_SpSeg - 1) by 1 do
+				(
+					if i == 0 then
+					(
+						v1 = index + ((i) * 4) + 1 + (t * 2)
+						v2 = index + ((i) * 4) + 2 + (t * 2)
+						v3 = ((j * 2) - 1) + P_Sides + t
+						v = [v1, v2, v3]
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+						
+						v1 = ((j * 2) - 1) + P_Sides + t
+						v2 = ((j * 2) - 1) + t
+						v3 = index + ((i) * 4) + 1 + (t * 2)
+						v = [v1, v2, v3]
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+					)
+					if (i > 0 and i < (P_SpSeg - 1)) then
+					(
+						v1 = index + ((i - 1) * 4) + 5 + (t * 2)
+						v2 = index + ((i - 1) * 4) + 6 + (t * 2)
+						v3 = index + ((i - 1) * 4) + 2 + (t * 2)
+						v = [v1, v2, v3]
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+						
+						v1 = index + ((i - 1) * 4) + 2 + (t * 2)
+						v2 = index + ((i - 1) * 4) + 1 + (t * 2)
+						v3 = index + ((i - 1) * 4) + 5 + (t * 2)
+						v = [v1, v2, v3]
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+					)
+					if i == (P_SpSeg - 1) then
+					(
+						v1 = index + ((i - 1) * 4) + 2 + (t * 2)
+						v2 = index
+						v3 = index - 1
+						v = [v1, v2, v3]
+						
+						if t == 1 then v = [v3, v2, v1]
+						Append faces v
+						
+						v1 = index + ((i - 1) * 4) + 2 + (t * 2)
+						v2 = index + ((i - 1) * 4) + 1 + (t * 2)
+						v3 = index - 1
 						v = [v1, v2, v3]
 						
 						if t == 1 then v = [v3, v2, v1]
