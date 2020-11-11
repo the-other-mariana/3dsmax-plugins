@@ -58,6 +58,13 @@ The next step is to finally connect the vertices in a mesh object. I first creat
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-14.png?raw=true) <br />
 
+### 8th Round
+
+Now I completed the side faces of the main spikes, including whether or not the spike is added (the Tip option, the Skip option, etc). <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-15.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-17.png?raw=true) <br />
+
 ## Helpful Links
 
 [Quat Rotation](https://cathyatseneca.gitbooks.io/3d-modelling-for-programmers/content/mathematical_background/quaternions.html) <br />
