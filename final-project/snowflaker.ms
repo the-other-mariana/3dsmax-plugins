@@ -233,6 +233,7 @@ category:"Snowflaker Plugin"
 				)
 			)
 		)
+		format "total sub: % \n" counter
 		
 		if counter == 0 then return messageBox "No Sub-spikes could be made. Increase segments!" title:"No Sub-spikes" beep:true
 		
@@ -448,6 +449,56 @@ category:"Snowflaker Plugin"
 							v = [v1, v2, v3]
 							
 							if t == 1 then v = [v3, v2, v1]
+							Append faces v
+						)
+					)
+				)
+			)
+		)
+		
+		-- sub spike faces top and bottom
+		index = 0
+		per_sp = int(counter / P_Spikes)
+		per_side = int(per_sp / 2.0)
+		v_sp =  (4 * (P_SSpSeg - 1) + 2)
+		
+		for j in 1 to (P_Spikes) by 1 do
+		(
+			if j == 1 then
+			(
+				index += (P_Sides * 4) + (4 * P_Spikes  * (P_SpSeg - 1)) + (P_Spikes * 2) + 2
+			) else
+			(
+				index += (per_sp) * (4 * (P_SSpSeg - 1) + 2)
+			)
+			for k in 0 to (per_side - 1) by 1 do
+			(
+				-- per side
+				for s in 0 to 1 by 1 do
+				(
+					-- its neighbor
+					for t in 0 to 1 by 1 do
+					(
+						-- top and bottom
+						for i in 1 to (P_SSpSeg - 2) by 1 do
+						(
+							v1 = index + ((i - 1) * 4) + 7 + t + (s * v_sp) + (2 * k * v_sp)
+							v2 = index + ((i - 1) * 4) + 5 + t + (s * v_sp) + (2 * k * v_sp)
+							v3 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * k * v_sp)
+							--format "index: % v1: % v2: % v3: % \n" index v1 v2 v3
+							
+							v = [v1, v2, v3]
+							
+							if t != s then v = [v3, v2, v1]
+							Append faces v
+							
+							v1 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * k * v_sp)
+							v2 = index + ((i - 1) * 4) + 3 + t + (s * v_sp) + (2 * k * v_sp)
+							v3 = index + ((i - 1) * 4) + 7 + t + (s * v_sp) + (2 * k * v_sp)
+							
+							v = [v1, v2, v3]
+							
+							if t != s then v = [v3, v2, v1]
 							Append faces v
 						)
 					)
