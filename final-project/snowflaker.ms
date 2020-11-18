@@ -458,51 +458,86 @@ category:"Snowflaker Plugin"
 		
 		-- sub spike faces top and bottom
 		index = 0
+		sp_index = 0
 		per_sp = int(counter / P_Spikes)
 		per_side = int(per_sp / 2.0)
 		v_sp =  (4 * (P_SSpSeg - 1) + 2)
+		k = 0
 		
 		for j in 1 to (P_Spikes) by 1 do
 		(
 			if j == 1 then
 			(
 				index += (P_Sides * 4) + (4 * P_Spikes  * (P_SpSeg - 1)) + (P_Spikes * 2) + 2
+				sp_index += (P_Sides * 4) + 2
 			) else
 			(
 				index += (per_sp) * (4 * (P_SSpSeg - 1) + 2)
+				sp_index += ((P_SpSeg - 1) * 4) + 2
 			)
-			for k in 0 to (per_side - 1) by 1 do
+			k = 0
+			for seg in 1 to (P_SpSeg - 2) by 1 do
 			(
-				-- per side
-				for s in 0 to 1 by 1 do
+				if (mod seg modNum) == 1 and seg >= minimum then
 				(
-					-- its neighbor
-					for t in 0 to 1 by 1 do
+					k += 1
+					--format "seg: % k: % \n" seg k
+					-- per side
+					for s in 0 to 1 by 1 do
 					(
-						-- top and bottom
-						for i in 1 to (P_SSpSeg - 2) by 1 do
+						-- its neighbor
+						for t in 0 to 1 by 1 do
 						(
-							v1 = index + ((i - 1) * 4) + 7 + t + (s * v_sp) + (2 * k * v_sp)
-							v2 = index + ((i - 1) * 4) + 5 + t + (s * v_sp) + (2 * k * v_sp)
-							v3 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * k * v_sp)
-							--format "index: % v1: % v2: % v3: % \n" index v1 v2 v3
-							
-							v = [v1, v2, v3]
-							
-							if t != s then v = [v3, v2, v1]
-							Append faces v
-							
-							v1 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * k * v_sp)
-							v2 = index + ((i - 1) * 4) + 3 + t + (s * v_sp) + (2 * k * v_sp)
-							v3 = index + ((i - 1) * 4) + 7 + t + (s * v_sp) + (2 * k * v_sp)
-							
-							v = [v1, v2, v3]
-							
-							if t != s then v = [v3, v2, v1]
-							Append faces v
+							-- top and bottom
+							for i in 0 to (P_SSpSeg - 2) by 1 do
+							(
+								if i == 0 then
+								(
+									--print("face 0")
+									v1 = index + ((i) * 4) + 3 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v2 = index + ((i) * 4) + 1 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v3 = sp_index + 1 + t + ((seg - 1) * 4) + (s * 2)
+									--format "index: % v1: % v2: % v3: % \n" index v1 v2 v3
+									v = [v1, v2, v3]
+									
+									if t != s then v = [v3, v2, v1]
+									Append faces v
+									
+									v1 = sp_index + 1 + t + ((seg - 1) * 4) + (s * 2)
+									v2 = sp_index + 1 + t + ((seg) * 4) + (s * 2)
+									v3 = index + ((i) * 4) + 3 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
+									--format "index: % v1: % v2: % v3: % \n" index v1 v2 v3
+									v = [v1, v2, v3]
+									
+									if t != s then v = [v3, v2, v1]
+									Append faces v
+								)
+								if i > 0 and i < (P_SSpSeg - 1) then
+								(
+									v1 = index + ((i - 1) * 4) + 7 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v2 = index + ((i - 1) * 4) + 5 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v3 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
+									--format "index: % v1: % v2: % v3: % \n" index v1 v2 v3
+									
+									v = [v1, v2, v3]
+									
+									if t != s then v = [v3, v2, v1]
+									Append faces v
+									
+									v1 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v2 = index + ((i - 1) * 4) + 3 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v3 = index + ((i - 1) * 4) + 7 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
+									
+									v = [v1, v2, v3]
+									
+									if t != s then v = [v3, v2, v1]
+									Append faces v
+								)
+							)
 						)
 					)
 				)
+				
 			)
 		)
 		
