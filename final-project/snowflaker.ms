@@ -517,7 +517,6 @@ category:"Snowflaker Plugin"
 									v1 = index + ((i - 1) * 4) + 7 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + ((i - 1) * 4) + 5 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v3 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
-									--format "index: % v1: % v2: % v3: % \n" index v1 v2 v3
 									v = [v1, v2, v3]
 									
 									if t != s then v = [v3, v2, v1]
@@ -526,6 +525,22 @@ category:"Snowflaker Plugin"
 									v1 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + ((i - 1) * 4) + 3 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v3 = index + ((i - 1) * 4) + 7 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v = [v1, v2, v3]
+									
+									if t != s then v = [v3, v2, v1]
+									Append faces v
+									
+									v1 = index + ((i - 1) * 4) + 2 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v2 = index + ((i - 1) * 4) + 1 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v3 = index + ((i - 1) * 4) + 5 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v = [v1, v2, v3]
+									
+									if t != s then v = [v3, v2, v1]
+									Append faces v
+									
+									v1 = index + ((i - 1) * 4) + 5 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v2 = index + ((i - 1) * 4) + 6 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
+									v3 = index + ((i - 1) * 4) + 2 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v = [v1, v2, v3]
 									
 									if t != s then v = [v3, v2, v1]
