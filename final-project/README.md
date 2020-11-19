@@ -63,7 +63,17 @@ The next step is to finally connect the vertices in a mesh object. I first creat
 Now I completed the side faces of the main spikes, including whether or not the spike is added (the Tip option, the Skip option, etc). <br />
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-15.png?raw=true) <br />
+
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-17.png?raw=true) <br />
+
+### 9th Round
+
+I finally finished joining all vertices in faces, by using loops and taking on account Tip and Skip parameters as well. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-faces.png?raw=true) <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-faces-02.png?raw=true) <br />
+
 
 ## Helpful Links
 
