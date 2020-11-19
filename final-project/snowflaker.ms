@@ -52,7 +52,7 @@ category:"Snowflaker Plugin"
 			spinner UI_Ampl "Impact" type:#float range:[0.0, 0.9, 0.3]
 			
 			checkbox OnlyTip_cb "Only In Tip"
-			slider UI_AngleVar "Angle Variation" orient:#horizontal ticks:10 range:[0.0,5.0, 0.0]
+			slider UI_AngleVar "Angle Variation" orient:#horizontal ticks:10 range:[0.0,10.0, 0.0]
 		)
 		
 		global shapeOp = 1
