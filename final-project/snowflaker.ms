@@ -669,8 +669,8 @@ category:"Snowflaker Plugin"
 			case click of
 			(
 				-- put P_Radius when ready
-				2: Radius = gridDist.x
-				3: Height = gridDist.z
+				2: P_Radius = gridDist.x
+				3: P_Height = gridDist.z
 			)
 		)
 	)

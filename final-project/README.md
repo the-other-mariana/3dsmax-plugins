@@ -74,6 +74,11 @@ I finally finished joining all vertices in faces, by using loops and taking on a
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/snowflakes.png?raw=true) <br />
 
+### 10th Round
+
+I added the sub-spike size variation on *each* sub-spike, as well as an angle variation for the *createSpike()* function when each of them is created. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/snowflakes-var.png?raw=true) <br />
 
 ## Helpful Links
 
