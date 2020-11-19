@@ -72,7 +72,7 @@ I finally finished joining all vertices in faces, by using loops and taking on a
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-faces.png?raw=true) <br />
 
-![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/spikes-faces-02.png?raw=true) <br />
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/snowflakes.png?raw=true) <br />
 
 
 ## Helpful Links
