@@ -15,12 +15,14 @@ category:"Snowflaker Plugin"
 		
 		P_SSpSeg type: #integer ui: UI_SSpSeg default: 4
 		P_SSpSize type: #float ui: UI_SSpSize default: 13.0
+		P_SizeVar type:#float ui: UI_SizeVar default: 0.0
 		P_Skip type: #integer ui: UI_Skip default: 1
 		
 		P_Freq type: #integer ui: UI_Freq default: 30
 		P_Ampl type: #float ui: UI_Ampl default: 0.3
 		
 		P_OnlyTip type: #boolean ui: OnlyTip_cb default: false
+		P_AngleVar type:#float ui: UI_AngleVar default: 0.0
 	)
 	
 	rollout SF_Params "Parameters"
@@ -42,6 +44,7 @@ category:"Snowflaker Plugin"
 		(
 			spinner UI_SSpSeg "Segments" type:#integer range:[1, 100, 4]
 			spinner UI_SSpSize "Size" type:#float range:[1.0, 1000.0, 13.0]
+			slider UI_SizeVar "Size Variation" orient:#horizontal ticks:10 range:[0.0,2.0,0.0]
 			spinner UI_Skip "Skip Degree" type:#integer range:[1, 5, 1]
 			
 			dropdownlist shape_dd "Shape" items:#("Decay", "Growth", "Sinusoidal", "Constant")
@@ -49,6 +52,7 @@ category:"Snowflaker Plugin"
 			spinner UI_Ampl "Impact" type:#float range:[0.0, 0.9, 0.3]
 			
 			checkbox OnlyTip_cb "Only In Tip"
+			slider UI_AngleVar "Angle Variation" orient:#horizontal ticks:10 range:[0.0,5.0, 0.0]
 		)
 		
 		global shapeOp = 1
@@ -226,14 +230,20 @@ category:"Snowflaker Plugin"
 						size = P_SSpSize
 					)
 					
-					createSpike p0_1 p1_1 (size) -120.0 ssp_pts P_SSpSeg
-					createSpike p0_2 p1_2 (size) 120.0 ssp_pts P_SSpSeg
+					randSize = random (-P_SizeVar) P_SizeVar
+					randAngle = random (-P_SizeVar) P_AngleVar
+					
+					createSpike p0_1 p1_1 (size + randSize) (-120.0 + randAngle) ssp_pts P_SSpSeg
+					
+					randSize = random (-P_SizeVar) P_SizeVar
+					randAngle = random (-P_SizeVar) P_AngleVar
+					
+					createSpike p0_2 p1_2 (size + randSize) (120.0 + randAngle) ssp_pts P_SSpSeg
 					
 					counter += 2
 				)
 			)
 		)
-		format "total sub: % \n" counter
 		
 		if counter == 0 then return messageBox "No Sub-spikes could be made. Increase segments!" title:"No Sub-spikes" beep:true
 		
@@ -282,6 +292,8 @@ category:"Snowflaker Plugin"
 		-- side ring faces
 		exc = 0
 		base = 0
+		sg = 0
+		sg_index = 1
 		for j in 1 to 2 by 1 do
 		(
 			exc = 0
@@ -294,12 +306,19 @@ category:"Snowflaker Plugin"
 				)
 				if ((j == 1) and (mod i 2 == 0)) or (j == 2) then
 				(
-					sg = 2^(j + 1)
+					if j == 2 then sg = 2^(j + 1)
+					if j == 1 then
+					(
+						sg = 2^(j + 1 + sg_index)
+						sg_index += 1
+					)
+					
 					v1 = (P_Sides * (base - 1)) + i 
 					v2 = (P_Sides * (base)) + i 
 					v3 = (P_Sides * (base)) + (i + 1) - exc
 					
 					v = [v1, v2, v3]
+					if (j == 1) then v = [v3, v2, v1]
 					Append faces v
 					Append smooth_g [faces.count, sg]
 					
@@ -309,6 +328,7 @@ category:"Snowflaker Plugin"
 					
 					v = [v1, v2, v3]
 					Append faces v
+					if (j == 1) then v = [v3, v2, v1]
 					Append smooth_g [faces.count, sg]
 				)
 			)
@@ -317,6 +337,8 @@ category:"Snowflaker Plugin"
 		
 		-- top and bottom main spike faces
 		index = 0
+		sg_index += 3
+		sp_sg = sg_index
 		for j in 1 to (P_Spikes) by 1 do
 		(
 			if j == 1 then
@@ -328,8 +350,11 @@ category:"Snowflaker Plugin"
 			)
 			for t in 0 to 1 by 1 do
 			(
+				sg_index += 1
+				sg = 2^(j + 1 + sg_index)
 				for i in 0 to (P_SpSeg - 1) by 1 do
 				(
+					
 					if i == 0 then
 					(
 						v1 = index + ((i) * 4) + 3 + t
@@ -339,6 +364,7 @@ category:"Snowflaker Plugin"
 						
 						if t == 1 then v = [v3, v2, v1]
 						Append faces v
+						Append smooth_g [faces.count, sg]
 						
 						v1 = ((j * 2) - 1) + P_Sides * (t)
 						v2 = (j * 2) + P_Sides * (t)
@@ -347,6 +373,7 @@ category:"Snowflaker Plugin"
 						
 						if t == 1 then v = [v3, v2, v1]
 						Append faces v
+						Append smooth_g [faces.count, sg]
 					) 
 					if (i > 0 and i < (P_SpSeg - 1)) then
 					(
@@ -357,6 +384,7 @@ category:"Snowflaker Plugin"
 						
 						if t == 1 then v = [v3, v2, v1]
 						Append faces v
+						Append smooth_g [faces.count, sg]
 						
 						v1 = index + ((i - 1) * 4) + 1 + t
 						v2 = index + ((i - 1) * 4) + 3 + t
@@ -365,6 +393,7 @@ category:"Snowflaker Plugin"
 						
 						if t == 1 then v = [v3, v2, v1]
 						Append faces v
+						Append smooth_g [faces.count, sg]
 					)
 					if i == (P_SpSeg - 1) then
 					(
@@ -375,12 +404,14 @@ category:"Snowflaker Plugin"
 						
 						if t == 1 then v = [v3, v2, v1]
 						Append faces v
+						Append smooth_g [faces.count, sg]
 					)
 				)
 			)
 		)
 		
 		-- side faces main spike
+		sg = 2^(31)
 		index = 0
 		for j in 1 to (P_Spikes) by 1 do
 		(
@@ -406,6 +437,7 @@ category:"Snowflaker Plugin"
 							
 							if t == 1 then v = [v3, v2, v1]
 							Append faces v
+							Append smooth_g [faces.count, sg]
 							
 							v1 = ((j * 2) - 1) + P_Sides + t
 							v2 = ((j * 2) - 1) + t
@@ -414,6 +446,7 @@ category:"Snowflaker Plugin"
 							
 							if t == 1 then v = [v3, v2, v1]
 							Append faces v
+							Append smooth_g [faces.count, sg]
 						)
 						if (i > 0 and i < (P_SpSeg - 1)) then
 						(
@@ -424,6 +457,7 @@ category:"Snowflaker Plugin"
 							
 							if t == 1 then v = [v3, v2, v1]
 							Append faces v
+							Append smooth_g [faces.count, sg]
 							
 							v1 = index + ((i - 1) * 4) + 2 + (t * 2)
 							v2 = index + ((i - 1) * 4) + 1 + (t * 2)
@@ -432,6 +466,7 @@ category:"Snowflaker Plugin"
 							
 							if t == 1 then v = [v3, v2, v1]
 							Append faces v
+							Append smooth_g [faces.count, sg]
 						)
 						if i == (P_SpSeg - 1) then
 						(
@@ -442,6 +477,7 @@ category:"Snowflaker Plugin"
 							
 							if t == 1 then v = [v3, v2, v1]
 							Append faces v
+							Append smooth_g [faces.count, sg]
 							
 							v1 = index + ((i - 1) * 4) + 2 + (t * 2)
 							v2 = index + ((i - 1) * 4) + 1 + (t * 2)
@@ -450,13 +486,14 @@ category:"Snowflaker Plugin"
 							
 							if t == 1 then v = [v3, v2, v1]
 							Append faces v
+							Append smooth_g [faces.count, sg]
 						)
 					)
 				)
 			)
 		)
 		
-		-- sub spike faces top and bottom
+		-- sub spike faces top and bottom and sides
 		index = 0
 		sp_index = 0
 		per_sp = int(counter / P_Spikes)
@@ -476,6 +513,8 @@ category:"Snowflaker Plugin"
 				sp_index += ((P_SpSeg - 1) * 4) + 2
 			)
 			k = 0
+			sp_sg += 1
+			sg = 2^(j + 1 + sp_sg)
 			for seg in 1 to (P_SpSeg - 2) by 1 do
 			(
 				if (mod seg modNum) == 1 and seg >= minimum then
@@ -501,6 +540,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, sg]
 									
 									v1 = sp_index + 1 + t + ((seg - 1) * 4) + (s * 2)
 									v2 = sp_index + 1 + t + ((seg) * 4) + (s * 2)
@@ -509,6 +549,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, sg]
 									
 									v1 = sp_index + 2 + (t * 4) + ((seg - 1) * 4) + (s * 2)
 									v2 = sp_index + 1 + (t * 4) + ((seg - 1) * 4) + (s * 2)
@@ -517,6 +558,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, 2^(31)]
 									
 									v1 = index + ((i) * 4) + 1 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + ((i) * 4) + 2 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
@@ -525,6 +567,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, 2^(31)]
 								)
 								if i > 0 and i < (P_SSpSeg - 1) then
 								(
@@ -535,6 +578,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, sg]
 									
 									v1 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + ((i - 1) * 4) + 3 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
@@ -543,6 +587,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, sg]
 									
 									v1 = index + ((i - 1) * 4) + 2 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + ((i - 1) * 4) + 1 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
@@ -551,6 +596,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, 2^(31)]
 									
 									v1 = index + ((i - 1) * 4) + 5 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + ((i - 1) * 4) + 6 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
@@ -559,6 +605,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, 2^(31)]
 								)
 								if i == (P_SSpSeg - 1) then
 								(
@@ -569,6 +616,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, sg]
 									
 									v1 = index + ((i - 1) * 4) + 2 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + ((i - 1) * 4) + 1 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
@@ -578,6 +626,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, 2^(31)]
 									
 									v1 = index - 1 + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + (s * v_sp) + (2 * (k - 1) * v_sp)
@@ -587,6 +636,7 @@ category:"Snowflaker Plugin"
 									
 									if t != s then v = [v3, v2, v1]
 									Append faces v
+									Append smooth_g [faces.count, 2^(31)]
 								)
 							)
 						)
