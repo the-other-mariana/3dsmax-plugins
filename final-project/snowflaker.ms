@@ -7,11 +7,11 @@ category:"Snowflaker Plugin"
 	(
 		P_Radius type:#worldUnits ui:UI_Radius	default:10
 		P_Height type:#worldUnits ui:UI_Height	default:4
-		P_Spikes type:#integer ui:UI_Spikes	default:5
+		P_Spikes type:#integer ui:UI_Spikes	default:6
 		P_Thick type:#float ui: UI_Thick default: 2.0
 		
 		P_SpSize type: #float ui: UI_SpSize default: 50.0
-		P_SpSeg type: #integer ui: UI_SpSeg default: 6
+		P_SpSeg type: #integer ui: UI_SpSeg default: 10
 		
 		P_SSpSeg type: #integer ui: UI_SSpSeg default: 4
 		P_SSpSize type: #float ui: UI_SSpSize default: 13.0
@@ -31,20 +31,20 @@ category:"Snowflaker Plugin"
 		(
 			spinner UI_Radius "Radius" type:#worldUnits range:[0, 1000, 10]
 			spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 4]
-			spinner UI_Spikes "Spikes" type:#integer range:[3, 27, 5]
+			spinner UI_Spikes "Spikes" type:#integer range:[3, 27, 6]
 			spinner UI_Thick "Thickness" type:#float range:[0.1, 30.0, 2.0]
 		)
 		group "Spikes"
 		(
 			spinner UI_SpSize "Spike Size" type:#float range:[20.0, 1000.0, 50.0]
-			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 1000, 6]
+			spinner UI_SpSeg "Spike Segments" type:#integer range:[1, 1000, 10]
 		)
 		
 		group "Sub-spikes"
 		(
 			spinner UI_SSpSeg "Segments" type:#integer range:[1, 100, 4]
 			spinner UI_SSpSize "Size" type:#float range:[1.0, 1000.0, 13.0]
-			slider UI_SizeVar "Size Variation" orient:#horizontal ticks:10 range:[0.0,2.0,0.0]
+			slider UI_SizeVar "Size Variation" orient:#horizontal ticks:10 range:[0.0,4.0,0.0]
 			spinner UI_Skip "Skip Degree" type:#integer range:[1, 5, 1]
 			
 			dropdownlist shape_dd "Shape" items:#("Decay", "Growth", "Sinusoidal", "Constant")
@@ -52,7 +52,7 @@ category:"Snowflaker Plugin"
 			spinner UI_Ampl "Impact" type:#float range:[0.0, 0.9, 0.3]
 			
 			checkbox OnlyTip_cb "Only In Tip"
-			slider UI_AngleVar "Angle Variation" orient:#horizontal ticks:10 range:[0.0,10.0, 0.0]
+			slider UI_AngleVar "Angle Variation" orient:#horizontal ticks:10 range:[0.0,20.0, 0.0]
 		)
 		
 		global shapeOp = 1
@@ -660,6 +660,7 @@ category:"Snowflaker Plugin"
 		(
 			setFaceSmoothGroup mesh ((smooth_g[i])[1]) ((smooth_g[i])[2])
 		)
+		
 	)
 	
 	tool create
@@ -685,4 +686,5 @@ category:"Snowflaker Plugin"
 	
 	
 )
+
 
