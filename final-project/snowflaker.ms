@@ -31,7 +31,7 @@ category:"Snowflaker Plugin"
 		(
 			spinner UI_Radius "Radius" type:#worldUnits range:[0, 1000, 10]
 			spinner UI_Height "Height" type:#worldUnits range:[-1000, 1000, 4]
-			spinner UI_Spikes "Spikes" type:#integer range:[3, 30, 5]
+			spinner UI_Spikes "Spikes" type:#integer range:[3, 27, 5]
 			spinner UI_Thick "Thickness" type:#float range:[0.1, 30.0, 2.0]
 		)
 		group "Spikes"
@@ -351,8 +351,6 @@ category:"Snowflaker Plugin"
 			)
 			for t in 0 to 1 by 1 do
 			(
-				--sg_index += 1
-				--sg = 2^(j + 1 + sg_index)
 				sg = 2^(t)
 				for i in 0 to (P_SpSeg - 1) by 1 do
 				(
@@ -413,7 +411,7 @@ category:"Snowflaker Plugin"
 		)
 		
 		-- side faces main spike
-		sg = 2^(31)
+		sg = 0
 		index = 0
 		for j in 1 to (P_Spikes) by 1 do
 		(
@@ -425,11 +423,9 @@ category:"Snowflaker Plugin"
 			(
 				index += ((P_SpSeg - 1) * 4) + 2
 			)
-			--sg = 2^(j + 2 + P_Spikes)
 			sg = 2^(j + 3)
 			for t in 0 to 1 by 1 do
 			(
-				--sg = 2^(j + 1 + t)
 				for i in 0 to (P_SpSeg - 1) by 1 do
 				(
 					if ((mod i modNum) != 1 or i < minimum or i == (P_SpSeg - 1)) then
@@ -521,13 +517,11 @@ category:"Snowflaker Plugin"
 			)
 			k = 0
 			sp_sg += 1
-			--sg = 2^(j + 1 + sp_sg)
 			for seg in 1 to (P_SpSeg - 2) by 1 do
 			(
 				if (mod seg modNum) == 1 and seg >= minimum then
 				(
 					k += 1
-					--format "seg: % k: % \n" seg k
 					-- per side
 					for s in 0 to 1 by 1 do
 					(
@@ -536,9 +530,7 @@ category:"Snowflaker Plugin"
 						(
 							-- top and bottom
 							sg = 2^(t)
-							--sg_2 = 2^(j + 2 + P_Spikes)
 							sg_2 = 2^(j + 3)
-							--sg_2 = 2^(j + 1 + s)
 							for i in 0 to (P_SSpSeg - 1) by 1 do
 							(
 								if i == 0 then
@@ -583,6 +575,7 @@ category:"Snowflaker Plugin"
 								)
 								if i > 0 and i < (P_SSpSeg - 1) then
 								(
+									-- top and bottom
 									v1 = index + ((i - 1) * 4) + 7 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + ((i - 1) * 4) + 5 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v3 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
@@ -601,6 +594,7 @@ category:"Snowflaker Plugin"
 									Append faces v
 									Append smooth_g [faces.count, sg]
 									
+									-- sides
 									v1 = index + ((i - 1) * 4) + 2 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + ((i - 1) * 4) + 1 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v3 = index + ((i - 1) * 4) + 5 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
@@ -621,6 +615,7 @@ category:"Snowflaker Plugin"
 								)
 								if i == (P_SSpSeg - 1) then
 								(
+									-- top and bottom
 									v1 = index + ((i - 1) * 4) + 3 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index - 1 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v3 = index + ((i - 1) * 4) + 1 + t + (s * v_sp) + (2 * (k - 1) * v_sp)
@@ -630,6 +625,7 @@ category:"Snowflaker Plugin"
 									Append faces v
 									Append smooth_g [faces.count, sg]
 									
+									-- sides
 									v1 = index + ((i - 1) * 4) + 2 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v2 = index + ((i - 1) * 4) + 1 + (t * 2) + (s * v_sp) + (2 * (k - 1) * v_sp)
 									v3 = index - 1 + (s * v_sp) + (2 * (k - 1) * v_sp)
