@@ -86,6 +86,16 @@ The smoothing groups were fixed and the output of the four types of snowflakes i
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/snowflakes-final.png?raw=true) <br />
 
+## Output
+
+The User Interface looks as follows. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/ui.png?raw=true) <br />
+
+And a sample snowflake rendered looks as below. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/render01.png?raw=true) <br />
+
 ## Helpful Links
 
 [Quat Rotation](https://cathyatseneca.gitbooks.io/3d-modelling-for-programmers/content/mathematical_background/quaternions.html) <br />
