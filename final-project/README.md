@@ -80,6 +80,12 @@ I added the sub-spike size variation on *each* sub-spike, as well as an angle va
 
 ![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/snowflakes-var.png?raw=true) <br />
 
+### Final Round
+
+The smoothing groups were fixed and the output of the four types of snowflakes is below. <br />
+
+![alt text](https://github.com/the-other-mariana/3dsmax-plugins/blob/master/final-project/media/snowflakes-final.png?raw=true) <br />
+
 ## Helpful Links
 
 [Quat Rotation](https://cathyatseneca.gitbooks.io/3d-modelling-for-programmers/content/mathematical_background/quaternions.html) <br />

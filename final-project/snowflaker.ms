@@ -18,7 +18,7 @@ category:"Snowflaker Plugin"
 		P_SizeVar type:#float ui: UI_SizeVar default: 0.0
 		P_Skip type: #integer ui: UI_Skip default: 1
 		
-		P_Freq type: #integer ui: UI_Freq default: 30
+		P_Freq type: #integer ui: UI_Freq default: 60
 		P_Ampl type: #float ui: UI_Ampl default: 0.3
 		
 		P_OnlyTip type: #boolean ui: OnlyTip_cb default: false
@@ -48,7 +48,7 @@ category:"Snowflaker Plugin"
 			spinner UI_Skip "Skip Degree" type:#integer range:[1, 5, 1]
 			
 			dropdownlist shape_dd "Shape" items:#("Decay", "Growth", "Sinusoidal", "Constant")
-			spinner UI_Freq "Frequency" type:#integer range:[1, 1000, 30]
+			spinner UI_Freq "Frequency" type:#integer range:[1, 1000, 60]
 			spinner UI_Ampl "Impact" type:#float range:[0.0, 0.9, 0.3]
 			
 			checkbox OnlyTip_cb "Only In Tip"
